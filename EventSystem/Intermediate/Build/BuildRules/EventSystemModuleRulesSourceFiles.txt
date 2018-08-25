@@ -1,3 +1,0 @@
-E:\Projects\eventsystemunreal\EventSystem\Source\EventSystem\EventSystem.Build.cs
-E:\Projects\eventsystemunreal\EventSystem\Source\EventSystem.Target.cs
-E:\Projects\eventsystemunreal\EventSystem\Source\EventSystemEditor.Target.cs
