@@ -1,46 +1,67 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<None Include="..\..\EventSystem.uproject" />
-		<Filter Include="Source">
-			<UniqueIdentifier>{3E7CC00C-FCAF-4C90-91C8-B0E21BECB449}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\EventSystem.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<None Include="..\..\Source\EventSystemEditor.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<Filter Include="Config">
-			<UniqueIdentifier>{C54065F4-96AC-4F41-8F23-680C91894CEF}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Config\DefaultEditor.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultEngine.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultGame.ini">
-			<Filter>Config</Filter>
-		</None >
-		<Filter Include="Source\EventSystem">
-			<UniqueIdentifier>{81D81563-C947-499A-B137-8F1E0F3DE1F1}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\EventSystem\EventSystem.Build.cs">
-			<Filter>Source\EventSystem</Filter>
-		</None >
-		<ClCompile Include="..\..\Source\EventSystem\EventSystem.cpp">
-			<Filter>Source\EventSystem</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\EventSystem\EventSystem.h">
-			<Filter>Source\EventSystem</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\EventSystem\EventSystemGameModeBase.cpp">
-			<Filter>Source\EventSystem</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\EventSystem\EventSystemGameModeBase.h">
-			<Filter>Source\EventSystem</Filter>
-		</ClInclude >
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\EventSystem.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{52FD0E38-58C2-4FCB-A0DF-DA436F1C09E6}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\EventSystem.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\EventSystemEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{F863FAE2-C2A5-4B95-834B-4CCC151821D8}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\EventSystem">
+      <UniqueIdentifier>{4105483A-1563-4482-8302-23F8404A6C0E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\EventSystem\EventSystem.Build.cs">
+      <Filter>Source\EventSystem</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\EventSystem\EventSystem.cpp">
+      <Filter>Source\EventSystem</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\EventSystem\EventSystem.h">
+      <Filter>Source\EventSystem</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\EventSystem\EventSystemGameModeBase.cpp">
+      <Filter>Source\EventSystem</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\EventSystem\EventSystemGameModeBase.h">
+      <Filter>Source\EventSystem</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\EventSystem\ObsEventFactory.cpp">
+      <Filter>Source\EventSystem</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\EventSystem\ObsEventFactory.h">
+      <Filter>Source\EventSystem</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\EventSystem\ObsEvent.h">
+      <Filter>Source\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\EventSystem\ObsListener.h">
+      <Filter>Source\EventSystem</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\EventSystem\ObsEvent.cpp">
+      <Filter>Source\EventSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\EventSystem\ObsListener.cpp">
+      <Filter>Source\EventSystem</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

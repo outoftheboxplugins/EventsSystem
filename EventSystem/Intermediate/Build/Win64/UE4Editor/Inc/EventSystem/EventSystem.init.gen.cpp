@@ -19,8 +19,8 @@ void EmptyLinkFunctionForGeneratedCodeEventSystem_init() {}
 			static const UE4CodeGen_Private::FPackageParams PackageParams = {
 				"/Script/EventSystem",
 				PKG_CompiledIn | 0x00000000,
-				0x8402CADE,
-				0xCF0F3B95,
+				0x97AAFE1C,
+				0x069A2374,
 				nullptr, 0,
 				METADATA_PARAMS(nullptr, 0)
 			};

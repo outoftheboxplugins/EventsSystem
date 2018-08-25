@@ -23,9 +23,24 @@
 /wd4838
 /we4668
 /I .
-/I E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\UE4Editor\Inc\EventSystem
-/I E:\Projects\eventsystemunreal\EventSystem\Source
-/I E:\Projects\eventsystemunreal\EventSystem\Source\EventSystem
+/I ..\Intermediate\Build\Win64\UE4Editor\Inc\UnrealEd
+/I Editor
+/I Programs\UnrealLightmass\Public
+/I Editor\UnrealEd\Classes
+/I Editor\UnrealEd\Public
+/I Editor\UnrealEd
+/I Editor\UnrealEd\Public\AutoReimport
+/I Editor\UnrealEd\Public\Commandlets
+/I Editor\UnrealEd\Public\Dialogs
+/I Editor\UnrealEd\Public\DragAndDrop
+/I Editor\UnrealEd\Public\Features
+/I Editor\UnrealEd\Public\Kismet2
+/I Editor\UnrealEd\Public\Layers
+/I Editor\UnrealEd\Public\Settings
+/I Editor\UnrealEd\Public\Tests
+/I Editor\UnrealEd\Public\Toolkits
+/I Editor\BspMode\Public
+/I Editor\BspMode
 /I Runtime
 /I Runtime\Core\Public
 /I Runtime\Core
@@ -66,6 +81,18 @@
 /I Runtime\CoreUObject\Public\Serialization\Formatters
 /I Runtime\CoreUObject\Public\Templates
 /I Runtime\CoreUObject\Public\UObject
+/I Runtime\ApplicationCore\Public
+/I Runtime\ApplicationCore
+/I Runtime\ApplicationCore\Public\GenericPlatform
+/I Runtime\ApplicationCore\Public\HAL
+/I Runtime\ApplicationCore\Public\Windows
+/I Runtime\RHI\Public
+/I Runtime\RHI
+/I Developer
+/I Developer\DirectoryWatcher\Public
+/I Developer\DirectoryWatcher
+/I Editor\Documentation\Public
+/I Editor\Documentation
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\Engine
 /I Runtime\Engine\Classes
 /I Runtime\Engine\Public
@@ -85,13 +112,6 @@
 /I Runtime\Engine\Public\Slate
 /I Runtime\Engine\Public\Tests
 /I Runtime\Engine\Public\VisualLogger
-/I Runtime\ApplicationCore\Public
-/I Runtime\ApplicationCore
-/I Runtime\ApplicationCore\Public\GenericPlatform
-/I Runtime\ApplicationCore\Public\HAL
-/I Runtime\ApplicationCore\Public\Windows
-/I Runtime\RHI\Public
-/I Runtime\RHI
 /I Runtime\Json\Public
 /I Runtime\Json
 /I Runtime\Json\Public\Dom
@@ -192,29 +212,30 @@
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\MeshDescription
 /I Runtime\MeshDescription\Public
 /I Runtime\MeshDescription
-/I ..\Intermediate\Build\Win64\UE4Editor\Inc\UnrealEd
-/I Editor
-/I Programs\UnrealLightmass\Public
-/I Editor\UnrealEd\Classes
-/I Editor\UnrealEd\Public
-/I Editor\UnrealEd
-/I Editor\UnrealEd\Public\AutoReimport
-/I Editor\UnrealEd\Public\Commandlets
-/I Editor\UnrealEd\Public\Dialogs
-/I Editor\UnrealEd\Public\DragAndDrop
-/I Editor\UnrealEd\Public\Features
-/I Editor\UnrealEd\Public\Kismet2
-/I Editor\UnrealEd\Public\Layers
-/I Editor\UnrealEd\Public\Settings
-/I Editor\UnrealEd\Public\Tests
-/I Editor\UnrealEd\Public\Toolkits
-/I Editor\BspMode\Public
-/I Editor\BspMode
-/I Developer
-/I Developer\DirectoryWatcher\Public
-/I Developer\DirectoryWatcher
-/I Editor\Documentation\Public
-/I Editor\Documentation
+/I ..\Intermediate\Build\Win64\UE4Editor\Inc\Kismet
+/I Editor\Kismet\Classes
+/I Editor\Kismet\Public
+/I Editor\Kismet
+/I Editor\Kismet\Public\Nodes
+/I Editor\Kismet\Public\WorkflowOrientedApp
+/I ..\Intermediate\Build\Win64\UE4Editor\Inc\ClothingSystemRuntimeInterface
+/I Runtime\ClothingSystemRuntimeInterface\Public
+/I Runtime\ClothingSystemRuntimeInterface
+/I Runtime\NetworkReplayStreaming
+/I Runtime\NetworkReplayStreaming\NetworkReplayStreaming\Public
+/I Runtime\NetworkReplayStreaming\NetworkReplayStreaming
+/I ..\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer
+/I Runtime\AudioMixer\Classes
+/I Runtime\AudioMixer\Public
+/I Runtime\AudioMixer
+/I Runtime\AudioMixer\Public\Components
+/I Runtime\AudioMixer\Public\DSP
+/I ThirdParty
+/I ThirdParty\libSampleRate\Public
+/I ThirdParty\libSampleRate
+/I ..\Intermediate\Build\Win64\UE4Editor\Inc\AnimationCore
+/I Runtime\AnimationCore\Public
+/I Runtime\AnimationCore
 /I Runtime\Projects\Public
 /I Runtime\Projects
 /I Runtime\Projects\Public\Interfaces
@@ -335,9 +356,6 @@
 /I Runtime\MovieSceneTracks\Public\Evaluation
 /I Runtime\MovieSceneTracks\Public\Sections
 /I Runtime\MovieSceneTracks\Public\Tracks
-/I ..\Intermediate\Build\Win64\UE4Editor\Inc\AnimationCore
-/I Runtime\AnimationCore\Public
-/I Runtime\AnimationCore
 /I ..\Intermediate\Build\Win64\UE4Editor\Inc\PropertyPath
 /I Runtime\PropertyPath\Public
 /I Runtime\PropertyPath
@@ -353,7 +371,6 @@
 /I Runtime\Windows
 /I Runtime\Windows\XAudio2\Public
 /I Runtime\Windows\XAudio2
-/I Runtime\AudioMixer\Public
 /I Runtime\Windows\AudioMixerXAudio2
 /I Developer\CollectionManager\Public
 /I Developer\CollectionManager
@@ -383,35 +400,18 @@
 /I Runtime\AIModule\Public
 /I Runtime\AIModule\Classes
 /I Runtime\AIModule
-/I ..\Intermediate\Build\Win64\UE4Editor\Inc\Kismet
-/I Editor\Kismet\Classes
-/I Editor\Kismet\Public
-/I Editor\Kismet
-/I Editor\Kismet\Public\Nodes
-/I Editor\Kismet\Public\WorkflowOrientedApp
-/I ..\Intermediate\Build\Win64\UE4Editor\Inc\ClothingSystemRuntimeInterface
-/I Runtime\ClothingSystemRuntimeInterface\Public
-/I Runtime\ClothingSystemRuntimeInterface
-/I Runtime\NetworkReplayStreaming
-/I Runtime\NetworkReplayStreaming\NetworkReplayStreaming\Public
-/I Runtime\NetworkReplayStreaming\NetworkReplayStreaming
-/I ..\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer
-/I Runtime\AudioMixer\Classes
-/I Runtime\AudioMixer
-/I Runtime\AudioMixer\Public\Components
-/I Runtime\AudioMixer\Public\DSP
-/I ThirdParty
-/I ThirdParty\libSampleRate\Public
-/I ThirdParty\libSampleRate
+/I E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\UE4Editor\Inc\EventSystem
+/I E:\Projects\eventsystemunreal\EventSystem\Source
+/I E:\Projects\eventsystemunreal\EventSystem\Source\EventSystem
 /I "D:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Tools\MSVC\14.15.26726\INCLUDE"
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.6.1\include\um"
 /I "D:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\ucrt"
 /I "D:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\shared"
 /I "D:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\um"
 /I "D:\Program Files (x86)\Windows Kits\10\include\10.0.17134.0\winrt"
-/FI"E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\EventSystemEditor\Development\Engine\SharedPCH.Engine.h"
-/Yu"E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\EventSystemEditor\Development\Engine\SharedPCH.Engine.h"
-/Fp"E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\EventSystemEditor\Development\Engine\SharedPCH.Engine.h.pch"
+/FI"E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\EventSystemEditor\Development\UnrealEd\SharedPCH.UnrealEd.h"
+/Yu"E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\EventSystemEditor\Development\UnrealEd\SharedPCH.UnrealEd.h"
+/Fp"E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\EventSystemEditor\Development\UnrealEd\SharedPCH.UnrealEd.h.pch"
 "E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\UE4Editor\Inc\EventSystem\EventSystem.init.gen.cpp"
 /FI"E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\UE4Editor\Development\EventSystem\Definitions.EventSystem.h"
 /Fo"E:\Projects\eventsystemunreal\EventSystem\Intermediate\Build\Win64\UE4Editor\Development\EventSystem\EventSystem.init.gen.cpp.obj"

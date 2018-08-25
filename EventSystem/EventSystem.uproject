@@ -7,7 +7,12 @@
 		{
 			"Name": "EventSystem",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"UnrealEd",
+				"CoreUObject",
+				"Engine"
+			]
 		}
 	]
 }
