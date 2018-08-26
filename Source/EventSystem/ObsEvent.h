@@ -11,7 +11,7 @@ class UObsListener;
 /**
  * Event holding all the listeners and delegating the call to them.
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable, DisplayName = "Blueprint Node Name")
 class EVENTSYSTEM_API UObsEvent : public UObject
 {
 	GENERATED_BODY()
