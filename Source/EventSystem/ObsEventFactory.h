@@ -9,6 +9,8 @@
 /**
  * Creats events in the Content browser.
  */
+
+
 UCLASS()
 class EVENTSYSTEM_API UObsEventFactory : public UFactory
 {
