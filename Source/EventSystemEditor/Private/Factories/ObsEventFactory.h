@@ -12,7 +12,7 @@
 
 
 UCLASS()
-class EVENTSYSTEM_API UObsEventFactory : public UFactory
+class UObsEventFactory : public UFactory
 {
 	GENERATED_BODY()
 	

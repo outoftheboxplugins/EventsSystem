@@ -2,15 +2,14 @@
 
 using UnrealBuildTool;
 
-public class EventSystem : ModuleRules
+public class EventSystemEditor : ModuleRules
 {
-	public EventSystem(ReadOnlyTargetRules Target) : base(Target)
+	public EventSystemEditor(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
-                "EventSystem/Public"
 				// ... add public include paths required here ...
 			}
             );
@@ -18,7 +17,8 @@ public class EventSystem : ModuleRules
 		
 		PrivateIncludePaths.AddRange(
 			new string[] {
-                "EventSystem/Private"
+                "EventSystemEditor/Private",
+                "EventSystemEditor/Private/Factories"
 				// ... add other private include paths required here ...
 			}
             );
@@ -27,7 +27,7 @@ public class EventSystem : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core",
+                //"AssetTools",
                 "UnrealEd",
 				// ... add other public dependencies that you statically link with here ...
 			}
@@ -37,10 +37,17 @@ public class EventSystem : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"CoreUObject",
-				"Engine",
-				"Slate",
-				"SlateCore",
+                "ContentBrowser",
+                "Core",
+                "CoreUObject",
+                "DesktopWidgets",
+                "EditorStyle",
+                "Engine",
+                "InputCore",
+                "Projects",
+                "Slate",
+                "SlateCore",
+                "EventSystem",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
@@ -49,6 +56,9 @@ public class EventSystem : ModuleRules
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{
+                //"AssetTools",
+                "MainFrame",
+
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);
