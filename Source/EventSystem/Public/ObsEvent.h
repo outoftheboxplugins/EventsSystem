@@ -46,6 +46,7 @@ public:
 	// Unregister the listener from the event.
 	void UnRegisterListener(UObsListener* listener);
 	
+	FString Text;
 protected:
 	// Listeners registered.
 	TArray<UObsListener*> listeners;

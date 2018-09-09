@@ -18,7 +18,8 @@ public class EventSystemEditor : ModuleRules
 		PrivateIncludePaths.AddRange(
 			new string[] {
                 "EventSystemEditor/Private",
-                "EventSystemEditor/Private/Factories"
+                "EventSystemEditor/Private/Factories",
+                "EventSystemEditor/Private/AssetTools"
 				// ... add other private include paths required here ...
 			}
             );
@@ -27,7 +28,6 @@ public class EventSystemEditor : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-                //"AssetTools",
                 "UnrealEd",
 				// ... add other public dependencies that you statically link with here ...
 			}
@@ -56,9 +56,7 @@ public class EventSystemEditor : ModuleRules
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{
-                //"AssetTools",
                 "MainFrame",
-
 				// ... add any modules that your module loads dynamically here ...
 			}
 			);

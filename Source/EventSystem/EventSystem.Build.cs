@@ -10,7 +10,6 @@ public class EventSystem : ModuleRules
 		
 		PublicIncludePaths.AddRange(
 			new string[] {
-                "EventSystem/Public"
 				// ... add public include paths required here ...
 			}
             );
