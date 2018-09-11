@@ -73,7 +73,7 @@ uint32 FObsAssetActions::GetCategories()
 
 FText FObsAssetActions::GetName() const
 {
-	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_TextAsset", "Text Asset");
+	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_ObsEvent", "Obs Event");
 }
 
 

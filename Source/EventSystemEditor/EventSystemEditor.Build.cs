@@ -28,7 +28,6 @@ public class EventSystemEditor : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-                "UnrealEd",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -48,14 +47,17 @@ public class EventSystemEditor : ModuleRules
                 "Slate",
                 "SlateCore",
                 "EventSystem",
+                "UnrealEd",
+
 				// ... add private dependencies that you statically link with here ...	
 			}
-			);
+            );
 		
 		
 		DynamicallyLoadedModuleNames.AddRange(
 			new string[]
 			{
+                "AssetTools",
                 "MainFrame",
 				// ... add any modules that your module loads dynamically here ...
 			}
