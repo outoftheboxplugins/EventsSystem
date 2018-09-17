@@ -9,9 +9,9 @@ class ISlateStyle;
 
 
 /**
- * Implements an action for UTextAsset assets.
+ * Implements an action for UObsEvent assets.
  */
-class FObsAssetActions
+class FObsEventActions
 	: public FAssetTypeActions_Base
 {
 public:
@@ -21,7 +21,7 @@ public:
 	 *
 	 * @param InStyle The style set to use for asset editor toolkits.
 	 */
-	FObsAssetActions(const TSharedRef<ISlateStyle>& InStyle);
+	FObsEventActions(const TSharedRef<ISlateStyle>& InStyle);
 
 public:
 
@@ -34,6 +34,7 @@ public:
 	virtual UClass* GetSupportedClass() const override;
 	virtual FColor GetTypeColor() const override;
 	virtual bool HasActions(const TArray<UObject*>& InObjects) const override;
+	virtual void OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor = TSharedPtr<IToolkitHost>()) override;
 
 private:
 
