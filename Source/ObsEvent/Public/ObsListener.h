@@ -11,7 +11,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FComponentCustomStartSignature);
 class UObsEvent;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class EVENTSYSTEM_API UObsListener : public USceneComponent
+class OBSEVENT_API UObsListener : public USceneComponent
 {
 	GENERATED_BODY()
 
