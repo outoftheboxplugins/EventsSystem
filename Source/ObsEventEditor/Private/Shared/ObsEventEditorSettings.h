@@ -10,7 +10,7 @@
 
 
 UCLASS(config=Editor)
-class UObsEventEditorSettings
+class OBSEVENTEDITOR_API UObsEventEditorSettings
 	: public UObject
 {
 	GENERATED_BODY()
