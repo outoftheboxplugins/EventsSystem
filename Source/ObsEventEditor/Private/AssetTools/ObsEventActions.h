@@ -1,4 +1,4 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #pragma once
 
@@ -28,7 +28,6 @@ public:
 	//~ FAssetTypeActions_Base overrides
 
 	virtual bool CanFilter() override;
-	virtual void GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder) override;
 	virtual uint32 GetCategories() override;
 	virtual FText GetName() const override;
 	virtual UClass* GetSupportedClass() const override;

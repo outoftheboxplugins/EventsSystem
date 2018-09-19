@@ -1,4 +1,4 @@
-// Copyright 2018 pasotee. All Rights Reserved.
+// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #pragma once
 

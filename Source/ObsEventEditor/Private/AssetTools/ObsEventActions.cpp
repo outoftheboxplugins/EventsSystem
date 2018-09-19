@@ -1,4 +1,4 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #include "ObsEventActions.h"
 
@@ -26,43 +26,6 @@ FObsEventActions::FObsEventActions(const TSharedRef<ISlateStyle>& InStyle)
 bool FObsEventActions::CanFilter()
 {
 	return true;
-}
-
-
-void FObsEventActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
-{
-	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
-
-	auto ObsEvents = GetTypedWeakObjectPtrs<UObsEvent>(InObjects);
-
-	MenuBuilder.AddMenuEntry(
-		LOCTEXT("ObsEvent_ReverseText", "Reverse Text"),
-		LOCTEXT("ObsEvent_ReverseTextToolTip", "Reverse the text stored in the selected text asset(s)."),
-		FSlateIcon(),
-		FUIAction(
-			FExecuteAction::CreateLambda([=]{
-				for (auto& ObsEvent : ObsEvents)
-				{
-					if (ObsEvent.IsValid() && !ObsEvent->Text.IsEmpty())
-					{
-						ObsEvent->Text = FText::FromString(ObsEvent->Text.ToString().Reverse());
-						ObsEvent->PostEditChange();
-						ObsEvent->MarkPackageDirty();
-					}
-				}
-			}),
-			FCanExecuteAction::CreateLambda([=] {
-				for (auto& ObsEvent : ObsEvents)
-				{
-					if (ObsEvent.IsValid() && !ObsEvent->Text.IsEmpty())
-					{
-						return true;
-					}
-				}
-				return false;
-			})
-		)
-	);
 }
 
 
@@ -113,6 +76,5 @@ void FObsEventActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TShare
 		}
 	}
 }
-
 
 #undef LOCTEXT_NAMESPACE

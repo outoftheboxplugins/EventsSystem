@@ -1,4 +1,4 @@
-// Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
+// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #include "Containers/Array.h"
 #include "ISettingsModule.h"

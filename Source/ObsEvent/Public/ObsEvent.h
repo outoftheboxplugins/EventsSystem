@@ -1,4 +1,4 @@
-// Copyright 2018 pasotee. All Rights Reserved.
+// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #pragma once
 
@@ -29,9 +29,10 @@ public:
 	// Unregister the listener from the event.
 	void UnRegisterListener(UObsListener* listener);
 	
-	/** Holds the stored text. */
+	// Short description so you won't forget.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ObsEvent")
-	FText Text;
+	FText Description;
+
 protected:
 	// Listeners registered.
 	TArray<UObsListener*> listeners;

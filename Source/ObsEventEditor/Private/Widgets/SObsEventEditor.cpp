@@ -44,7 +44,7 @@ void SObsEventEditor::Construct(const FArguments& InArgs, UObsEvent* InObsEvent,
 					.Margin((Settings != nullptr) ? Settings->Margin : 4.0f)
 					.OnTextChanged(this, &SObsEventEditor::HandleEditableTextBoxTextChanged)
 					.OnTextCommitted(this, &SObsEventEditor::HandleEditableTextBoxTextCommitted)
-					.Text(ObsEvent->Text)
+					.Text(ObsEvent->Description)
 			]
 	];
 
@@ -63,7 +63,7 @@ void SObsEventEditor::HandleEditableTextBoxTextChanged(const FText& NewText)
 
 void SObsEventEditor::HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType)
 {
-	ObsEvent->Text = EditableTextBox->GetText();
+	ObsEvent->Description = EditableTextBox->GetText();
 }
 
 
@@ -71,7 +71,7 @@ void SObsEventEditor::HandleObsEventPropertyChanged(UObject* Object, FPropertyCh
 {
 	if (Object == ObsEvent)
 	{
-		EditableTextBox->SetText(ObsEvent->Text);
+		EditableTextBox->SetText(ObsEvent->Description);
 	}
 }
 
