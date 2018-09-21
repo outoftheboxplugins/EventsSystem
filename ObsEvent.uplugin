@@ -9,12 +9,13 @@
 	"CreatedBy" : "Oprea Alexandru",
 	"CreatedByURL" : "http://alexandruoprea.fragmentedpixel.com/",
 	"DocsURL" : "https://docs.google.com/document/d/1GnoW3Z2PW8XShl9mwqkGlMhT_KPgbwVvmKbJB4qoOJc/edit?usp=sharing",
-	"MarketplaceURL" : "",
+	"MarketplaceURL" : "com.epicgames.launcher://ue/marketplace/content/92c5f7f264f94069bc5d9a6981117c52",
 	"SupportURL" : "http://alexandruoprea.fragmentedpixel.com/contact/",
 	"EnabledByDefault" : true,
 	"CanContainContent" : false,
 	"IsBetaVersion" : false,
 	"Installed" : false,
+	"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ],
 	"Modules" :
 	[
 		{
