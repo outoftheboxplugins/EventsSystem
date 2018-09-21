@@ -40,7 +40,8 @@ public class ObsEventEditor : ModuleRules
 				"SlateCore",
 				"ObsEvent",
 				"UnrealEd",
-			});
+                "Projects"
+            });
 
 		PrivateIncludePathModuleNames.AddRange(
 			new string[] {

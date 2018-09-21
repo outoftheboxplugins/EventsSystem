@@ -2,6 +2,7 @@
 
 #include "ObsListener.h"
 #include "ObsEvent.h"
+#include "GameFramework/Actor.h"
 
 void UObsListener::BeginPlay()
 {
