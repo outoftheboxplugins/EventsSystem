@@ -21,14 +21,14 @@ protected:
 
 public:
 	// Event to listen to.
-	UPROPERTY(EditAnywhere, Category = "Observer Events", BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, Category = "ObsEvents", BlueprintReadWrite)
 	UObsEvent* eventToListen;
 
 	// Called when the event is called.
 	void OnEventCalled();
 
 	// Flow of action when the event is called.
-	UPROPERTY(BlueprintAssignable, Category = "Observer Events")
+	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
 	FComponentCustomStartSignature OnEventInvoked;
 
 	// Called at the end of the game.
