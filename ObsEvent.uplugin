@@ -15,18 +15,19 @@
 	"CanContainContent" : false,
 	"IsBetaVersion" : false,
 	"Installed" : false,
-	"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ],
 	"Modules" :
 	[
 		{
 			"Name" : "ObsEvent",
 			"Type" : "Runtime",
 			"LoadingPhase" : "Default"
+			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ]
 		},
 		{
 			"Name" : "ObsEventEditor",
 			"Type" : "Editor",
 			"LoadingPhase" : "Default"
+			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ]
 		}
 
 	]
