@@ -20,7 +20,7 @@ class OBSEVENT_API UObsEvent : public UObject
 	
 public:
 	// Invoke the event.
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
 	static void Invoke(UObsEvent* eventToInvoke);
 
 	// Register the listener to the event.
