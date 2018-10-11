@@ -1,7 +1,7 @@
 // Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #include "ObsEvent.h"
-#include "ObsListener.h"
+#include "ObsInterfaceListener.h"
 
 void UObsEvent::Invoke(UObsEvent* eventToInvoke)
 {
@@ -9,7 +9,7 @@ void UObsEvent::Invoke(UObsEvent* eventToInvoke)
 	eventToInvoke->CallListeners();
 }
 
-void UObsEvent::RegisterListener(UObsListener* newListener)
+void UObsEvent::RegisterListener(const IObsInterfaceListener* newListener)
 {
 	// If the listener is not already registered, add him.
 	if (listeners.Contains(newListener) == false)
@@ -18,7 +18,7 @@ void UObsEvent::RegisterListener(UObsListener* newListener)
 	}
 }
 
-void UObsEvent::UnRegisterListener(UObsListener* oldListener)
+void UObsEvent::UnRegisterListener(const IObsInterfaceListener* oldListener)
 {
 	// If the listener is now in our list, remove it.
 	if (listeners.Contains(oldListener))

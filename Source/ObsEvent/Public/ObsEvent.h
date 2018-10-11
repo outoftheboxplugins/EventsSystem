@@ -7,7 +7,7 @@
 #include "UObject/ObjectMacros.h"
 #include "ObsEvent.generated.h"
 
-class UObsListener;
+class IObsInterfaceListener;
 
 /**
  * Event holding all the listeners and delegating the call to them.
@@ -24,10 +24,10 @@ public:
 	static void Invoke(UObsEvent* eventToInvoke);
 
 	// Register the listener to the event.
-	void RegisterListener(UObsListener* listener);
+	void RegisterListener(const IObsInterfaceListener* listener);
 
 	// Unregister the listener from the event.
-	void UnRegisterListener(UObsListener* listener);
+	void UnRegisterListener(const IObsInterfaceListener* listener);
 	
 	// Short description so you won't forget.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ObsEvent")
@@ -35,7 +35,7 @@ public:
 
 protected:
 	// Listeners registered.
-	TArray<UObsListener*> listeners;
+	TArray<const IObsInterfaceListener*> listeners;
 
 	// Delegate the call to the listeners.
 	void CallListeners();
