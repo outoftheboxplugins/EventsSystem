@@ -27,9 +27,12 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
 	FOnEventCalled OnEventInvoked;
 
+protected:
+	//TODO: Find a way to move this to the constructor without loosing event reference.
 	// Called at the start of the game.
-	virtual void OnConstruction() override;
+	virtual void BeginPlay() override;
 
+public:
 	// Called at the end of the game.
 	~UObsListener();
 

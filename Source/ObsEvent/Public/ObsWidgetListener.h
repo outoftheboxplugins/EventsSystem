@@ -15,7 +15,7 @@
 class UObsEvent;
 
 UCLASS()
-class OBSEVENT_API UObsWidgetListener : public UWidget, public IObsInterfaceListener
+class OBSEVENT_API UObsWidgetListener : public UUserWidget, public IObsInterfaceListener
 {
 	GENERATED_BODY()
 
@@ -28,9 +28,11 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
 	FOnEventCalled OnEventInvoked;
 
+protected:
 	// Runs at the start of the game.
-	UObsWidgetListener();
+	virtual void NativeConstruct() override;
 
+public:
 	// Called at the end of the game.
 	~UObsWidgetListener();
 
