@@ -4,7 +4,7 @@
 #include "ObsEvent.h"
 #include "GameFramework/Actor.h"
 
-UObsWidgetListener::UObsWidgetListener()
+UObsWidgetListener::UObsWidgetListener() : Super()
 {
 	RegisterListener(eventToListen);
 }

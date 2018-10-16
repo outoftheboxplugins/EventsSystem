@@ -4,8 +4,10 @@
 #include "ObsEvent.h"
 #include "GameFramework/Actor.h"
 
-UObsListener::UObsListener()
+UObsListener::OnConstruction()
 {
+	Super::OnConstruction();
+
 	RegisterListener(eventToListen);
 }
 

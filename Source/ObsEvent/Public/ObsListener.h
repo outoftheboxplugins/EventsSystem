@@ -13,7 +13,7 @@
 
 class UObsEvent;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), hidecategories = (Object, Variable, Transform, Socket), meta=(BlueprintSpawnableComponent) )
 class OBSEVENT_API UObsListener : public USceneComponent, public IObsInterfaceListener
 {
 	GENERATED_BODY()
@@ -28,7 +28,7 @@ public:
 	FOnEventCalled OnEventInvoked;
 
 	// Called at the start of the game.
-	UObsListener();
+	virtual void OnConstruction() override;
 
 	// Called at the end of the game.
 	~UObsListener();
