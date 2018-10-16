@@ -12,7 +12,8 @@ namespace UnrealBuildTool.Rules
 				new string[] {
 					"Core",
 					"CoreUObject",
-                    "Engine"
+                    "Engine",
+                    "UMG"
 				});
 
 			PrivateIncludePaths.AddRange(
