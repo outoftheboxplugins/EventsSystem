@@ -6,7 +6,7 @@
 
 void IObsInterfaceListener::RegisterListener(UObsEvent* ObsEvent) const
 {
-	if (ObsEvent != nullptr)
+	if (IsValid(ObsEvent))
 	{
 		ObsEvent->RegisterListener(this);
 	}
@@ -18,7 +18,7 @@ void IObsInterfaceListener::RegisterListener(UObsEvent* ObsEvent) const
 
 void IObsInterfaceListener::UnregisterListener(UObsEvent* ObsEvent) const
 {
-	if (ObsEvent != nullptr)
+	if (IsValid(ObsEvent))
 	{
 		ObsEvent->UnRegisterListener(this);
 	}
