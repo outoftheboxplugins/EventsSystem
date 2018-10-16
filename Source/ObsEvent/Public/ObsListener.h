@@ -7,7 +7,9 @@
 #include "ObsInterfaceListener.h"
 #include "ObsListener.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FComponentCustomStartSignature);
+/**
+ * Component listening to event calls.
+ */
 
 class UObsEvent;
 
@@ -23,19 +25,14 @@ public:
 
 	// Flow of action when the event is called.
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
-	FComponentCustomStartSignature OnEventInvoked;
+	FOnEventCalled OnEventInvoked;
+
+	// Called at the start of the game.
+	UObsListener();
 
 	// Called at the end of the game.
 	~UObsListener();
 
+	// Called when the event is invoked.
 	void OnEventCalled() const;
-
-	//virtual void RegisterListener(UObsEvent* ObsEvent) const override
-
-	//void UnregisterListener(UObsEvent* ObsEvent) const {}
-
-protected:
-	// Runs at the start of the game.
-	void BeginPlay() override;
-
 };

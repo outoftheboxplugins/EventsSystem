@@ -4,12 +4,10 @@
 #include "ObsEvent.h"
 #include "GameFramework/Actor.h"
 
-// void UObsWidgetListener::NativeConstruct()
-// {
-// 	Super::NativeConstruct();
-// 
-// 	RegisterListener(eventToListen);
-// }
+UObsWidgetListener::UObsWidgetListener()
+{
+	RegisterListener(eventToListen);
+}
 
 UObsWidgetListener::~UObsWidgetListener()
 {
@@ -19,10 +17,5 @@ UObsWidgetListener::~UObsWidgetListener()
 void UObsWidgetListener::OnEventCalled() const
 {
 	OnEventInvoked.Broadcast();
-}
-
-UObsWidgetListener::UObsWidgetListener()
-{
-	RegisterListener(eventToListen);
 }
 

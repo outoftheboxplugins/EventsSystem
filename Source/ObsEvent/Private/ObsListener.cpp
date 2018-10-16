@@ -4,10 +4,8 @@
 #include "ObsEvent.h"
 #include "GameFramework/Actor.h"
 
-void UObsListener::BeginPlay()
+UObsListener::UObsListener()
 {
-	Super::BeginPlay();
-
 	RegisterListener(eventToListen);
 }
 

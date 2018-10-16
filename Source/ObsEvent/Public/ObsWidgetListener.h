@@ -8,9 +8,13 @@
 #include "ObsInterfaceListener.h"
 #include "ObsWidgetListener.generated.h"
 
+/**
+ * User Widget listening to event calls.
+ */
+
 class UObsEvent;
 
-UCLASS( )
+UCLASS()
 class OBSEVENT_API UObsWidgetListener : public UWidget, public IObsInterfaceListener
 {
 	GENERATED_BODY()
@@ -22,16 +26,14 @@ public:
 
 	// Flow of action when the event is called.
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
-	FComponentCustomStartSignature OnEventInvoked;
+	FOnEventCalled OnEventInvoked;
+
+	// Runs at the start of the game.
+	UObsWidgetListener();
 
 	// Called at the end of the game.
 	~UObsWidgetListener();
 
+	// Called when the event is invoked.
 	void OnEventCalled() const;
-
-public:
-	// Runs at the start of the game.
-	UObsWidgetListener();
-	//virtual void NativeConstruct() override;
-
 };

@@ -2,9 +2,10 @@
 
 #include "ObsInterfaceListener.h"
 
+//TODO: Remove uelogs.
+
 void IObsInterfaceListener::RegisterListener(UObsEvent* ObsEvent) const
 {
-	UE_LOG(LogTemp, Warning, TEXT("works"))
 	if (ObsEvent != nullptr)
 	{
 		ObsEvent->RegisterListener(this);

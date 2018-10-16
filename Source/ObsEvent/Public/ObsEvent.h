@@ -7,13 +7,14 @@
 #include "UObject/ObjectMacros.h"
 #include "ObsEvent.generated.h"
 
-class IObsInterfaceListener;
 
 /**
  * Event holding all the listeners and delegating the call to them.
  */
-UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "Events", Blueprintable)
 
+class IObsInterfaceListener;
+
+UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "Events", Blueprintable)
 class OBSEVENT_API UObsEvent : public UObject
 {
 	GENERATED_BODY()
@@ -28,6 +29,8 @@ public:
 
 	// Unregister the listener from the event.
 	void UnRegisterListener(const IObsInterfaceListener* listener);
+
+	//TODO: Unregister all function.
 	
 	// Short description so you won't forget.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ObsEvent")
