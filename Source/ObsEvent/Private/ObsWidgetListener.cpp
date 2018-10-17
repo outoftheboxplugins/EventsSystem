@@ -4,8 +4,10 @@
 #include "ObsEvent.h"
 #include "GameFramework/Actor.h"
 
-UObsWidgetListener::UObsWidgetListener() : Super()
+void UObsWidgetListener::NativeConstruct()
 {
+	Super::NativeConstruct();
+
 	RegisterListener(eventToListen);
 }
 

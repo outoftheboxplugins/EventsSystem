@@ -14,8 +14,8 @@
 
 class UObsEvent;
 
-UCLASS(BlueprintType, Blueprintable)
-class OBSEVENT_API UObsWidgetListener : public UWidget, public IObsInterfaceListener
+UCLASS(Blueprintable, BlueprintType, Category = "Custom UI Components")
+class OBSEVENT_API UObsWidgetListener : public UUserWidget, public IObsInterfaceListener
 {
 	GENERATED_BODY()
 
@@ -30,7 +30,7 @@ public:
 
 public:
 	// Called at the start of the game.
-	UObsWidgetListener();
+	virtual void NativeConstruct() override;
 
 	// Called at the end of the game.
 	~UObsWidgetListener();
