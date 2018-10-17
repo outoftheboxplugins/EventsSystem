@@ -12,7 +12,7 @@
 	"MarketplaceURL" : "com.epicgames.launcher://ue/marketplace/content/92c5f7f264f94069bc5d9a6981117c52",
 	"SupportURL" : "http://alexandruoprea.fragmentedpixel.com/contact/",
 	"EnabledByDefault" : true,
-	"CanContainContent" : false,
+	"CanContainContent" : true,
 	"IsBetaVersion" : false,
 	"Installed" : false,
 	"Modules" :
