@@ -3,6 +3,7 @@
 #pragma once
 
 #include "ObsEvent.h"
+#include "UObject/Interface.h"
 #include "ObsInterfaceListener.generated.h"
 
 /**
