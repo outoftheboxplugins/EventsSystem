@@ -8,7 +8,11 @@ void UObsWidgetListener::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	RegisterListener(eventToListen);
+	// Register listener if wanted.
+	if (bShouldRegisterOnStart)
+	{
+		RegisterListener(eventToListen);
+	}
 }
 
 UObsWidgetListener::~UObsWidgetListener()

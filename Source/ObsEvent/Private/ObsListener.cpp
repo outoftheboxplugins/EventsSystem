@@ -8,7 +8,11 @@ void UObsListener::BeginPlay()
 {
 	Super::BeginPlay();
 
-	RegisterListener(eventToListen);
+	// Register listener if wanted.
+	if (bShouldRegisterOnStart)
+	{
+		RegisterListener(eventToListen);
+	}
 }
 
 UObsListener::~UObsListener()

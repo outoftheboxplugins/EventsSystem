@@ -21,8 +21,12 @@ class OBSEVENT_API UObsWidgetListener : public UUserWidget, public IObsInterface
 
 public:
 	// Event to listen to.
-	UPROPERTY(EditAnywhere, Category = "ObsEvents", BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ObsEvents")
 	UObsEvent* eventToListen;
+
+	// Should the listener register on start?
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ObsEvents")
+	bool bShouldRegisterOnStart = true;
 
 	// Flow of action when the event is called.
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
