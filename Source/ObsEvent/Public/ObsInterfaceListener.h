@@ -14,7 +14,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEventCalled);
 
 class UObsEvent;
 
-UINTERFACE(Blueprintable)
+UINTERFACE(meta = (CannotImplementInterfaceInBlueprint))
 class UObsInterfaceListener : public UInterface
 {
 	GENERATED_BODY()
@@ -28,9 +28,11 @@ class IObsInterfaceListener
 
 public:
 	// Adds the current listener to the event's listeners
+	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
 	virtual void RegisterListener(UObsEvent* ObsEvent) const;
 
 	// Removes the current listener from the event's listeners
+	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
 	virtual void UnregisterListener(UObsEvent* ObsEvent) const;
 
 	// Callback when the event is invoked.
