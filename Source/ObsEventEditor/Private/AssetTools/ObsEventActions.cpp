@@ -52,29 +52,4 @@ FColor FObsEventActions::GetTypeColor() const
 	return FColor::Red;
 }
 
-
-bool FObsEventActions::HasActions(const TArray<UObject*>& InObjects) const
-{
-	return true;
-}
-
-
-void FObsEventActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
-{
-	EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid()
-		? EToolkitMode::WorldCentric
-		: EToolkitMode::Standalone;
-
-	for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
-	{
-		auto ObsEvent = Cast<UObsEvent>(*ObjIt);
-
-		if (ObsEvent != nullptr)
-		{
-			TSharedRef<FObsEventEditorToolkit> EditorToolkit = MakeShareable(new FObsEventEditorToolkit(Style));
-			EditorToolkit->Initialize(ObsEvent, Mode, EditWithinLevelEditor);
-		}
-	}
-}
-
 #undef LOCTEXT_NAMESPACE
