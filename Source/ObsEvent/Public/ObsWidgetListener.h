@@ -14,7 +14,7 @@
 
 class UObsEvent;
 
-UCLASS(Blueprintable, BlueprintType, Category = "Custom UI Components")
+UCLASS(Blueprintable, BlueprintType, Category = "Custom UI Components", hidecategories = ("Slot (Canvas Panel Slot)", "Appearance", "Input", "Interaction", "Behavior", "RenderTransform", "Performance", "Clipping", "Navigation") )
 class OBSEVENT_API UObsWidgetListener : public UUserWidget, public IObsInterfaceListener
 {
 	GENERATED_BODY()
