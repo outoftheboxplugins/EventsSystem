@@ -1,8 +1,8 @@
 {
 	"FileVersion" : 3,
-	"Version" : 1,
-	"VersionName" : "0.1",
-	"EngineVersion" : "4.20.0",
+	"Version" : 6,
+	"VersionName" : "1.5",
+	"EngineVersion" : "4.21.0",
 	"FriendlyName" : "Obs Event System",
 	"Description" : "Dyanmic Observer pattern event system for better arhitectures.",
 	"Category" : "Editor",

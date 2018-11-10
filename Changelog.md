@@ -1,3 +1,9 @@
+#Version 1.5#
+
+- Upgraded to version 4.21
+- Fixed bug for users crash who upgraded their version from v1.0
+
+
 #Version 1.4#
 
 - Registering and unregistering functions are now exposed to BPs.
