@@ -1,7 +1,7 @@
 {
 	"FileVersion" : 3,
-	"VersionName" : "0.0.1",
-	"EngineVersion" : "4.20.0",
+	"VersionName" : "pluginversion",
+	"EngineVersion" : "engineversion",
 	"FriendlyName" : "Obs Event System",
 	"Description" : "Dyanmic Observer pattern event system for better arhitectures.",
 	"Category" : "Editor",
