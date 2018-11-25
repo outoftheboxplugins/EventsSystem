@@ -1,3 +1,8 @@
+#Version 1.6#
+- Support for version 4.19, 4.20, 4.21
+- New function to remove all the listeners for one event.
+
+
 #Version 1.5#
 
 - Upgraded to version 4.21.
