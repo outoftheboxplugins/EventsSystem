@@ -2,8 +2,6 @@
 
 #include "ObsInterfaceListener.h"
 
-//TODO: Remove uelogs.
-
 void IObsInterfaceListener::RegisterListener(UObsEvent* ObsEvent) const
 {
 	if (IsValid(ObsEvent))

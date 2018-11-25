@@ -24,13 +24,15 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
 	static void Invoke(UObsEvent* eventToInvoke);
 
+	// Removes all the listeners from one event.
+	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
+	static void UnRegisterAllListeners(UObsEvent* eventToClear);
+
 	// Register the listener to the event.
 	void RegisterListener(const IObsInterfaceListener* listener);
 
 	// Unregister the listener from the event.
 	void UnRegisterListener(const IObsInterfaceListener* listener);
-
-	//TODO: Unregister all function.
 	
 	// Short description so you won't forget.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ObsEvent")

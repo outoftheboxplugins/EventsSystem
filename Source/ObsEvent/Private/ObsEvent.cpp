@@ -9,6 +9,15 @@ void UObsEvent::Invoke(UObsEvent* eventToInvoke)
 	eventToInvoke->CallListeners();
 }
 
+void UObsEvent::UnRegisterAllListeners(UObsEvent* eventToClear)
+{
+	// Remove each one of the listeners.
+	for (int i = eventToClear->listeners.Num() - 1; i >= 0; i--)
+	{
+		eventToClear->listeners.RemoveAt(i);
+	}
+}
+
 void UObsEvent::RegisterListener(const IObsInterfaceListener* newListener)
 {
 	// If the listener is not already registered, add him.
@@ -29,7 +38,7 @@ void UObsEvent::UnRegisterListener(const IObsInterfaceListener* oldListener)
 
 void UObsEvent::CallListeners()
 {
-	// Call each of the listeners & remove deleted ones.
+	// Call each one of the listeners & remove deleted ones.
 	for (int i = listeners.Num() - 1; i >= 0; i--)
 	{
 		if (listeners[i] == nullptr)
