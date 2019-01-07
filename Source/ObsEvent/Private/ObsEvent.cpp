@@ -21,7 +21,7 @@ void UObsEvent::UnRegisterAllListeners(UObsEvent* eventToClear)
 void UObsEvent::RegisterListener(const IObsInterfaceListener* newListener)
 {
 	// If the listener is not already registered, add him.
-	if (listeners.Contains(newListener) == false)
+	if (newListener != nullptr && listeners.Contains(newListener) == false)
 	{
 		listeners.Add(newListener);
 	}

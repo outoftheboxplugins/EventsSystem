@@ -1,3 +1,6 @@
+#Version 1.7#
+- Fixed bug for crashes on shipable race conditions.
+
 #Version 1.6#
 - Support for version 4.19, 4.20, 4.21
 - New function to remove all the listeners for one event.
