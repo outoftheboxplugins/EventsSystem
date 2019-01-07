@@ -1,7 +1,7 @@
 {
 	"FileVersion" : 3,
-	"VersionName" : "pluginversion",
-	"EngineVersion" : "engineversion",
+	"VersionName" : "versionplugin",
+	"EngineVersion" : "versionengine",
 	"FriendlyName" : "Obs Event System",
 	"Description" : "Dyanmic Observer pattern event system for better arhitectures.",
 	"Category" : "Editor",
@@ -28,6 +28,5 @@
 			"LoadingPhase" : "Default",
 			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ]
 		}
-
 	]
 }
