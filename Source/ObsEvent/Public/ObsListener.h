@@ -32,13 +32,13 @@ public:
 	FOnEventCalled OnEventInvoked;
 
 protected:
-	//TODO: Find a way to move this to the constructor without loosing event reference.
 	// Called at the start of the game.
 	virtual void BeginPlay() override;
 
+	// Called at the start of destroying.
+	virtual void BeginDestroy() override;
+
 public:
-	// Called at the end of the game.
-	~UObsListener();
 
 	// Called when the event is invoked.
 	void OnEventCalled() const;

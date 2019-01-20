@@ -15,8 +15,10 @@ void UObsListener::BeginPlay()
 	}
 }
 
-UObsListener::~UObsListener()
+void UObsListener::BeginDestroy()
 {
+	Super::BeginDestroy();
+
 	UnregisterListener(eventToListen);
 }
 
