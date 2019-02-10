@@ -22,8 +22,9 @@ void UObsListener::BeginDestroy()
 	UnregisterListener(eventToListen);
 }
 
-void UObsListener::OnEventCalled() const
+void UObsListener::OnEventCalled(AActor* instigator) const
 {
 	OnEventInvoked.Broadcast();
+	OnEventInstigatorInvoked.Broadcast(instigator);
 }
 

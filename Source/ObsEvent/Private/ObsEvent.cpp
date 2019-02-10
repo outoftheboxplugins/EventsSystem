@@ -4,22 +4,22 @@
 #include "ObsInterfaceListener.h"
 #include "GameFramework/Actor.h"
 
-void UObsEvent::Invoke(UObsEvent* eventToInvoke)
+void UObsEvent::Invoke(UObsEvent* eventToInvoke, AActor* instigator)
 {
 	// Delegate the event to all the listeners.
 	if (eventToInvoke)
 	{
-		eventToInvoke->CallListeners();
+		eventToInvoke->CallListeners(instigator);
 	}
 }
 
-void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke)
+void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, AActor* instigator)
 {
 	if (!actor) return;
 
 	if (eventToInvoke)
 	{
-		eventToInvoke->CallListenerComponents(actor);
+		eventToInvoke->CallListenerComponents(actor, instigator);
 	}
 }
 
@@ -50,7 +50,7 @@ void UObsEvent::UnRegisterListener(const IObsInterfaceListener* oldListener)
 	}
 }
 
-void UObsEvent::CallListeners()
+void UObsEvent::CallListeners(AActor* instigator)
 {
 	// Call each one of the listeners & remove deleted ones.
 	for (int i = listeners.Num() - 1; i >= 0; i--)
@@ -61,12 +61,12 @@ void UObsEvent::CallListeners()
 		}
 		else
 		{
-			listeners[i]->OnEventCalled();
+			listeners[i]->OnEventCalled(instigator);
 		}
 	}
 }
 
-void UObsEvent::CallListenerComponents(AActor* actor)
+void UObsEvent::CallListenerComponents(AActor* actor, AActor* instigator)
 {
 	TArray<UActorComponent*> components;
 	actor->GetComponents(components);
@@ -79,7 +79,7 @@ void UObsEvent::CallListenerComponents(AActor* actor)
 			IObsInterfaceListener* listenerComponent = Cast<IObsInterfaceListener>(components[i]);
 			if (listenerComponent && listeners.Contains(listenerComponent))
 			{
-				listenerComponent->OnEventCalled();
+				listenerComponent->OnEventCalled(instigator);
 			}
 		}
 	}

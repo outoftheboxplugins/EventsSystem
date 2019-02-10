@@ -4,6 +4,7 @@
 
 #include "ObsEvent.h"
 #include "UObject/Interface.h"
+#include "GameFramework/Actor.h"
 #include "ObsInterfaceListener.generated.h"
 
 /**
@@ -11,6 +12,7 @@
  */
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEventCalled);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEventInstigatorCalled, class AActor*, Instigator);
 
 class UObsEvent;
 
@@ -35,6 +37,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
 	virtual void UnregisterListener(UObsEvent* ObsEvent) const;
 
-	// Callback when the event is invoked.
-	virtual void OnEventCalled() const {}
+	// Sends the invokation to the delegate of the event.
+	virtual void OnEventCalled(AActor* instigator) const {}
 };

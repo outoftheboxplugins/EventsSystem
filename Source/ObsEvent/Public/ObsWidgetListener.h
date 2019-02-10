@@ -40,5 +40,5 @@ public:
 	~UObsWidgetListener();
 
 	// Called when the event is invoked.
-	void OnEventCalled() const;
+	virtual void OnEventCalled(AActor* instigator) const override;
 };

@@ -31,6 +31,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
 	FOnEventCalled OnEventInvoked;
 
+	// Flow if action when the event is called. (Including instigator)
+	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
+	FOnEventInstigatorCalled OnEventInstigatorInvoked;
+
 protected:
 	// Called at the start of the game.
 	virtual void BeginPlay() override;
@@ -39,7 +43,6 @@ protected:
 	virtual void BeginDestroy() override;
 
 public:
-
 	// Called when the event is invoked.
-	void OnEventCalled() const;
+	virtual void OnEventCalled(AActor* instigator) const override;
 };
