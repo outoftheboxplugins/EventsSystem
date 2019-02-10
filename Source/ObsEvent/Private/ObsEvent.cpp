@@ -2,11 +2,25 @@
 
 #include "ObsEvent.h"
 #include "ObsInterfaceListener.h"
+#include "GameFramework/Actor.h"
 
 void UObsEvent::Invoke(UObsEvent* eventToInvoke)
 {
 	// Delegate the event to all the listeners.
-	eventToInvoke->CallListeners();
+	if (eventToInvoke)
+	{
+		eventToInvoke->CallListeners();
+	}
+}
+
+void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke)
+{
+	if (!actor) return;
+
+	if (eventToInvoke)
+	{
+		eventToInvoke->CallListenerComponents(actor);
+	}
 }
 
 void UObsEvent::UnRegisterAllListeners(UObsEvent* eventToClear)
@@ -48,6 +62,25 @@ void UObsEvent::CallListeners()
 		else
 		{
 			listeners[i]->OnEventCalled();
+		}
+	}
+}
+
+void UObsEvent::CallListenerComponents(AActor* actor)
+{
+	TArray<UActorComponent*> components;
+	actor->GetComponents(components);
+
+	for (int i = 0; i < components.Num(); i++)
+	{
+		if (components[i])
+		{
+			//TODO: Allow for both calling only registered listeners or all of them.
+			IObsInterfaceListener* listenerComponent = Cast<IObsInterfaceListener>(components[i]);
+			if (listenerComponent && listeners.Contains(listenerComponent))
+			{
+				listenerComponent->OnEventCalled();
+			}
 		}
 	}
 }
