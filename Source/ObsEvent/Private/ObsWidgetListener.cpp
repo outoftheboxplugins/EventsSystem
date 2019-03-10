@@ -23,6 +23,6 @@ UObsWidgetListener::~UObsWidgetListener()
 void UObsWidgetListener::OnEventCalled(AActor* instigator) const
 {
 	OnEventInvoked.Broadcast();
-	//TODO: Add instigator callback.
+	OnEventInstigatorInvoked.Broadcast(instigator);
 }
 

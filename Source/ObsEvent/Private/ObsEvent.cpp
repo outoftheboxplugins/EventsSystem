@@ -25,6 +25,11 @@ void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, AActor* i
 
 void UObsEvent::UnRegisterAllListeners(UObsEvent* eventToClear)
 {
+	if (!eventToClear)
+	{
+		return;
+	}
+
 	// Remove each one of the listeners.
 	for (int i = eventToClear->listeners.Num() - 1; i >= 0; i--)
 	{
@@ -68,6 +73,11 @@ void UObsEvent::CallListeners(AActor* instigator)
 
 void UObsEvent::CallListenerComponents(AActor* actor, AActor* instigator)
 {
+	if (!actor)
+	{
+		return;
+	}
+
 	TArray<UActorComponent*> components;
 	actor->GetComponents(components);
 

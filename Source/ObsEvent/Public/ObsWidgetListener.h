@@ -32,6 +32,10 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
 	FOnEventCalled OnEventInvoked;
 
+	// Flow if action when the event is called. (Including instigator)
+	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
+	FOnEventInstigatorCalled OnEventInstigatorInvoked;
+
 public:
 	// Called at the start of the game.
 	virtual void NativeConstruct() override;
