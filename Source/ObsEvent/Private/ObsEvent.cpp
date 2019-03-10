@@ -37,6 +37,11 @@ void UObsEvent::UnRegisterAllListeners(UObsEvent* eventToClear)
 	}
 }
 
+void UObsEvent::DebugInvoke()
+{
+	Invoke(this, nullptr);
+}
+
 void UObsEvent::RegisterListener(const IObsInterfaceListener* newListener)
 {
 	// If the listener is not already registered, add him.

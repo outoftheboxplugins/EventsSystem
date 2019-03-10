@@ -29,6 +29,40 @@ bool FObsEventActions::CanFilter()
 }
 
 
+void FObsEventActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
+{
+	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
+
+	auto ObsEvents = GetTypedWeakObjectPtrs<UObsEvent>(InObjects);
+
+	MenuBuilder.AddMenuEntry(
+		LOCTEXT("ObsEvent_InvokeEvent", "Debug Invoke Event"),
+		LOCTEXT("ObsEvent_InvokeEventToolTip", "Simulate an invoke event for this event."),
+		FSlateIcon(),
+		FUIAction(
+			FExecuteAction::CreateLambda([=] {
+		for (auto& Obsevent : ObsEvents)
+		{
+			if (Obsevent.IsValid())
+			{
+				Obsevent->DebugInvoke();
+			}
+		}
+	}),
+			FCanExecuteAction::CreateLambda([=] {
+		for (auto& Obsevent : ObsEvents)
+		{
+			if (Obsevent.IsValid())
+			{
+				return true;
+			}
+		}
+		return false;
+	})
+		)
+	);
+}
+
 uint32 FObsEventActions::GetCategories()
 {
 	return EAssetTypeCategories::Blueprint;
@@ -50,6 +84,29 @@ UClass* FObsEventActions::GetSupportedClass() const
 FColor FObsEventActions::GetTypeColor() const
 {
 	return FColor::Red;
+}
+
+bool FObsEventActions::HasActions(const TArray<UObject *>& InObjects) const
+{
+	return true;
+}
+
+void FObsEventActions::OpenAssetEditor(const TArray<UObject *>& InObjects, TSharedPtr<class IToolkitHost> EditWithinLevelEditor /* = TSharedPtr<IToolkitHost>() */)
+{
+	EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid()
+		? EToolkitMode::WorldCentric
+		: EToolkitMode::Standalone;
+
+	for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
+	{
+		auto ObsEvent = Cast<UObsEvent>(*ObjIt);
+
+		if (ObsEvent != nullptr)
+		{
+			TSharedRef<FObsEventEditorToolkit> EditorToolkit = MakeShareable(new FObsEventEditorToolkit(Style));
+			EditorToolkit->Initialize(ObsEvent, Mode, EditWithinLevelEditor);
+		}
+	}
 }
 
 #undef LOCTEXT_NAMESPACE

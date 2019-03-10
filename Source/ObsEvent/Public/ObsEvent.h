@@ -33,6 +33,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
 	static void UnRegisterAllListeners(UObsEvent* eventToClear);
 
+	// Invokes the event for debug purposes.
+	void DebugInvoke();
+
 	// Register the listener to the event.
 	void RegisterListener(const IObsInterfaceListener* listener);
 
