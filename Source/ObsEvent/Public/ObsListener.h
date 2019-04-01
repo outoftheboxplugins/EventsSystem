@@ -34,6 +34,10 @@ public:
 	// Flow if action when the event is called. (Including instigator)
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
 	FOnEventInstigatorCalled OnEventInstigatorInvoked;
+	
+	// Flow if action when the event is called. (Including payload)
+	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
+	FOnEventPayLoadCalled OnEventPayLoadCalled;
 
 protected:
 	// Called at the start of the game.
@@ -44,5 +48,5 @@ protected:
 
 public:
 	// Called when the event is invoked.
-	virtual void OnEventCalled(AActor* instigator) const override;
+	virtual void OnEventCalled(AActor* instigator, UObsPayload* payload) const override;
 };

@@ -13,6 +13,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEventCalled);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEventInstigatorCalled, class AActor*, Instigator);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEventPayLoadCalled, class UObsPayload*, Payload);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParam(FOnEventDetailedCalled, class AActor*, Instigator, class UObsPayload*, Payload);
 
 class UObsEvent;
 
@@ -38,5 +40,5 @@ public:
 	virtual void UnregisterListener(UObsEvent* ObsEvent) const;
 
 	// Sends the invokation to the delegate of the event.
-	virtual void OnEventCalled(AActor* instigator) const {}
+	virtual void OnEventCalled(AActor* instigator, UObsPayload* payload) const {}
 };

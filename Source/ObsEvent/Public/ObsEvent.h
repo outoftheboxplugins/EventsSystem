@@ -14,6 +14,7 @@
 
 class IObsInterfaceListener;
 class AActor;
+class UObsPayload;
 
 UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "Events", Blueprintable)
 class OBSEVENT_API UObsEvent : public UObject
@@ -23,11 +24,11 @@ class OBSEVENT_API UObsEvent : public UObject
 public:
 	// Invoke the event.
 	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
-	static void Invoke(UObsEvent* eventToInvoke, AActor* instigator);
+	static void Invoke(UObsEvent* eventToInvoke, AActor* instigator, UObsPayload* payload);
 
 	// Invoke the event on a single actor.
 	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
-	static void InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, AActor* instigator);
+	static void InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, AActor* instigator, UObsPayload* payload);
 
 	// Removes all the listeners from one event.
 	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
@@ -51,7 +52,7 @@ protected:
 	TArray<const IObsInterfaceListener*> listeners;
 
 	// Delegate the call to the listeners.
-	void CallListeners(AActor* instigator);
+	void CallListeners(AActor* instigator, UObsPayload* payload);
 
-	void CallListenerComponents(AActor* actor, AActor* instigator);
+	void CallListenerComponents(AActor* actor, AActor* instigator, UObsPayload* payload);
 };

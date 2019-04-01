@@ -22,9 +22,10 @@ void UObsListener::BeginDestroy()
 	UnregisterListener(eventToListen);
 }
 
-void UObsListener::OnEventCalled(AActor* instigator) const
+void UObsListener::OnEventCalled(AActor* instigator, UObsPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
 	OnEventInstigatorInvoked.Broadcast(instigator);
+	OnEventPayLoadCalled.Broadcast(payload);
 }
 
