@@ -13,7 +13,7 @@
 
 class UObsEvent;
 
-UCLASS( ClassGroup=(Custom), hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering"), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), BlueprintType, Blueprintable, hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering"), meta=(BlueprintSpawnableComponent) )
 class OBSEVENT_API UObsListener : public USceneComponent, public IObsInterfaceListener
 {
 	GENERATED_BODY()
