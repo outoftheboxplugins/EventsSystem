@@ -4,7 +4,7 @@
 #include "K2Node.h"
 #include "K2Node_ConstructObsPayload.generated.h"
 
-UCLASS(abstract)
+UCLASS()
 class UK2Node_ConstructObsPayload : public UK2Node
 {
 	GENERATED_BODY()
