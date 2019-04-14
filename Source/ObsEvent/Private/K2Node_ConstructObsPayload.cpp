@@ -101,6 +101,38 @@ void UK2Node_ConstructObsPayload::ReallocatePinsDuringReconstruction(TArray<UEdG
 	RestoreSplitPins(OldPins);
 }
 
+void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
+{
+	Super::ExpandNode(CompilerContext, SourceGraph);
+
+	UK2Node_CallFunction* CallCreateNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
+	CallCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UObsEvent, Invoke), UObsEvent::StaticClass());
+	//CallCreateNode->SetFromFunction(BlueprintFunction);
+	CallCreateNode->AllocateDefaultPins();
+	CompilerContext.MessageLog.NotifyIntermediateObjectCreation(CallCreateNode, this);
+	
+	// store off the class to spawn before we mutate pin connections:
+	UClass* ClassToSpawn = GetClassToSpawn();
+
+	//Input
+	CompilerContext.MovePinLinksToIntermediate(*FindPin(FGetPinName::GetEventTextPin()), *CallCreateNode->FindPin(TEXT("eventToInvoke")));
+
+	//Output
+	//CompilerContext.MovePinLinksToIntermediate(*FindPin(UEdGraphSchema_K2::PN_ReturnValue), *CallCreateNode->GetReturnValuePin());
+
+	//Exec pins
+	UEdGraphPin* NodeExec = GetExecPin();
+	UEdGraphPin* NodeThen = FindPin(UEdGraphSchema_K2::PN_Then);
+
+	UEdGraphPin* InternalExec = CallCreateNode->GetExecPin();
+	CompilerContext.MovePinLinksToIntermediate(*NodeExec, *InternalExec);
+
+	UEdGraphPin* InternalThen = CallCreateNode->GetThenPin();
+	CompilerContext.MovePinLinksToIntermediate(*NodeThen, *InternalThen);
+
+	BreakAllNodeLinks();
+}
+
 //This method adds our node to the context menu
 void UK2Node_ConstructObsPayload::GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const
 {
@@ -217,6 +249,13 @@ UEdGraphPin* UK2Node_ConstructObsPayload::GetResultPin() const
 {
 	UEdGraphPin* Pin = FindPinChecked(UEdGraphSchema_K2::PN_ReturnValue);
 	check(Pin->Direction == EGPD_Output);
+	return Pin;
+}
+
+UEdGraphPin* UK2Node_ConstructObsPayload::GetThenPin() const
+{
+	UEdGraphPin* Pin = FindPin(UEdGraphSchema_K2::PN_Then);
+	check(Pin == nullptr || Pin->Direction == EGPD_Output); // If pin exists, it must be output
 	return Pin;
 }
 

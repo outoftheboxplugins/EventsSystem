@@ -22,7 +22,7 @@ public:
 	//K2Node implementation
 	virtual FText GetMenuCategory() const override;
 	virtual void ReallocatePinsDuringReconstruction(TArray<UEdGraphPin*>& OldPins) override;
-	//virtual void ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
+	virtual void ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
 	virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
 	//K2Node implementation
 
@@ -39,6 +39,8 @@ public:
 	UEdGraphPin* GetClassPin(const TArray<UEdGraphPin*>* InPinsToSearch = NULL) const;
 	/** Get the result output pin */
 	UEdGraphPin* GetResultPin() const;
+	/** Get the then output pin */
+	UEdGraphPin* GetThenPin() const;
 
 	/** See if this is a spawn variable pin, or a 'default' pin */
 	virtual bool IsSpawnVarPin(UEdGraphPin* Pin) const;
