@@ -5,8 +5,10 @@
 #include "BlueprintNodeSpawner.h"
 #include "K2Node_CallFunction.h"
 #include "ObsPayload.h"
-#include "BlueprintEditorUtils.h"
+#include "Kismet2/BlueprintEditorUtils.h"
 #include "ObsEvent.h"
+#include "AssertionMacros.h"
+#include "Kismet/GameplayStatics.h"
 
 #define LOCTEXT_NAMESPACE "K2Node_Tutorial"
 
@@ -106,31 +108,108 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 	Super::ExpandNode(CompilerContext, SourceGraph);
 
 	UK2Node_CallFunction* CallCreateNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
-	CallCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UObsEvent, Invoke), UObsEvent::StaticClass());
-	//CallCreateNode->SetFromFunction(BlueprintFunction);
+	CallCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGameplayStatics, SpawnObject), UGameplayStatics::StaticClass());
 	CallCreateNode->AllocateDefaultPins();
-	CompilerContext.MessageLog.NotifyIntermediateObjectCreation(CallCreateNode, this);
-	
+
 	// store off the class to spawn before we mutate pin connections:
 	UClass* ClassToSpawn = GetClassToSpawn();
 
-	//Input
-	CompilerContext.MovePinLinksToIntermediate(*FindPin(FGetPinName::GetEventTextPin()), *CallCreateNode->FindPin(TEXT("eventToInvoke")));
+	bool bSucceeded = true;
+	//connect exe
+	{
+		UEdGraphPin* SpawnExecPin = GetExecPin();
+		UEdGraphPin* CallExecPin = CallCreateNode->GetExecPin();
+		bSucceeded &= SpawnExecPin && CallExecPin && CompilerContext.MovePinLinksToIntermediate(*SpawnExecPin, *CallExecPin).CanSafeConnect();
+	}
 
-	//Output
-	//CompilerContext.MovePinLinksToIntermediate(*FindPin(UEdGraphSchema_K2::PN_ReturnValue), *CallCreateNode->GetReturnValuePin());
+	//connect class
+	{
+		UEdGraphPin* SpawnClassPin = GetClassPin();
+		UEdGraphPin* CallClassPin = CallCreateNode->FindPin(TEXT("ObjectClass"));
+		bSucceeded &= SpawnClassPin && CallClassPin && CompilerContext.MovePinLinksToIntermediate(*SpawnClassPin, *CallClassPin).CanSafeConnect();
+	}
 
-	//Exec pins
-	UEdGraphPin* NodeExec = GetExecPin();
-	UEdGraphPin* NodeThen = FindPin(UEdGraphSchema_K2::PN_Then);
+	//connect outer
+	{
+		UEdGraphPin* SpawnOuterPin = GetEventPin();
+		UEdGraphPin* CallOuterPin = CallCreateNode->FindPin(TEXT("Outer"));
+		bSucceeded &= SpawnOuterPin && CallOuterPin && CompilerContext.MovePinLinksToIntermediate(*SpawnOuterPin, *CallOuterPin).CanSafeConnect();
+	}
 
-	UEdGraphPin* InternalExec = CallCreateNode->GetExecPin();
-	CompilerContext.MovePinLinksToIntermediate(*NodeExec, *InternalExec);
+	UEdGraphPin* CallResultPin = nullptr;
+	//connect result
+	{
+		UEdGraphPin* SpawnResultPin = GetResultPin();
+		CallResultPin = CallCreateNode->GetReturnValuePin();
 
-	UEdGraphPin* InternalThen = CallCreateNode->GetThenPin();
-	CompilerContext.MovePinLinksToIntermediate(*NodeThen, *InternalThen);
+		// cast HACK. It should be safe. The only problem is native code generation.
+		if (SpawnResultPin && CallResultPin)
+		{
+			CallResultPin->PinType = SpawnResultPin->PinType;
+		}
+		bSucceeded &= SpawnResultPin && CallResultPin && CompilerContext.MovePinLinksToIntermediate(*SpawnResultPin, *CallResultPin).CanSafeConnect();
+	}
+
+	UEdGraphPin* LastThenCreate = nullptr;
+	//assign exposed values and connect then
+	{
+		LastThenCreate = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallCreateNode, this, CallResultPin, ClassToSpawn);
+		UEdGraphPin* SpawnNodeThen = GetThenPin();
+		bSucceeded &= SpawnNodeThen && LastThenCreate && CompilerContext.MovePinLinksToIntermediate(*SpawnNodeThen, *LastThenCreate).CanSafeConnect();
+	}
+
+	// Calling the invoke node from ObsEvent
+
+	UK2Node_CallFunction* CallInvokeNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
+	CallInvokeNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UObsEvent, Invoke), UObsEvent::StaticClass());
+	CallInvokeNode->AllocateDefaultPins();
+
+	//connect exe
+	{
+		UEdGraphPin* SpawnExecPin = CallCreateNode->GetExecPin();
+		UEdGraphPin* CallExecPin = CallInvokeNode->GetExecPin();
+		bSucceeded &= SpawnExecPin && CallExecPin && CompilerContext.MovePinLinksToIntermediate(*SpawnExecPin, *CallExecPin).CanSafeConnect();
+	}
+
+	//connect class
+	//{
+	//	UEdGraphPin* SpawnClassPin = GetClassPin();
+	//	UEdGraphPin* CallClassPin = CallInvokeNode->FindPin(TEXT("payload"));
+	//	bSucceeded &= SpawnClassPin && CallClassPin && CompilerContext.MovePinLinksToIntermediate(*SpawnClassPin, *CallClassPin).CanSafeConnect();
+	//}
+
+	//connect event to invoke
+	{
+		UEdGraphPin* SpawnOuterPin = GetEventPin();
+		UEdGraphPin* CallOuterPin = CallInvokeNode->FindPin(TEXT("eventToInvoke"));
+		bSucceeded &= SpawnOuterPin && CallOuterPin && CompilerContext.MovePinLinksToIntermediate(*SpawnOuterPin, *CallOuterPin).CanSafeConnect();
+	}
+
+	//connect result
+	{
+		UEdGraphPin* SpawnResultPin = CallInvokeNode->FindPin(TEXT("payload"));
+
+		// cast HACK. It should be safe. The only problem is native code generation.
+		if (SpawnResultPin && CallResultPin)
+		{
+			CallResultPin->PinType = SpawnResultPin->PinType;
+		}
+		bSucceeded &= SpawnResultPin && CallResultPin && CompilerContext.MovePinLinksToIntermediate(*SpawnResultPin, *CallResultPin).CanSafeConnect();
+	}
+
+	//assign exposed values and connect then
+	{
+		UEdGraphPin* LastThen = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallInvokeNode, this, CallResultPin, ClassToSpawn);
+		UEdGraphPin* SpawnNodeThen = LastThenCreate;
+		bSucceeded &= SpawnNodeThen && LastThen && CompilerContext.MovePinLinksToIntermediate(*SpawnNodeThen, *LastThen).CanSafeConnect();
+	}
 
 	BreakAllNodeLinks();
+
+	if (!bSucceeded)
+	{
+		CompilerContext.MessageLog.Error(*LOCTEXT("GenericCreateObject_Error", "ICE: GenericCreateObject error @@").ToString(), this);
+	}
 }
 
 //This method adds our node to the context menu
@@ -236,6 +315,23 @@ UEdGraphPin* UK2Node_ConstructObsPayload::GetClassPin(const TArray<UEdGraphPin*>
 	for (UEdGraphPin* TestPin : *PinsToSearch)
 	{
 		if (TestPin && TestPin->PinName == FGetPinName::GetPayloadClassTextPin())
+		{
+			Pin = TestPin;
+			break;
+		}
+	}
+	check(Pin == nullptr || Pin->Direction == EGPD_Input);
+	return Pin;
+}
+
+UEdGraphPin* UK2Node_ConstructObsPayload::GetEventPin(const TArray<UEdGraphPin*>* InPinsToSearch /*= NULL*/) const
+{
+	const TArray<UEdGraphPin*>* PinsToSearch = InPinsToSearch ? InPinsToSearch : &Pins;
+
+	UEdGraphPin* Pin = nullptr;
+	for (UEdGraphPin* TestPin : *PinsToSearch)
+	{
+		if (TestPin && TestPin->PinName == FGetPinName::GetEventTextPin())
 		{
 			Pin = TestPin;
 			break;

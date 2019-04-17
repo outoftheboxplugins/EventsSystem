@@ -37,6 +37,9 @@ public:
 
 	/** Get the blueprint input pin */
 	UEdGraphPin* GetClassPin(const TArray<UEdGraphPin*>* InPinsToSearch = NULL) const;
+	/** Get the event input pin */
+	UEdGraphPin* GetEventPin(const TArray<UEdGraphPin*>* InPinsToSearch = NULL) const;
+	
 	/** Get the result output pin */
 	UEdGraphPin* GetResultPin() const;
 	/** Get the then output pin */
