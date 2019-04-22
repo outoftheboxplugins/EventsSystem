@@ -7,7 +7,7 @@
 #include "ObsPayload.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 #include "ObsEvent.h"
-#include "AssertionMacros.h"
+#include "Misc/AssertionMacros.h"
 #include "Kismet/GameplayStatics.h"
 
 #define LOCTEXT_NAMESPACE "K2Node_Tutorial"
@@ -131,9 +131,9 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 
 	//connect outer
 	{
-		UEdGraphPin* SpawnOuterPin = GetEventPin();
+		UEdGraphPin* InputEventPin = GetEventPin();
 		UEdGraphPin* CallOuterPin = CallCreateNode->FindPin(TEXT("Outer"));
-		bSucceeded &= SpawnOuterPin && CallOuterPin && CompilerContext.MovePinLinksToIntermediate(*SpawnOuterPin, *CallOuterPin).CanSafeConnect();
+		bSucceeded &= InputEventPin && CallOuterPin && CompilerContext.MovePinLinksToIntermediate(*InputEventPin, *CallOuterPin).CanSafeConnect();
 	}
 
 	UEdGraphPin* CallResultPin = nullptr;
@@ -150,58 +150,31 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 		bSucceeded &= SpawnResultPin && CallResultPin && CompilerContext.MovePinLinksToIntermediate(*SpawnResultPin, *CallResultPin).CanSafeConnect();
 	}
 
-	UEdGraphPin* LastThenCreate = nullptr;
-	//assign exposed values and connect then
-	{
-		LastThenCreate = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallCreateNode, this, CallResultPin, ClassToSpawn);
-		UEdGraphPin* SpawnNodeThen = GetThenPin();
-		bSucceeded &= SpawnNodeThen && LastThenCreate && CompilerContext.MovePinLinksToIntermediate(*SpawnNodeThen, *LastThenCreate).CanSafeConnect();
-	}
-
-	// Calling the invoke node from ObsEvent
-
+	/* Invoking the event */
 	UK2Node_CallFunction* CallInvokeNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
 	CallInvokeNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UObsEvent, Invoke), UObsEvent::StaticClass());
 	CallInvokeNode->AllocateDefaultPins();
 
-	//connect exe
-	{
-		UEdGraphPin* SpawnExecPin = CallCreateNode->GetExecPin();
-		UEdGraphPin* CallExecPin = CallInvokeNode->GetExecPin();
-		bSucceeded &= SpawnExecPin && CallExecPin && CompilerContext.MovePinLinksToIntermediate(*SpawnExecPin, *CallExecPin).CanSafeConnect();
-	}
-
-	//connect class
-	//{
-	//	UEdGraphPin* SpawnClassPin = GetClassPin();
-	//	UEdGraphPin* CallClassPin = CallInvokeNode->FindPin(TEXT("payload"));
-	//	bSucceeded &= SpawnClassPin && CallClassPin && CompilerContext.MovePinLinksToIntermediate(*SpawnClassPin, *CallClassPin).CanSafeConnect();
-	//}
-
-	//connect event to invoke
-	{
-		UEdGraphPin* SpawnOuterPin = GetEventPin();
-		UEdGraphPin* CallOuterPin = CallInvokeNode->FindPin(TEXT("eventToInvoke"));
-		bSucceeded &= SpawnOuterPin && CallOuterPin && CompilerContext.MovePinLinksToIntermediate(*SpawnOuterPin, *CallOuterPin).CanSafeConnect();
-	}
-
-	//connect result
-	{
-		UEdGraphPin* SpawnResultPin = CallInvokeNode->FindPin(TEXT("payload"));
-
-		// cast HACK. It should be safe. The only problem is native code generation.
-		if (SpawnResultPin && CallResultPin)
-		{
-			CallResultPin->PinType = SpawnResultPin->PinType;
-		}
-		bSucceeded &= SpawnResultPin && CallResultPin && CompilerContext.MovePinLinksToIntermediate(*SpawnResultPin, *CallResultPin).CanSafeConnect();
-	}
-
+	UEdGraphPin* LastCreateThen = nullptr;
 	//assign exposed values and connect then
 	{
-		UEdGraphPin* LastThen = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallInvokeNode, this, CallResultPin, ClassToSpawn);
-		UEdGraphPin* SpawnNodeThen = LastThenCreate;
-		bSucceeded &= SpawnNodeThen && LastThen && CompilerContext.MovePinLinksToIntermediate(*SpawnNodeThen, *LastThen).CanSafeConnect();
+		LastCreateThen = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallCreateNode, this, CallResultPin, ClassToSpawn);
+		UEdGraphPin* InvokeThen = CallInvokeNode->GetThenPin();
+		bSucceeded &= InvokeThen && LastCreateThen && CompilerContext.MovePinLinksToIntermediate(*InvokeThen, *LastCreateThen).CanSafeConnect();
+	}
+
+	//connect event
+	{
+		UEdGraphPin* InputEventPin = GetEventPin();
+		UEdGraphPin* EventToInvokePin = CallInvokeNode->FindPin(TEXT("eventToInvoke"));
+		bSucceeded &= InputEventPin && EventToInvokePin && CompilerContext.MovePinLinksToIntermediate(*InputEventPin, *EventToInvokePin).CanSafeConnect();
+	}
+
+	// connect then
+	{
+		UEdGraphPin* SpawnNodeThen = GetThenPin();
+		UEdGraphPin* InvokeThen = CallInvokeNode->GetThenPin();
+		bSucceeded &= SpawnNodeThen && InvokeThen && CompilerContext.MovePinLinksToIntermediate(*SpawnNodeThen, *InvokeThen).CanSafeConnect();
 	}
 
 	BreakAllNodeLinks();
@@ -410,10 +383,9 @@ void UK2Node_ConstructObsPayload::CreatePinsForClass(UClass* InClass, TArray<UEd
 		}
 	}
 
-	//TODO: Review this.
 	// Change class of output pin
-	//UEdGraphPin* ResultPin = GetResultPin();
-	//ResultPin->PinType.PinSubCategoryObject = InClass->GetAuthoritativeClass();
+	UEdGraphPin* ResultPin = GetResultPin();
+	ResultPin->PinType.PinSubCategoryObject = InClass->GetAuthoritativeClass();
 }
 
 #undef LOCTEXT_NAMESPACE

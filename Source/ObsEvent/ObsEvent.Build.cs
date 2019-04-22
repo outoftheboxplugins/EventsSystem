@@ -20,13 +20,6 @@ namespace UnrealBuildTool.Rules
             }
         );
 
-            PrivateIncludePaths.AddRange(
-            new string[] {
-                "Editor/BlueprintGraph/Private",
-                "Editor/KismetCompiler/Public",
-            }
-        );
-
             PrivateDependencyModuleNames.AddRange(
             new string[] {
                 "EditorStyle",
@@ -37,23 +30,6 @@ namespace UnrealBuildTool.Rules
                 "Kismet",
                 "KismetWidgets",
                 "PropertyEditor",
-            }
-        );
-
-            CircularlyReferencedDependentModules.AddRange(
-                new string[] {
-                "KismetCompiler",
-                "UnrealEd",
-                "GraphEditor",
-                "Kismet",
-                }
-            );
-
-            PrivateIncludePaths.AddRange(
-            new string[] {
-                "Editor/GraphEditor/Private",
-                "Editor/Kismet/Private",
-                "Editor/AIGraph/Private",
             }
         );
 
