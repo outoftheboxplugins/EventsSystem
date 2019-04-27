@@ -1,53 +1,30 @@
 #pragma once
+#include "K2Node_ConstructObjectFromClass.h"
 
 #include "CoreMinimal.h"
-#include "K2Node.h"
 #include "K2Node_ConstructObsPayload.generated.h"
 
 UCLASS()
-class UK2Node_ConstructObsPayload : public UK2Node
+class UK2Node_ConstructObsPayload : public UK2Node_ConstructObjectFromClass
 {
-	GENERATED_BODY()
+	GENERATED_UCLASS_BODY()
 public:
-
-	//UEdGraphNode implementation
+	//~ Begin UEdGraphNode Interface.
 	virtual void AllocateDefaultPins() override;
-	virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
-	virtual FText GetTooltipText() const override;
-	virtual void GetPinHoverText(const UEdGraphPin& Pin, FString& HoverTextOut) const override;
-	virtual void PinDefaultValueChanged(UEdGraphPin* Pin) override;
-	virtual void PinConnectionListChanged(UEdGraphPin* Pin) override;
-	//UEdGraphNode implementation
-
-	//K2Node implementation
-	virtual FText GetMenuCategory() const override;
-	virtual void ReallocatePinsDuringReconstruction(TArray<UEdGraphPin*>& OldPins) override;
 	virtual void ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
-	virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
-	//K2Node implementation
+	//~ End UEdGraphNode Interface.
 
-	/** Format the pin tool tip text */
-	void SetPinToolTip(UEdGraphPin& MutatablePin, const FText& PinDescription) const;
+	//~ Begin UK2Node Interface
+	virtual FText GetMenuCategory() const override;
+	//~ End UK2Node Interface.
 
-	/** Refresh pins when class was changed */
-	void OnClassPinChanged();
+	virtual bool UseOuter() const override { return true; }
 
-	/** Get the class that we are going to spawn, if it's defined as default value */
-	UClass* GetClassToSpawn(const TArray<UEdGraphPin*>* InPinsToSearch = NULL) const;
-
-	/** Get the blueprint input pin */
-	UEdGraphPin* GetClassPin(const TArray<UEdGraphPin*>* InPinsToSearch = NULL) const;
-	/** Get the event input pin */
-	UEdGraphPin* GetEventPin(const TArray<UEdGraphPin*>* InPinsToSearch = NULL) const;
-	
-	/** Get the result output pin */
-	UEdGraphPin* GetResultPin() const;
-	/** Get the then output pin */
-	UEdGraphPin* GetThenPin() const;
-
-	/** See if this is a spawn variable pin, or a 'default' pin */
-	virtual bool IsSpawnVarPin(UEdGraphPin* Pin) const;
-
-	/** Create new pins to show properties on archetype */
-	void CreatePinsForClass(UClass* InClass, TArray<UEdGraphPin*>* OutClassPins = nullptr);
+protected:
+	/** Gets the default node title when no class is selected */
+	virtual FText GetBaseNodeTitle() const override;
+	/** Gets the node title when a class has been selected. */
+	virtual FText GetNodeTitleFormat() const override;
+	/** Gets base class to use for the 'class' pin.  UObject by default. */
+	virtual UClass* GetClassPinBaseClass() const override;
 };
