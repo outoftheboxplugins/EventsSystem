@@ -1,4 +1,4 @@
-#include "K2Node_ConstructObsPayload.h"
+#include "Nodes/K2Node_ConstructObsPayload.h"
 
 #include "KismetCompiler.h"
 #include "BlueprintActionDatabaseRegistrar.h"
@@ -13,11 +13,11 @@
 
 #define LOCTEXT_NAMESPACE "K2Node_ConstructObsPayload"
 
-UK2Node_ConstructObsPayload::UK2Node_ConstructObsPayload(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-	NodeTooltip = LOCTEXT("ConstructObsPayloadNodeTooltip", "Create a new payload for an event.");
-}
+//UK2Node_ConstructObsPayload::UK2Node_ConstructObsPayload(const FObjectInitializer& ObjectInitializer)
+//	: Super(ObjectInitializer)
+//{
+//	NodeTooltip = LOCTEXT("ConstructObsPayloadNodeTooltip", "Create a new payload for an event.");
+//}
 
 FText UK2Node_ConstructObsPayload::GetBaseNodeTitle() const
 {

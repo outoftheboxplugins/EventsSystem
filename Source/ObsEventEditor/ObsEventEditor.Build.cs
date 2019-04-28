@@ -12,7 +12,6 @@ public class ObsEventEditor : ModuleRules
 			new string[] {
 				"AssetTools",
 				"MainFrame",
-//				"WorkspaceMenuStructure",
 			});
 
 		PrivateIncludePaths.AddRange(
@@ -24,7 +23,8 @@ public class ObsEventEditor : ModuleRules
 				"ObsEventEditor/Private/Styles",
 				"ObsEventEditor/Private/Toolkits",
 				"ObsEventEditor/Private/Widgets",
-			});
+                "ObsEventEditor/Private/Nodes",
+            } );
 
 		PrivateDependencyModuleNames.AddRange(
 			new string[] {
@@ -40,14 +40,15 @@ public class ObsEventEditor : ModuleRules
 				"SlateCore",
 				"ObsEvent",
 				"UnrealEd",
-                "Projects"
-            });
+                "Projects",
+                "BlueprintGraph",
+                "KismetCompiler",
+            } );
 
 		PrivateIncludePathModuleNames.AddRange(
 			new string[] {
 				"AssetTools",
 				"UnrealEd",
-//				"WorkspaceMenuStructure",
 			});
 	}
 }
