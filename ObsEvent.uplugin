@@ -2,31 +2,26 @@
 	"FileVersion" : 3,
 	"VersionName" : "versionplugin",
 	"EngineVersion" : "versionengine",
-	"FriendlyName" : "Obs Event System",
-	"Description" : "Dyanmic Observer pattern event system for better arhitectures.",
+	"FriendlyName" : "Blueprints Events System",
+	"Description" : "Event-driven system who improves flow control inside C++ and BP.",
 	"Category" : "Editor",
-	"CreatedBy" : "Oprea Alexandru",
-	"CreatedByURL" : "http://alexandruoprea.fragmentedpixel.com/",
-	"DocsURL" : "https://docs.google.com/document/d/1GnoW3Z2PW8XShl9mwqkGlMhT_KPgbwVvmKbJB4qoOJc/edit?usp=sharing",
+	"CreatedBy" : "Out-of-the-Box Plugis",
+	"CreatedByURL" : "https://outofthebox-plugins.com",
+	"DocsURL" : "https://bitbucket.org/pasotee-marketplace/eventsystemunreal/wiki/Home",
 	"MarketplaceURL" : "com.epicgames.launcher://ue/marketplace/content/13d45e838b954d67b9d5d01fa82635d9",
-	"SupportURL" : "http://alexandruoprea.fragmentedpixel.com/contact/",
+	"SupportURL" : "https://outofthebox-plugins.com/pages/about",
 	"EnabledByDefault" : true,
 	"CanContainContent" : true,
-	"IsBetaVersion" : false,
-	"Installed" : false,
 	"Modules" :
 	[
 		{
 			"Name" : "ObsEvent",
 			"Type" : "Runtime",
-			"LoadingPhase" : "Default",
-			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ]
 		},
 		{
 			"Name" : "ObsEventEditor",
 			"Type" : "Editor",
-			"LoadingPhase" : "Default",
-			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ]
+			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "Linux" ]
 		}
 	]
 }
