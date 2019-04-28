@@ -25,49 +25,29 @@ class FObsEventEditorModule
 	, public IModuleInterface
 {
 public:
-
 	//~ IHasMenuExtensibility interface
-
-	virtual TSharedPtr<FExtensibilityManager> GetMenuExtensibilityManager() override
-	{
-		return MenuExtensibilityManager;
-	}
-
-public:
+	virtual TSharedPtr<FExtensibilityManager> GetMenuExtensibilityManager() override { return MenuExtensibilityManager; }
 
 	//~ IHasToolBarExtensibility interface
-
-	virtual TSharedPtr<FExtensibilityManager> GetToolBarExtensibilityManager() override
-	{
-		return ToolBarExtensibilityManager;
-	}
+	virtual TSharedPtr<FExtensibilityManager> GetToolBarExtensibilityManager() override { return ToolBarExtensibilityManager; }
 
 public:
-
 	//~ IModuleInterface interface
-
 	virtual void StartupModule() override
 	{
 		Style = MakeShareable(new FObsEventEditorStyle());
-
-//		FObsEventEditorCommands::Register();
 
 		RegisterAssetTools();
 		RegisterMenuExtensions();
 		RegisterSettings();
 	}
-
 	virtual void ShutdownModule() override
 	{
 		UnregisterAssetTools();
 		UnregisterMenuExtensions();
 		UnregisterSettings();
 	}
-
-	virtual bool SupportsDynamicReloading() override
-	{
-		return true;
-	}
+	virtual bool SupportsDynamicReloading() override { return true; }
 
 protected:
 
@@ -75,16 +55,10 @@ protected:
 	void RegisterAssetTools()
 	{
 		IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
-
 		RegisterAssetTypeAction(AssetTools, MakeShareable(new FObsEventActions(Style.ToSharedRef())));
 	}
 
-	/**
-	 * Registers a single asset type action.
-	 *
-	 * @param AssetTools The asset tools object to register with.
-	 * @param Action The asset type action to register.
-	 */
+	/** Registers a single asset type action. */
 	void RegisterAssetTypeAction(IAssetTools& AssetTools, TSharedRef<IAssetTypeActions> Action)
 	{
 		AssetTools.RegisterAssetTypeActions(Action);
@@ -99,8 +73,8 @@ protected:
 		if (SettingsModule != nullptr)
 		{
 			ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Editor", "Plugins", "ObsEvent",
-				LOCTEXT("ObsEventSettingsName", "Text Asset"),
-				LOCTEXT("ObsEventSettingsDescription", "Configure the Text Asset plug-in."),
+				LOCTEXT("ObsEventSettingsName", "Obs Events System"),
+				LOCTEXT("ObsEventSettingsDescription", "Configure Obs Events System"),
 				GetMutableDefault<UObsEventEditorSettings>()
 			);
 		}
