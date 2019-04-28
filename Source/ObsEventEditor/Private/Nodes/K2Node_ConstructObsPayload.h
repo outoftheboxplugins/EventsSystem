@@ -18,7 +18,7 @@ public:
 	virtual FText GetMenuCategory() const override;
 	//~ End UK2Node Interface.
 
-	virtual bool UseOuter() const override { return true; }
+	virtual bool IsSpawnVarPin(UEdGraphPin* Pin) const override;
 
 protected:
 	/** Gets the default node title when no class is selected */
@@ -27,4 +27,7 @@ protected:
 	virtual FText GetNodeTitleFormat() const override;
 	/** Gets base class to use for the 'class' pin.  UObject by default. */
 	virtual UClass* GetClassPinBaseClass() const override;
+
+	/** Get the event input pin */
+	UEdGraphPin* GetEventPin() const;
 };
