@@ -1,10 +1,10 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "ObsListener.h"
+#include "ObsComponentListener.h"
 #include "ObsEvent.h"
 #include "GameFramework/Actor.h"
 
-void UObsListener::BeginPlay()
+void UObsComponentListener::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -15,17 +15,16 @@ void UObsListener::BeginPlay()
 	}
 }
 
-void UObsListener::BeginDestroy()
+void UObsComponentListener::BeginDestroy()
 {
 	Super::BeginDestroy();
 
 	UnregisterListener(eventToListen);
 }
 
-void UObsListener::OnEventCalled(AActor* instigator, UObsPayload* payload) const
+void UObsComponentListener::OnEventCalled(UObsPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
-	OnEventInstigatorInvoked.Broadcast(instigator);
 	OnEventPayLoadCalled.Broadcast(payload);
 }
 

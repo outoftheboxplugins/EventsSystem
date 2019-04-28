@@ -16,7 +16,7 @@
 	[
 		{
 			"Name" : "ObsEvent",
-			"Type" : "Runtime",
+			"Type" : "Runtime"
 		},
 		{
 			"Name" : "ObsEventEditor",

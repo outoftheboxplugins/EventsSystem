@@ -1,4 +1,4 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #pragma once
 
@@ -13,8 +13,8 @@
  */
 
 class UObsEvent;
-
-UCLASS(Blueprintable, BlueprintType, Category = "Custom UI Components", hidecategories = ("Slot (Canvas Panel Slot)", "Appearance", "Input", "Interaction", "Behavior", "RenderTransform", "Performance", "Clipping", "Navigation") )
+//TODO: Make this class blueprint spawnable widget
+UCLASS(ClassGroup = (Custom), Category = "ObsEvents", Blueprintable, BlueprintType, meta = (BlueprintSpawnableComponent), hidecategories = ("Slot (Canvas Panel Slot)", "Appearance", "Input", "Interaction", "Behavior", "RenderTransform", "Performance", "Clipping", "Navigation") )
 class OBSEVENT_API UObsWidgetListener : public UUserWidget, public IObsInterfaceListener
 {
 	GENERATED_BODY()
@@ -32,10 +32,6 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
 	FOnEventCalled OnEventInvoked;
 
-	// Flow if action when the event is called. (Including instigator)
-	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
-	FOnEventInstigatorCalled OnEventInstigatorInvoked;
-
 	// Flow if action when the event is called. (Including payload)
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
 	FOnEventPayLoadCalled OnEventPayLoadCalled;
@@ -48,5 +44,5 @@ public:
 	~UObsWidgetListener();
 
 	// Called when the event is invoked.
-	virtual void OnEventCalled(AActor* instigator, UObsPayload* payload) const override;
+	virtual void OnEventCalled(UObsPayload* payload) const override;
 };

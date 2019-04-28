@@ -1,4 +1,4 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #include "ObsWidgetListener.h"
 #include "ObsEvent.h"
@@ -20,10 +20,9 @@ UObsWidgetListener::~UObsWidgetListener()
 	UnregisterListener(eventToListen);
 }
 
-void UObsWidgetListener::OnEventCalled(AActor* instigator, UObsPayload* payload) const
+void UObsWidgetListener::OnEventCalled(UObsPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
-	OnEventInstigatorInvoked.Broadcast(instigator);
 	OnEventPayLoadCalled.Broadcast(payload);
 }
 
