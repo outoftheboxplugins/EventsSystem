@@ -15,7 +15,7 @@
 
 struct FGetPinName {
 	static const FName& GetEventTextPin() {
-		static const FName EventTextPin(TEXT("Event to invoke"));
+		static const FName EventTextPin(TEXT("EventToInvoke"));
 		return EventTextPin;
 	}
 };
@@ -123,7 +123,7 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 	CallCreateNode->GetReturnValuePin()->MakeLinkTo(CallInvokeNode->FindPin(TEXT("payload")));
 
 	// Copy transform connection
-	CompilerContext.CopyPinLinksToIntermediate(*CallCreateNode->FindPin(TEXT("Outer")), *CallInvokeNode->FindPin(TEXT("eventToInvoke")));
+	CompilerContext.CopyPinLinksToIntermediate(*GetEventPin(), *CallInvokeNode->FindPin(TEXT("eventToInvoke")));
 
 	CallCreateNode->GetReturnValuePin()->PinType = GetResultPin()->PinType; // Copy type so it uses the right actor subclass
 	CompilerContext.MovePinLinksToIntermediate(*GetResultPin(), *CallCreateNode->GetReturnValuePin());
