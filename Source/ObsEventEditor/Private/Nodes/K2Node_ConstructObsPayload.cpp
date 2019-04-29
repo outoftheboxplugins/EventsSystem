@@ -13,6 +13,13 @@
 
 #define LOCTEXT_NAMESPACE "K2Node_ConstructObsPayload"
 
+struct FGetPinName {
+	static const FName& GetEventTextPin() {
+		static const FName EventTextPin(TEXT("EventToInvoke"));
+		return EventTextPin;
+	}
+};
+
 //UK2Node_ConstructObsPayload::UK2Node_ConstructObsPayload(const FObjectInitializer& ObjectInitializer)
 //	: Super(ObjectInitializer)
 //{
@@ -34,9 +41,22 @@ UClass* UK2Node_ConstructObsPayload::GetClassPinBaseClass() const
 	return UObsPayload::StaticClass();
 }
 
+UEdGraphPin* UK2Node_ConstructObsPayload::GetEventPin() const
+{
+	UEdGraphPin* Pin = FindPin(FGetPinName::GetEventTextPin());
+	ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
+	return Pin;
+}
+
 FText UK2Node_ConstructObsPayload::GetMenuCategory() const
 {
 	return LOCTEXT("ConstructObsPayloadK2Node_MenuCategory", "ObsEvents");
+}
+
+bool UK2Node_ConstructObsPayload::IsSpawnVarPin(UEdGraphPin* Pin) const
+{
+	bool eventPinCheck = (Pin->PinName != FGetPinName::GetEventTextPin());
+	return eventPinCheck && Super::IsSpawnVarPin(Pin);
 }
 
 void UK2Node_ConstructObsPayload::AllocateDefaultPins()
@@ -54,6 +74,9 @@ void UK2Node_ConstructObsPayload::AllocateDefaultPins()
 			CreatePinsForClass(UseSpawnClass);
 		}
 	}
+
+	const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
+	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UObsEvent::StaticClass(), FGetPinName::GetEventTextPin());
 }
 
 void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
@@ -91,7 +114,7 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 
 	//connect outer
 	{
-		UEdGraphPin* SpawnOuterPin = GetOuterPin();
+		UEdGraphPin* SpawnOuterPin = GetEventPin();
 		UEdGraphPin* CallOuterPin = CallCreateNode->FindPin(TEXT("Outer"));
 		bSucceeded &= SpawnOuterPin && CallOuterPin && CompilerContext.MovePinLinksToIntermediate(*SpawnOuterPin, *CallOuterPin).CanSafeConnect();
 	}
@@ -100,7 +123,7 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 	CallCreateNode->GetReturnValuePin()->MakeLinkTo(CallInvokeNode->FindPin(TEXT("payload")));
 
 	// Copy transform connection
-	CompilerContext.CopyPinLinksToIntermediate(*CallCreateNode->FindPin(TEXT("Outer")), *CallInvokeNode->FindPin(TEXT("eventToInvoke")));
+	CompilerContext.CopyPinLinksToIntermediate(*GetEventPin(), *CallInvokeNode->FindPin(TEXT("eventToInvoke")));
 
 	CallCreateNode->GetReturnValuePin()->PinType = GetResultPin()->PinType; // Copy type so it uses the right actor subclass
 	CompilerContext.MovePinLinksToIntermediate(*GetResultPin(), *CallCreateNode->GetReturnValuePin());
@@ -110,96 +133,12 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 	// Make exec connection between 'then' on last node and 'finish'
 	LastThen->MakeLinkTo(CallInvokeNode->GetExecPin());
 
-	//UEdGraphPin* CallResultPin = nullptr;
-	////connect result
-	//{
-	//	UEdGraphPin* SpawnResultPin = GetResultPin();
-	//	CallResultPin = CallCreateNode->GetReturnValuePin();
-	//
-	//	// cast HACK. It should be safe. The only problem is native code generation.
-	//	if (SpawnResultPin && CallResultPin)
-	//	{
-	//		CallResultPin->PinType = SpawnResultPin->PinType;
-	//	}
-	//	bSucceeded &= SpawnResultPin && CallResultPin && CompilerContext.MovePinLinksToIntermediate(*SpawnResultPin, *CallResultPin).CanSafeConnect();
-	//}
-	//
-	////todo: review this
-	////assign exposed values and connect then
-	//{
-	//	UEdGraphPin* LastThen = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallCreateNode, this, CallResultPin, ClassToSpawn);
-	//	UEdGraphPin* SpawnNodeThen = GetThenPin();
-	//	bSucceeded &= SpawnNodeThen && LastThen && CompilerContext.MovePinLinksToIntermediate(*SpawnNodeThen, *LastThen).CanSafeConnect();
-	//}
-
 	BreakAllNodeLinks();
 
 	if (!bSucceeded)
 	{
 		CompilerContext.MessageLog.Error(*LOCTEXT("GenericCreateObject_Error", "ICE: GenericCreateObject error @@").ToString(), this);
 	}
-
-	// FINISHED //////////////////////////////////////////////////////////////////////////
-
-	//static const FName BeginSpawningBlueprintFuncName = GET_FUNCTION_NAME_CHECKED(UGameplayStatics, BeginDeferredActorSpawnFromClass);
-	//static const FName ActorClassParamName(TEXT("ActorClass"));
-	//static const FName WorldContextParamName(TEXT("WorldContextObject"));
-	//
-	//static const FName FinishSpawningFuncName = GET_FUNCTION_NAME_CHECKED(UGameplayStatics, FinishSpawningActor);
-	//static const FName ActorParamName(TEXT("Actor"));
-	//static const FName TransformParamName(TEXT("SpawnTransform"));
-	//static const FName CollisionHandlingOverrideParamName(TEXT("CollisionHandlingOverride"));
-	//static const FName OwnerParamName(TEXT("Owner"));
-	//
-	//static const FName ObjectParamName(TEXT("Object"));
-	//static const FName ValueParamName(TEXT("Value"));
-	//static const FName PropertyNameParamName(TEXT("PropertyName"));
-	//
-	//UK2Node_ConstructObsPayload* SpawnNode = this;
-	//UEdGraphPin* SpawnNodeExec = SpawnNode->GetExecPin();
-	//UEdGraphPin* SpawnWorldContextPin = SpawnNode->GetWorldContextPin();
-	//UEdGraphPin* SpawnClassPin = SpawnNode->GetClassPin();
-	//UEdGraphPin* SpawnNodeThen = SpawnNode->GetThenPin();
-	//UEdGraphPin* SpawnNodeResult = SpawnNode->GetResultPin();
-	//
-	////////////////////////////////////////////////////////////////////////////
-	//// create 'begin spawn' call node
-	//UK2Node_CallFunction* CallBeginSpawnNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(SpawnNode, SourceGraph);
-	//CallBeginSpawnNode->FunctionReference.SetExternalMember(BeginSpawningBlueprintFuncName, UGameplayStatics::StaticClass());
-	//CallBeginSpawnNode->AllocateDefaultPins();
-	//
-	//UEdGraphPin* CallBeginExec = CallBeginSpawnNode->GetExecPin();
-	//UEdGraphPin* CallBeginWorldContextPin = CallBeginSpawnNode->FindPinChecked(WorldContextParamName);
-	//UEdGraphPin* CallBeginActorClassPin = CallBeginSpawnNode->FindPinChecked(ActorClassParamName);
-	//UEdGraphPin* CallBeginTransform = CallBeginSpawnNode->FindPinChecked(TransformParamName);
-	//UEdGraphPin* CallBeginCollisionHandlingOverride = CallBeginSpawnNode->FindPinChecked(CollisionHandlingOverrideParamName);
-	//
-	//UEdGraphPin* CallBeginOwnerPin = CallBeginSpawnNode->FindPinChecked(FK2Node_SpawnActorFromClassHelper::OwnerPinName);
-	//UEdGraphPin* CallBeginResult = CallBeginSpawnNode->GetReturnValuePin();
-	//
-	////////////////////////////////////////////////////////////////////////////
-	//// create 'finish spawn' call node
-	//UK2Node_CallFunction* CallFinishSpawnNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(SpawnNode, SourceGraph);
-	//CallFinishSpawnNode->FunctionReference.SetExternalMember(FinishSpawningFuncName, UGameplayStatics::StaticClass());
-	//CallFinishSpawnNode->AllocateDefaultPins();
-	//
-	//UEdGraphPin* CallFinishExec = CallFinishSpawnNode->GetExecPin();
-	//UEdGraphPin* CallFinishThen = CallFinishSpawnNode->GetThenPin();
-	//UEdGraphPin* CallFinishActor = CallFinishSpawnNode->FindPinChecked(ActorParamName);
-	//UEdGraphPin* CallFinishTransform = CallFinishSpawnNode->FindPinChecked(TransformParamName);
-	//UEdGraphPin* CallFinishResult = CallFinishSpawnNode->GetReturnValuePin();
-	//
-	////////////////////////////////////////////////////////////////////////////
-	//// create 'set var' nodes
-	//
-	//// Get 'result' pin from 'begin spawn', this is the actual actor we want to set properties on
-	//UEdGraphPin* LastThen = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallBeginSpawnNode, SpawnNode, CallBeginResult, ClassToSpawn);
-	//
-	//// Make exec connection between 'then' on last node and 'finish'
-	//LastThen->MakeLinkTo(CallFinishExec);
-	//
-	//// Break any links to the expanded node
-	//SpawnNode->BreakAllNodeLinks();
 }
 
 #undef LOCTEXT_NAMESPACE

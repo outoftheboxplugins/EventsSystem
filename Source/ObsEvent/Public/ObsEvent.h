@@ -1,4 +1,4 @@
-// Copyright Alexandru pasotee Oprea 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #pragma once
 
@@ -16,24 +16,26 @@ class IObsInterfaceListener;
 class AActor;
 class UObsPayload;
 
-UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "Events", Blueprintable)
+UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "ObsEvents", Blueprintable)
 class OBSEVENT_API UObsEvent : public UObject
 {
 	GENERATED_BODY()
 	
 public:
 	// Invoke the event.
-	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
-	static void Invoke(UObsEvent* eventToInvoke, AActor* instigator, UObsPayload* payload);
+	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
+	static void Invoke(UObsEvent* eventToInvoke, UObsPayload* payload);
 
+	//TODO: Add optional pin to invoke pin for actor only
 	// Invoke the event on a single actor.
-	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
-	static void InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, AActor* instigator, UObsPayload* payload);
+	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
+	static void InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, UObsPayload* payload);
 
 	// Removes all the listeners from one event.
-	UFUNCTION(BlueprintCallable, Category = "ObsEvent")
+	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
 	static void UnRegisterAllListeners(UObsEvent* eventToClear);
 
+	//TODO: Consider putting payload in here as well.
 	// Invokes the event for debug purposes.
 	void DebugInvoke();
 
@@ -44,7 +46,7 @@ public:
 	void UnRegisterListener(const IObsInterfaceListener* listener);
 	
 	// Short description so you won't forget.
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ObsEvent")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "ObsEvents")
 	FText Description;
 
 protected:
@@ -52,7 +54,8 @@ protected:
 	TArray<const IObsInterfaceListener*> listeners;
 
 	// Delegate the call to the listeners.
-	void CallListeners(AActor* instigator, UObsPayload* payload);
+	void CallListeners(UObsPayload* payload);
 
-	void CallListenerComponents(AActor* actor, AActor* instigator, UObsPayload* payload);
+	// Delegate the call to all the components listeners on the target actor
+	void CallListenerComponents(AActor* actor, UObsPayload* payload);
 };

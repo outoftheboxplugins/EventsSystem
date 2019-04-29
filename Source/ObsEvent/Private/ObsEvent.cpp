@@ -1,26 +1,26 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #include "ObsEvent.h"
 #include "ObsPayload.h"
 #include "ObsInterfaceListener.h"
 #include "GameFramework/Actor.h"
 
-void UObsEvent::Invoke(UObsEvent* eventToInvoke, AActor* instigator, UObsPayload* payload)
+void UObsEvent::Invoke(UObsEvent* eventToInvoke, UObsPayload* payload)
 {
 	// Delegate the event to all the listeners.
 	if (eventToInvoke)
 	{
-		eventToInvoke->CallListeners(instigator, payload);
+		eventToInvoke->CallListeners(payload);
 	}
 }
 
-void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, AActor* instigator, UObsPayload* payload)
+void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, UObsPayload* payload)
 {
 	if (!actor) return;
 
 	if (eventToInvoke)
 	{
-		eventToInvoke->CallListenerComponents(actor, instigator, payload);
+		eventToInvoke->CallListenerComponents(actor, payload);
 	}
 }
 
@@ -40,7 +40,7 @@ void UObsEvent::UnRegisterAllListeners(UObsEvent* eventToClear)
 
 void UObsEvent::DebugInvoke()
 {
-	Invoke(this, nullptr, nullptr);
+	Invoke(this, nullptr);
 }
 
 void UObsEvent::RegisterListener(const IObsInterfaceListener* newListener)
@@ -61,7 +61,7 @@ void UObsEvent::UnRegisterListener(const IObsInterfaceListener* oldListener)
 	}
 }
 
-void UObsEvent::CallListeners(AActor* instigator, UObsPayload* payload)
+void UObsEvent::CallListeners(UObsPayload* payload)
 {
 	// Call each one of the listeners & remove deleted ones.
 	for (int i = listeners.Num() - 1; i >= 0; i--)
@@ -72,12 +72,12 @@ void UObsEvent::CallListeners(AActor* instigator, UObsPayload* payload)
 		}
 		else
 		{
-			listeners[i]->OnEventCalled(instigator, payload);
+			listeners[i]->OnEventCalled(payload);
 		}
 	}
 }
 
-void UObsEvent::CallListenerComponents(AActor* actor, AActor* instigator, UObsPayload* payload)
+void UObsEvent::CallListenerComponents(AActor* actor, UObsPayload* payload)
 {
 	if (!actor)
 	{
@@ -91,11 +91,10 @@ void UObsEvent::CallListenerComponents(AActor* actor, AActor* instigator, UObsPa
 	{
 		if (components[i])
 		{
-			//TODO: Allow for both calling only registered listeners or all of them.
 			IObsInterfaceListener* listenerComponent = Cast<IObsInterfaceListener>(components[i]);
 			if (listenerComponent && listeners.Contains(listenerComponent))
 			{
-				listenerComponent->OnEventCalled(instigator, payload);
+				listenerComponent->OnEventCalled(payload);
 			}
 		}
 	}

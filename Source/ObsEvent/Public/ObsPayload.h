@@ -11,7 +11,7 @@
  * Event holding all the listeners and delegating the call to them.
  */
 
-UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "Events", Blueprintable)
+UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "ObsEvents", Blueprintable)
 class OBSEVENT_API UObsPayload : public UObject
 {
 	GENERATED_BODY()

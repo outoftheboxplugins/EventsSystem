@@ -1,4 +1,4 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #include "ObsEventActions.h"
 
@@ -68,22 +68,19 @@ uint32 FObsEventActions::GetCategories()
 	return EAssetTypeCategories::Blueprint;
 }
 
-
 FText FObsEventActions::GetName() const
 {
 	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_ObsEvent", "Obs Event");
 }
-
 
 UClass* FObsEventActions::GetSupportedClass() const
 {
 	return UObsEvent::StaticClass();
 }
 
-
 FColor FObsEventActions::GetTypeColor() const
 {
-	return FColor::Red;
+	return FColor::Blue;
 }
 
 bool FObsEventActions::HasActions(const TArray<UObject *>& InObjects) const
