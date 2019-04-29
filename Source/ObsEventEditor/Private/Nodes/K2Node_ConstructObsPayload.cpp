@@ -9,7 +9,7 @@
 #include "ObsEvent.h"
 #include "Misc/AssertionMacros.h"
 #include "Kismet/GameplayStatics.h"
-#include "UObjectGlobals.h"
+#include "UObject/UObjectGlobals.h"
 
 #define LOCTEXT_NAMESPACE "K2Node_ConstructObsPayload"
 
