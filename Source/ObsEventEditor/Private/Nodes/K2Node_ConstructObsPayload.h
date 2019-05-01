@@ -17,6 +17,7 @@ public:
 
 	//~ Begin UK2Node Interface
 	virtual FText GetMenuCategory() const override;
+	virtual bool CanUserEditPinAdvancedViewFlag() const override { return true; }
 	//~ End UK2Node Interface.
 
 	virtual bool IsSpawnVarPin(UEdGraphPin* Pin) const override;

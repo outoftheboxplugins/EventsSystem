@@ -22,12 +22,12 @@ class OBSEVENT_API UObsEvent : public UObject
 	
 public:
 	// Invoke the event.
-	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
+	UFUNCTION(BlueprintCallable, Category = "ObsEvents", meta = (AdvancedDisplay = "payload"))
 	static void Invoke(UObsEvent* eventToInvoke, UObsPayload* payload);
 
 	//TODO: Add optional pin to invoke pin for actor only
 	// Invoke the event on a single actor.
-	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
+	UFUNCTION(BlueprintCallable, Category = "ObsEvents", meta = (AdvancedDisplay = "payload"))
 	static void InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, UObsPayload* payload);
 
 	// Removes all the listeners from one event.
