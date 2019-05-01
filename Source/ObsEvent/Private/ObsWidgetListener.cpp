@@ -23,6 +23,6 @@ UObsWidgetListener::~UObsWidgetListener()
 void UObsWidgetListener::OnEventCalled(UObsPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
-	OnEventPayLoadCalled.Broadcast(payload);
+	OnEventPayloadInvoked.Broadcast(payload);
 }
 

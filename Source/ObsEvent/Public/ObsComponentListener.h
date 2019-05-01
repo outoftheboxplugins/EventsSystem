@@ -2,19 +2,20 @@
 
 #pragma once
 
+#include "Components/ActorComponent.h"
+
 #include "CoreMinimal.h"
-#include "Components/SceneComponent.h"
 #include "ObsInterfaceListener.h"
 #include "ObsComponentListener.generated.h"
+
+class UObsEvent;
 
 /**
  * Component listening to event calls.
  */
 
-class UObsEvent;
-
-UCLASS( ClassGroup=(Custom), Category = "ObsEvents", BlueprintType, Blueprintable, hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering"), meta=(BlueprintSpawnableComponent) )
-class OBSEVENT_API UObsComponentListener : public USceneComponent, public IObsInterfaceListener
+UCLASS( ClassGroup=(Custom), Category = "ObsEvents", BlueprintType, Blueprintable, hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering", "Sockets"), meta=(BlueprintSpawnableComponent) )
+class OBSEVENT_API UObsComponentListener : public UActorComponent, public IObsInterfaceListener
 {
 	GENERATED_BODY()
 
@@ -33,7 +34,7 @@ public:
 	
 	// Flow if action when the event is called. (Including payload)
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
-	FOnEventPayLoadCalled OnEventPayLoadCalled;
+	FOnEventPayLoadCalled OnEventPayloadInvoked;
 
 protected:
 	// Called at the start of the game.

@@ -25,6 +25,6 @@ void UObsComponentListener::BeginDestroy()
 void UObsComponentListener::OnEventCalled(UObsPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
-	OnEventPayLoadCalled.Broadcast(payload);
+	OnEventPayloadInvoked.Broadcast(payload);
 }
 

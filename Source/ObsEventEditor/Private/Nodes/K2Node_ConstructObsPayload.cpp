@@ -10,6 +10,7 @@
 #include "Misc/AssertionMacros.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/UObjectGlobals.h"
+#include "Text.h"
 
 #define LOCTEXT_NAMESPACE "K2Node_ConstructObsPayload"
 
@@ -28,12 +29,12 @@ struct FGetPinName {
 
 FText UK2Node_ConstructObsPayload::GetBaseNodeTitle() const
 {
-	return LOCTEXT("ConstructObsPayload_BaseTitle", "Create ObsPayload");
+	return LOCTEXT("ConstructObsPayload_BaseTitle", "Invoke Event with Payload");
 }
 
 FText UK2Node_ConstructObsPayload::GetNodeTitleFormat() const
 {
-	return LOCTEXT("ConstructObsPayload", "Create Payload {ClassName}");
+	return LOCTEXT("ConstructObsPayload", "Invoke Event with {ClassName}");
 }
 
 UClass* UK2Node_ConstructObsPayload::GetClassPinBaseClass() const
@@ -138,6 +139,19 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 	if (!bSucceeded)
 	{
 		CompilerContext.MessageLog.Error(*LOCTEXT("GenericCreateObject_Error", "ICE: GenericCreateObject error @@").ToString(), this);
+	}
+}
+
+FText UK2Node_ConstructObsPayload::GetNodeTitle(ENodeTitleType::Type TitleType) const
+{
+	FText superValue = Super::GetNodeTitle(TitleType);
+	if (!superValue.CompareTo(FText::FromString("Construct NONE")))
+	{
+		return  LOCTEXT("ConstructObsPayloadK2Node_NoPayload", "Invoke Event without payload");
+	}
+	else
+	{
+		return superValue;
 	}
 }
 

@@ -34,7 +34,7 @@ public:
 
 	// Flow if action when the event is called. (Including payload)
 	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
-	FOnEventPayLoadCalled OnEventPayLoadCalled;
+	FOnEventPayLoadCalled OnEventPayloadInvoked;
 
 public:
 	// Called at the start of the game.

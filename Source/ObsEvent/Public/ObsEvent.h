@@ -7,14 +7,13 @@
 #include "UObject/ObjectMacros.h"
 #include "ObsEvent.generated.h"
 
+class IObsInterfaceListener;
+class AActor;
+class UObsPayload;
 
 /**
  * Event holding all the listeners and delegating the call to them.
  */
-
-class IObsInterfaceListener;
-class AActor;
-class UObsPayload;
 
 UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "ObsEvents", Blueprintable)
 class OBSEVENT_API UObsEvent : public UObject
