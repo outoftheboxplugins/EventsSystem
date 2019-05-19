@@ -17,28 +17,10 @@ namespace UnrealBuildTool.Rules
                 });
 
             PrivateDependencyModuleNames.AddRange(
-    new string[] {
-                "ContentBrowser",
-                "Core",
-                "CoreUObject",
-                "DesktopWidgets",
-                "EditorStyle",
-                "Engine",
-                "InputCore",
-                "Projects",
-                "Slate",
-                "SlateCore",
-                "ObsEvent",
-                "UnrealEd",
-                "Projects",
-                "BlueprintGraph",
-                "KismetCompiler",
-    } );
-
-            PrivateIncludePathModuleNames.AddRange(
                 new string[] {
-                "AssetTools",
-                "UnrealEd",
+                    "UnrealEd",
+                    "BlueprintGraph",
+                    "KismetCompiler",
                 } );
         }
 	}
