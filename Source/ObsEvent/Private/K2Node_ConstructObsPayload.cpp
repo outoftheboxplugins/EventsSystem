@@ -1,4 +1,4 @@
-#include "Nodes/K2Node_ConstructObsPayload.h"
+#include "K2Node_ConstructObsPayload.h"
 
 #include "KismetCompiler.h"
 #include "BlueprintActionDatabaseRegistrar.h"
