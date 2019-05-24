@@ -1,5 +1,5 @@
 #pragma once
-#include "K2Node_ConstructObjectFromClass.h"
+#include "BlueprintGraph/Classes/K2Node_ConstructObjectFromClass.h"
 
 #include "CoreMinimal.h"
 #include "K2Node_ConstructObsPayload.generated.h"
