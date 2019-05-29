@@ -16,7 +16,8 @@
 	[
 		{
 			"Name" : "ObsEvent",
-			"Type" : "Runtime"
+			"Type" : "Runtime",
+			"LoadingPhase" : "PreDefault"
 		},
 		{
 			"Name" : "ObsEventEditor",

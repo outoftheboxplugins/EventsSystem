@@ -2,23 +2,19 @@
 
 namespace UnrealBuildTool.Rules
 {
-	public class ObsEvent : ModuleRules
-	{
-		public ObsEvent(ReadOnlyTargetRules Target) : base(Target)
-		{
-			PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+    public class ObsEvent : ModuleRules
+    {
+        public ObsEvent( ReadOnlyTargetRules Target ) : base( Target )
+        {
+            PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
             PublicDependencyModuleNames.AddRange(
                 new string[] {
                     "Core",
                     "CoreUObject",
                     "Engine",
-                    "UMG",
-                    "EditorWidgets",
-                    "UnrealEd",
-                    "BlueprintGraph",
-                    "KismetCompiler",
+                    "UMG"
                 } );
         }
-	}
+    }
 }
