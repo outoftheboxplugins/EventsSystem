@@ -20,11 +20,11 @@ struct FGetPinName {
 	}
 };
 
-//UK2Node_ConstructObsPayload::UK2Node_ConstructObsPayload(const FObjectInitializer& ObjectInitializer)
-//	: Super(ObjectInitializer)
-//{
-//	NodeTooltip = LOCTEXT("ConstructObsPayloadNodeTooltip", "Create a new payload for an event.");
-//}
+UK2Node_ConstructObsPayload::UK2Node_ConstructObsPayload(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	NodeTooltip = LOCTEXT("ConstructObsPayloadNodeTooltip", "Create a new payload and invokes an event with it.");
+}
 
 FText UK2Node_ConstructObsPayload::GetBaseNodeTitle() const
 {
@@ -122,7 +122,8 @@ void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& Compi
 	{
 		UEdGraphPin* SpawnOuterPin = GetEventPin();
 		UEdGraphPin* CallOuterPin = CallCreateNode->FindPin(TEXT("Outer"));
-		bSucceeded &= SpawnOuterPin && CallOuterPin && CompilerContext.MovePinLinksToIntermediate(*SpawnOuterPin, *CallOuterPin).CanSafeConnect();
+		//bSucceeded &= SpawnOuterPin && CallOuterPin && CompilerContext.MovePinLinksToIntermediate(*SpawnOuterPin, *CallOuterPin).CanSafeConnect();
+        bSucceeded &= SpawnOuterPin && CallOuterPin && CompilerContext.CopyPinLinksToIntermediate(*SpawnOuterPin, *CallOuterPin).CanSafeConnect();
 	}
 
 	// Connect output actor from 'begin' to 'finish'

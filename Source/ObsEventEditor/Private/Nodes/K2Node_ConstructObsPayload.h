@@ -7,7 +7,7 @@
 UCLASS()
 class UK2Node_ConstructObsPayload : public UK2Node_ConstructObjectFromClass
 {
-	GENERATED_BODY()
+    GENERATED_UCLASS_BODY()
 public:
 	//~ Begin UEdGraphNode Interface.
 	virtual void AllocateDefaultPins() override;
