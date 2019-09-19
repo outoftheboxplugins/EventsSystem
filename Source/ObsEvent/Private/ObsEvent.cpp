@@ -4,6 +4,8 @@
 #include "ObsPayload.h"
 #include "ObsInterfaceListener.h"
 #include "GameFramework/Actor.h"
+#include "Blueprint/WidgetTree.h"
+#include "Blueprint/UserWidget.h"
 
 void UObsEvent::Invoke(UObsEvent* eventToInvoke, UObsPayload* payload)
 {
@@ -21,6 +23,16 @@ void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, UObsPaylo
 	if (eventToInvoke)
 	{
 		eventToInvoke->CallListenerComponents(actor, payload);
+	}
+}
+
+void UObsEvent::InvokeOnWidget(UUserWidget* widget, UObsEvent* eventToInvoke, UObsPayload* payload)
+{
+	if (!widget) return;
+
+	if (eventToInvoke)
+	{
+		eventToInvoke->CallListenerWidgets(widget, payload);
 	}
 }
 
@@ -98,4 +110,27 @@ void UObsEvent::CallListenerComponents(AActor* actor, UObsPayload* payload)
 			}
 		}
 	}
+}
+
+void UObsEvent::CallListenerWidgets(UUserWidget* widget, UObsPayload* payload)
+{
+    if (!widget)
+    {
+        return;
+    }
+
+    TArray<UWidget*> widgets;
+    widget->WidgetTree->GetAllWidgets(widgets);
+
+    for (int i = 0; i < widgets.Num(); i++)
+    {
+        if (widgets[i])
+        {
+            IObsInterfaceListener* listenerComponent = Cast<IObsInterfaceListener>(widgets[i]);
+            if (listenerComponent && listeners.Contains(listenerComponent))
+            {
+                listenerComponent->OnEventCalled(payload);
+            }
+        }
+    }
 }

@@ -4,7 +4,7 @@
 #include "CoreMinimal.h"
 #include "K2Node_ConstructObsPayload.generated.h"
 
-UCLASS()
+UCLASS(MinimalAPI, meta = (Keywords = "event invoke obs"))
 class UK2Node_ConstructObsPayload : public UK2Node_ConstructObjectFromClass
 {
     GENERATED_UCLASS_BODY()

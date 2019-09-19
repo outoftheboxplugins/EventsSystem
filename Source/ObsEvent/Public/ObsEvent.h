@@ -9,6 +9,7 @@
 
 class IObsInterfaceListener;
 class AActor;
+class UUserWidget;
 class UObsPayload;
 
 /**
@@ -29,6 +30,11 @@ public:
 	// Invoke the event on a single actor.
 	UFUNCTION(BlueprintCallable, Category = "ObsEvents", meta = (AdvancedDisplay = "payload"))
 	static void InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, UObsPayload* payload);
+
+    //TODO: Add optional pin to invoke pin for widget only
+    // Invoke the event on a single widget.
+    UFUNCTION(BlueprintCallable, Category = "ObsEvents", meta = (AdvancedDisplay = "payload"))
+    static void InvokeOnWidget(UUserWidget* widget, UObsEvent* eventToInvoke, UObsPayload* payload);
 
 	// Removes all the listeners from one event.
 	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
@@ -57,4 +63,7 @@ protected:
 
 	// Delegate the call to all the components listeners on the target actor
 	void CallListenerComponents(AActor* actor, UObsPayload* payload);
+
+    // Delegate the call to all the widget listeners on the target widget
+    void CallListenerWidgets(UUserWidget* widget, UObsPayload* payload);
 };
