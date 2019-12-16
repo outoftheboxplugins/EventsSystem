@@ -13,7 +13,7 @@
 
 #define LOCTEXT_NAMESPACE "K2Node_ConstructObsPayload"
 
-struct FGetPinName {
+struct FPinNames {
 	static const FName& GetEventTextPin() {
 		static const FName EventTextPin(TEXT("EventToInvoke"));
 		return EventTextPin;
@@ -43,7 +43,7 @@ UClass* UK2Node_ConstructObsPayload::GetClassPinBaseClass() const
 
 UEdGraphPin* UK2Node_ConstructObsPayload::GetEventPin() const
 {
-	UEdGraphPin* Pin = FindPin(FGetPinName::GetEventTextPin());
+	UEdGraphPin* Pin = FindPin(FPinNames::GetEventTextPin());
 	ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
 	return Pin;
 }
@@ -55,7 +55,7 @@ FText UK2Node_ConstructObsPayload::GetMenuCategory() const
 
 bool UK2Node_ConstructObsPayload::IsSpawnVarPin(UEdGraphPin* Pin) const
 {
-	bool eventPinCheck = (Pin->PinName != FGetPinName::GetEventTextPin());
+	bool eventPinCheck = (Pin->PinName != FPinNames::GetEventTextPin());
 	return eventPinCheck && Super::IsSpawnVarPin(Pin);
 }
 
@@ -76,7 +76,7 @@ void UK2Node_ConstructObsPayload::AllocateDefaultPins()
 	}
 
 	const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
-	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UEventsSystem::StaticClass(), FGetPinName::GetEventTextPin());
+	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UEventsSystem::StaticClass(), FPinNames::GetEventTextPin());
 
 	InEventPin->bAdvancedView = true;
 	if (ENodeAdvancedPins::NoPins == AdvancedPinDisplay)
