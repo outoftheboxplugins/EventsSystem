@@ -75,14 +75,13 @@ void UK2Node_ConstructObsPayload::AllocateDefaultPins()
 		}
 	}
 
-	const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
-	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UEventsSystem::StaticClass(), FPinNames::GetEventTextPin());
+    ClassPin->bAdvancedView = true;
+    if (ENodeAdvancedPins::NoPins == AdvancedPinDisplay)
+    {
+        AdvancedPinDisplay = ENodeAdvancedPins::Hidden;
+    }
 
-	InEventPin->bAdvancedView = true;
-	if (ENodeAdvancedPins::NoPins == AdvancedPinDisplay)
-	{
-		AdvancedPinDisplay = ENodeAdvancedPins::Hidden;
-	}
+    UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UEventsSystem::StaticClass(), FPinNames::GetEventTextPin());
 }
 
 void UK2Node_ConstructObsPayload::ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
