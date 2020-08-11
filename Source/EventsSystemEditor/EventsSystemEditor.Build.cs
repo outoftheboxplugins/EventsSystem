@@ -1,13 +1,11 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 using UnrealBuildTool;
 
-public class ObsEventEditor : ModuleRules
+public class EventsSystemEditor : ModuleRules
 {
-    public ObsEventEditor( ReadOnlyTargetRules Target ) : base( Target )
+    public EventsSystemEditor (ReadOnlyTargetRules Target) : base( Target )
     {
-        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
         DynamicallyLoadedModuleNames.AddRange(
             new string[] {
                 "AssetTools",
@@ -16,15 +14,15 @@ public class ObsEventEditor : ModuleRules
 
         PrivateIncludePaths.AddRange(
             new string[] {
-                "ObsEventEditor/Private",
-                "ObsEventEditor/Private/AssetTools",
-                "ObsEventEditor/Private/Factories",
-                "ObsEventEditor/Private/Shared",
-                "ObsEventEditor/Private/Styles",
-                "ObsEventEditor/Private/Toolkits",
-                "ObsEventEditor/Private/Widgets",
-                "ObsEventEditor/Private/Nodes"
-            } );
+                "EventsSystemEditor/Private",
+                "EventsSystemEditor/Private/AssetTools",
+                "EventsSystemEditor/Private/Factories",
+                "EventsSystemEditor/Private/Shared",
+                "EventsSystemEditor/Private/Styles",
+                "EventsSystemEditor/Private/Toolkits",
+                "EventsSystemEditor/Private/Widgets",
+				"EventsSystemEditor/Private/Nodes"
+			} );
 
         PrivateDependencyModuleNames.AddRange(
             new string[] {
@@ -38,7 +36,7 @@ public class ObsEventEditor : ModuleRules
                 "Projects",
                 "Slate",
                 "SlateCore",
-                "ObsEvent",
+				"EventsSystem",
                 "UnrealEd",
                 "Projects",
                 "BlueprintGraph",
