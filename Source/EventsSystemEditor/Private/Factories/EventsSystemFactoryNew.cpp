@@ -11,7 +11,7 @@
 UObsEventFactoryNew::UObsEventFactoryNew(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	SupportedClass = UObsEvent::StaticClass();
+	SupportedClass = UEvent::StaticClass();
 	bCreateNew = true;
 	bEditAfterNew = true;
 }
@@ -22,7 +22,7 @@ UObsEventFactoryNew::UObsEventFactoryNew(const FObjectInitializer& ObjectInitial
 
 UObject* UObsEventFactoryNew::FactoryCreateNew(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
 {
-	return NewObject<UObsEvent>(InParent, InClass, InName, Flags);
+	return NewObject<UEvent>(InParent, InClass, InName, Flags);
 }
 
 

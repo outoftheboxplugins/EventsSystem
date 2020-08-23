@@ -73,8 +73,8 @@ protected:
 		if (SettingsModule != nullptr)
 		{
 			ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Editor", "Plugins", "ObsEvent",
-				LOCTEXT("ObsEventSettingsName", "Obs Events System"),
-				LOCTEXT("ObsEventSettingsDescription", "Configure Obs Events System"),
+				LOCTEXT("EventsSystemettingsName", "Obs Events System"),
+				LOCTEXT("EventsSystemettingsDescription", "Configure Obs Events System"),
 				GetMutableDefault<UObsEventEditorSettings>()
 			);
 		}

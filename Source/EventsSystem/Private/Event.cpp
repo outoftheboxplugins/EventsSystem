@@ -1,13 +1,13 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "ObsEvent.h"
-#include "ObsPayload.h"
-#include "ObsInterfaceListener.h"
+#include "Event.h"
+#include "EventsSystemPayload.h"
+#include "EventListenerInterface.h"
 #include "GameFramework/Actor.h"
 #include "Blueprint/WidgetTree.h"
 #include "Blueprint/UserWidget.h"
 
-void UObsEvent::Invoke(UObsEvent* eventToInvoke, UObsPayload* payload)
+void UEvent::Invoke(UEvent* eventToInvoke, UEventsSystemPayload* payload)
 {
 	// Delegate the event to all the listeners.
 	if (eventToInvoke)
@@ -16,7 +16,7 @@ void UObsEvent::Invoke(UObsEvent* eventToInvoke, UObsPayload* payload)
 	}
 }
 
-void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, UObsPayload* payload)
+void UEvent::InvokeOnActor(AActor* actor, UEvent* eventToInvoke, UEventsSystemPayload* payload)
 {
 	if (!actor) return;
 
@@ -26,7 +26,7 @@ void UObsEvent::InvokeOnActor(AActor* actor, UObsEvent* eventToInvoke, UObsPaylo
 	}
 }
 
-void UObsEvent::InvokeOnWidget(UUserWidget* widget, UObsEvent* eventToInvoke, UObsPayload* payload)
+void UEvent::InvokeOnWidget(UUserWidget* widget, UEvent* eventToInvoke, UEventsSystemPayload* payload)
 {
 	if (!widget) return;
 
@@ -36,7 +36,7 @@ void UObsEvent::InvokeOnWidget(UUserWidget* widget, UObsEvent* eventToInvoke, UO
 	}
 }
 
-void UObsEvent::UnRegisterAllListeners(UObsEvent* eventToClear)
+void UEvent::UnRegisterAllListeners(UEvent* eventToClear)
 {
 	if (!eventToClear)
 	{
@@ -50,12 +50,12 @@ void UObsEvent::UnRegisterAllListeners(UObsEvent* eventToClear)
 	}
 }
 
-void UObsEvent::DebugInvoke()
+void UEvent::DebugInvoke()
 {
 	Invoke(this, nullptr);
 }
 
-void UObsEvent::RegisterListener(const IObsInterfaceListener* newListener)
+void UEvent::RegisterListener(const IEventListenerInterface* newListener)
 {
 	// If the listener is not already registered, add him.
 	if (newListener != nullptr && listeners.Contains(newListener) == false)
@@ -64,7 +64,7 @@ void UObsEvent::RegisterListener(const IObsInterfaceListener* newListener)
 	}
 }
 
-void UObsEvent::UnRegisterListener(const IObsInterfaceListener* oldListener)
+void UEvent::UnRegisterListener(const IEventListenerInterface* oldListener)
 {
 	// If the listener is now in our list, remove it.
 	if (listeners.Contains(oldListener))
@@ -73,7 +73,7 @@ void UObsEvent::UnRegisterListener(const IObsInterfaceListener* oldListener)
 	}
 }
 
-void UObsEvent::CallListeners(UObsPayload* payload)
+void UEvent::CallListeners(UEventsSystemPayload* payload)
 {
 	// Call each one of the listeners & remove deleted ones.
 	for (int i = listeners.Num() - 1; i >= 0; i--)
@@ -89,7 +89,7 @@ void UObsEvent::CallListeners(UObsPayload* payload)
 	}
 }
 
-void UObsEvent::CallListenerComponents(AActor* actor, UObsPayload* payload)
+void UEvent::CallListenerComponents(AActor* actor, UEventsSystemPayload* payload)
 {
 	if (!actor)
 	{
@@ -103,7 +103,7 @@ void UObsEvent::CallListenerComponents(AActor* actor, UObsPayload* payload)
 	{
 		if (components[i])
 		{
-			IObsInterfaceListener* listenerComponent = Cast<IObsInterfaceListener>(components[i]);
+			IEventListenerInterface* listenerComponent = Cast<IEventListenerInterface>(components[i]);
 			if (listenerComponent && listeners.Contains(listenerComponent))
 			{
 				listenerComponent->OnEventCalled(payload);
@@ -112,7 +112,7 @@ void UObsEvent::CallListenerComponents(AActor* actor, UObsPayload* payload)
 	}
 }
 
-void UObsEvent::CallListenerWidgets(UUserWidget* widget, UObsPayload* payload)
+void UEvent::CallListenerWidgets(UUserWidget* widget, UEventsSystemPayload* payload)
 {
     if (!widget)
     {
@@ -126,7 +126,7 @@ void UObsEvent::CallListenerWidgets(UUserWidget* widget, UObsPayload* payload)
     {
         if (widgets[i])
         {
-            IObsInterfaceListener* listenerComponent = Cast<IObsInterfaceListener>(widgets[i]);
+            IEventListenerInterface* listenerComponent = Cast<IEventListenerInterface>(widgets[i]);
             if (listenerComponent && listeners.Contains(listenerComponent))
             {
                 listenerComponent->OnEventCalled(payload);

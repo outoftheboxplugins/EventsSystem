@@ -5,36 +5,36 @@
 #include "ObsEvent.h"
 #include "UObject/Interface.h"
 #include "GameFramework/Actor.h"
-#include "ObsInterfaceListener.generated.h"
+#include "EventListenerInterface.generated.h"
 
 /**
  * Interface for creating Event listeners of any type.
  */
 //TODO: Hide more categories on the classes inherited from this.
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEventCalled);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEventPayLoadCalled, class UObsPayload*, Payload);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEventsSystemPayloadCalled, class UEventsSystemPayload*, Payload);
 
-class UObsEvent;
+class UEvent;
 
 UINTERFACE(meta = (CannotImplementInterfaceInBlueprint))
-class UObsInterfaceListener : public UInterface
+class UEventListenerInterface : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class IObsInterfaceListener
+class IEventListenerInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Adds the current listener to the event's listeners
-	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
-	virtual void RegisterListener(UObsEvent* ObsEvent) const;
+	UFUNCTION(BlueprintCallable, Category = "EventsSystem")
+	virtual void RegisterListener(UEvent* ObsEvent) const;
 
 	// Removes the current listener from the event's listeners
-	UFUNCTION(BlueprintCallable, Category = "ObsEvents")
-	virtual void UnregisterListener(UObsEvent* ObsEvent) const;
+	UFUNCTION(BlueprintCallable, Category = "EventsSystem")
+	virtual void UnregisterListener(UEvent* ObsEvent) const;
 
 	// Sends the invoke to the delegate of the event.
-	virtual void OnEventCalled(UObsPayload* payload) const {}
+	virtual void OnEventCalled(UEventsSystemPayload* payload) const {}
 };

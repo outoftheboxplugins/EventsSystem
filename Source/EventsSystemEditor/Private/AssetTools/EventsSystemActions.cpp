@@ -33,26 +33,26 @@ void FObsEventActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilde
 {
 	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
 
-	auto ObsEvents = GetTypedWeakObjectPtrs<UObsEvent>(InObjects);
+	auto EventsSystem = GetTypedWeakObjectPtrs<UEvent>(InObjects);
 
 	MenuBuilder.AddMenuEntry(
-		LOCTEXT("ObsEvent_InvokeEvent", "Debug Invoke Event"),
-		LOCTEXT("ObsEvent_InvokeEventToolTip", "Simulate an invoke event for this event."),
+		LOCTEXT("Event_InvokeEvent", "Debug Invoke Event"),
+		LOCTEXT("Event_InvokeEventToolTip", "Simulate an invoke event for this event."),
 		FSlateIcon(),
 		FUIAction(
 			FExecuteAction::CreateLambda([=] {
-		for (auto& Obsevent : ObsEvents)
+		for (auto& Event : EventsSystem)
 		{
-			if (Obsevent.IsValid())
+			if (Event.IsValid())
 			{
-				Obsevent->DebugInvoke();
+				Event->DebugInvoke();
 			}
 		}
 	}),
 			FCanExecuteAction::CreateLambda([=] {
-		for (auto& Obsevent : ObsEvents)
+		for (auto& Event : EventsSystem)
 		{
-			if (Obsevent.IsValid())
+			if (Event.IsValid())
 			{
 				return true;
 			}
@@ -75,7 +75,7 @@ FText FObsEventActions::GetName() const
 
 UClass* FObsEventActions::GetSupportedClass() const
 {
-	return UObsEvent::StaticClass();
+	return UEvent::StaticClass();
 }
 
 FColor FObsEventActions::GetTypeColor() const
@@ -96,9 +96,9 @@ void FObsEventActions::OpenAssetEditor(const TArray<UObject *>& InObjects, TShar
 
 	for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
 	{
-		auto ObsEvent = Cast<UObsEvent>(*ObjIt);
+		auto Event = Cast<UEvent>(*ObjIt);
 
-		if (ObsEvent != nullptr)
+		if (Event != nullptr)
 		{
 			TSharedRef<FObsEventEditorToolkit> EditorToolkit = MakeShareable(new FObsEventEditorToolkit(Style));
 			EditorToolkit->Initialize(ObsEvent, Mode, EditWithinLevelEditor);

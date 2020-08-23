@@ -1,10 +1,10 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "ObsComponentListener.h"
+#include "EventListenerComponent.h"
 #include "ObsEvent.h"
 #include "GameFramework/Actor.h"
 
-void UObsComponentListener::BeginPlay()
+void UEventListenerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -15,16 +15,16 @@ void UObsComponentListener::BeginPlay()
 	}
 }
 
-void UObsComponentListener::BeginDestroy()
+void UEventListenerComponent::BeginDestroy()
 {
 	Super::BeginDestroy();
 
 	UnregisterListener(eventToListen);
 }
 
-void UObsComponentListener::OnEventCalled(UObsPayload* payload) const
+void UEventListenerComponent::OnEventCalled(UEventsSystemPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
-	OnEventPayloadInvoked.Broadcast(payload);
+	OnEventsSystemPayloadInvoked.Broadcast(payload);
 }
 

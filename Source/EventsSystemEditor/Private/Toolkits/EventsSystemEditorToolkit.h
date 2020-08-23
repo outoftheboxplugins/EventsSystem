@@ -11,7 +11,7 @@ class FSpawnTabArgs;
 class ISlateStyle;
 class IToolkitHost;
 class SDockTab;
-class UObsEvent;
+class UEvent;
 
 
 /**
@@ -43,7 +43,7 @@ public:
 	 * @param InMode The mode to create the toolkit in.
 	 * @param InToolkitHost The toolkit host.
 	 */
-	void Initialize(UObsEvent* InObsEvent, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
+	void Initialize(UEvent* InObsEvent, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
 
 public:
 
@@ -83,7 +83,7 @@ private:
 private:
 
 	/** The text asset being edited. */
-	UObsEvent* ObsEvent;
+	UEvent* ObsEvent;
 
 	/** Pointer to the style set to use for toolkits. */
 	TSharedRef<ISlateStyle> Style;

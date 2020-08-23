@@ -46,7 +46,7 @@ FObsEventEditorToolkit::~FObsEventEditorToolkit()
 /* FObsEventEditorToolkit interface
  *****************************************************************************/
 
-void FObsEventEditorToolkit::Initialize(UObsEvent* InObsEvent, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
+void FObsEventEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
 {
 	ObsEvent = InObsEvent;
 

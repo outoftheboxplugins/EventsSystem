@@ -5,36 +5,36 @@
 #include "Components/ActorComponent.h"
 
 #include "CoreMinimal.h"
-#include "ObsInterfaceListener.h"
-#include "ObsComponentListener.generated.h"
+#include "EventListenerInterface.h"
+#include "EventListenerComponent.generated.h"
 
-class UObsEvent;
+class UEvent;
 
 /**
  * Component listening to event calls.
  */
 
-UCLASS( ClassGroup=(Custom), Category = "ObsEvents", BlueprintType, Blueprintable, hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering", "Sockets"), meta=(BlueprintSpawnableComponent) )
-class OBSEVENT_API UObsComponentListener : public UActorComponent, public IObsInterfaceListener
+UCLASS( ClassGroup=(Custom), Category = "EventsSystem", BlueprintType, Blueprintable, hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering", "Sockets"), meta=(BlueprintSpawnableComponent) )
+class EVENTSSYSTEM_API UEventListenerComponent : public UActorComponent, public IEventListenerInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Event to listen to.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ObsEvents")
-	UObsEvent* eventToListen;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
+	UEvent* eventToListen;
 
 	// Should the listener register on start?
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "ObsEvents")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
 	bool bShouldRegisterOnStart = true;
 
 	// Flow of action when the event is called.
-	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
+	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
 	FOnEventCalled OnEventInvoked;
 	
 	// Flow if action when the event is called. (Including payload)
-	UPROPERTY(BlueprintAssignable, Category = "ObsEvents")
-	FOnEventPayLoadCalled OnEventPayloadInvoked;
+	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
+	FOnEventsSystemPayloadCalled OnEventsSystemPayloadInvoked;
 
 protected:
 	// Called at the start of the game.
@@ -45,5 +45,5 @@ protected:
 
 public:
 	// Called when the event is invoked.
-	virtual void OnEventCalled(UObsPayload* payload) const override;
+	virtual void OnEventCalled(UEventsSystemPayload* payload) const override;
 };

@@ -2,10 +2,10 @@
 #include "BlueprintGraph/Classes/K2Node_ConstructObjectFromClass.h"
 
 #include "CoreMinimal.h"
-#include "K2Node_ConstructObsPayload.generated.h"
+#include "K2Node_ConstructEventsSystemPayload.generated.h"
 
 UCLASS(MinimalAPI, meta = (Keywords = "event invoke obs"))
-class UK2Node_ConstructObsPayload : public UK2Node_ConstructObjectFromClass
+class UK2Node_ConstructEventsSystemPayload : public UK2Node_ConstructObjectFromClass
 {
     GENERATED_UCLASS_BODY()
 public:

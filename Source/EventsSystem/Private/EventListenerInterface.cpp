@@ -1,8 +1,8 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "ObsInterfaceListener.h"
+#include "EventListenerInterface.h"
 
-void IObsInterfaceListener::RegisterListener(UObsEvent* ObsEvent) const
+void IEventListenerInterface::RegisterListener(UEvent* ObsEvent) const
 {
 	if (IsValid(ObsEvent))
 	{
@@ -14,7 +14,7 @@ void IObsInterfaceListener::RegisterListener(UObsEvent* ObsEvent) const
 	}
 }
 
-void IObsInterfaceListener::UnregisterListener(UObsEvent* ObsEvent) const
+void IEventListenerInterface::UnregisterListener(UEvent* ObsEvent) const
 {
 	if (IsValid(ObsEvent))
 	{

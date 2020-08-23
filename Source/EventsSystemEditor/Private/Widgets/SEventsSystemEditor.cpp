@@ -24,7 +24,7 @@ SObsEventEditor::~SObsEventEditor()
 }
 
 
-void SObsEventEditor::Construct(const FArguments& InArgs, UObsEvent* InObsEvent, const TSharedRef<ISlateStyle>& InStyle)
+void SObsEventEditor::Construct(const FArguments& InArgs, UEvent* InObsEvent, const TSharedRef<ISlateStyle>& InStyle)
 {
 	ObsEvent = InObsEvent;
 

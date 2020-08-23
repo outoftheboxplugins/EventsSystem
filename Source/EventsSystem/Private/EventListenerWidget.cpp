@@ -1,10 +1,10 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "ObsWidgetListener.h"
+#include "EventListenerWidget.h"
 #include "ObsEvent.h"
 #include "GameFramework/Actor.h"
 
-void UObsWidgetListener::NativeConstruct()
+void UEventListenerWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
@@ -15,14 +15,14 @@ void UObsWidgetListener::NativeConstruct()
 	}
 }
 
-UObsWidgetListener::~UObsWidgetListener()
+UEventListenerWidget::~UEventListenerWidget()
 {
 	UnregisterListener(eventToListen);
 }
 
-void UObsWidgetListener::OnEventCalled(UObsPayload* payload) const
+void UEventListenerWidget::OnEventCalled(UEventsSystemPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
-	OnEventPayloadInvoked.Broadcast(payload);
+	OnEventsSystemPayloadInvoked.Broadcast(payload);
 }
 
