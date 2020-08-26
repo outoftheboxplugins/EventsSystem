@@ -2,4 +2,4 @@
 
 #include "EventsSystemModule.h"
 
-IMPLEMENT_MODULE(FObsEventModule, EventsSystem);
+IMPLEMENT_MODULE(FEventsSystemModule, EventsSystem);

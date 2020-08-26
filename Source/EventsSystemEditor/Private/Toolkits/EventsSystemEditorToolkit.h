@@ -39,11 +39,11 @@ public:
 	/**
 	 * Initializes the editor tool kit.
 	 *
-	 * @param InObsEvent The UObsEvent asset to edit.
+	 * @param InEvent The UEvent asset to edit.
 	 * @param InMode The mode to create the toolkit in.
 	 * @param InToolkitHost The toolkit host.
 	 */
-	void Initialize(UEvent* InObsEvent, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
+	void Initialize(UEvent* InEvent, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
 
 public:
 
@@ -83,7 +83,7 @@ private:
 private:
 
 	/** The text asset being edited. */
-	UEvent* ObsEvent;
+	UEvent* Event;
 
 	/** Pointer to the style set to use for toolkits. */
 	TSharedRef<ISlateStyle> Style;

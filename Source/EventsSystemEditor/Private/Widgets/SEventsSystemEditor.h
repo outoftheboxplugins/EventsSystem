@@ -13,7 +13,7 @@ class UEvent;
 
 
 /**
- * Implements the UObsEvent asset editor widget.
+ * Implements the UEvent asset editor widget.
  */
 class SEventsSystemEditor
 	: public SCompoundWidget
@@ -32,10 +32,10 @@ public:
 	 * Construct this widget
 	 *
 	 * @param InArgs The declaration data for this widget.
-	 * @param InObsEvent The UObsEvent asset to edit.
+	 * @param InEvent The UEvent asset to edit.
 	 * @param InStyleSet The style set to use.
 	 */
-	void Construct(const FArguments& InArgs, UEvent* InObsEvent, const TSharedRef<ISlateStyle>& InStyle);
+	void Construct(const FArguments& InArgs, UEvent* InEvent, const TSharedRef<ISlateStyle>& InStyle);
 
 private:
 
@@ -46,7 +46,7 @@ private:
 	void HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType);
 
 	/** Callback for property changes in the text asset. */
-	void HandleObsEventPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent);
+	void HandleEventPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent);
 
 private:
 
@@ -54,5 +54,5 @@ private:
 	TSharedPtr<SMultiLineEditableTextBox> EditableTextBox;
 
 	/** Pointer to the text asset that is being edited. */
-	UEvent* ObsEvent;
+	UEvent* Event;
 };

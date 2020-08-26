@@ -29,7 +29,7 @@ namespace EventsSystemEditor
  *****************************************************************************/
 
 FEventsSystemEditorToolkit::FEventsSystemEditorToolkit(const TSharedRef<ISlateStyle>& InStyle)
-	: ObsEvent(nullptr)
+	: Event(nullptr)
 	, Style(InStyle)
 { }
 
@@ -46,12 +46,12 @@ FEventsSystemEditorToolkit::~FEventsSystemEditorToolkit()
 /* FEventsSystemEditorToolkit interface
  *****************************************************************************/
 
-void FEventsSystemEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
+void FEventsSystemEditorToolkit::Initialize(UEvent* InEvent, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
 {
-	ObsEvent = InObsEvent;
+	Event = InEvent;
 
 	// Support undo/redo
-	ObsEvent->SetFlags(RF_Transactional);
+	Event->SetFlags(RF_Transactional);
 	GEditor->RegisterForUndo(this);
 
 	// create tab layout
@@ -90,7 +90,7 @@ void FEventsSystemEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMo
 		Layout,
 		true /*bCreateDefaultStandaloneMenu*/,
 		true /*bCreateDefaultToolbar*/,
-		InObsEvent
+		InEvent
 	);
 
 	RegenerateMenusAndToolbars();
@@ -151,7 +151,7 @@ FLinearColor FEventsSystemEditorToolkit::GetWorldCentricTabColorScale() const
 
 FString FEventsSystemEditorToolkit::GetWorldCentricTabPrefix() const
 {
-	return LOCTEXT("WorldCentricTabPrefix", "ObsEvent ").ToString();
+	return LOCTEXT("WorldCentricTabPrefix", "EventsSystem").ToString();
 }
 
 
@@ -160,7 +160,7 @@ FString FEventsSystemEditorToolkit::GetWorldCentricTabPrefix() const
 
 void FEventsSystemEditorToolkit::AddReferencedObjects(FReferenceCollector& Collector)
 {
-	Collector.AddReferencedObject(ObsEvent);
+	Collector.AddReferencedObject(Event);
 }
 
 
@@ -186,7 +186,7 @@ TSharedRef<SDockTab> FEventsSystemEditorToolkit::HandleTabManagerSpawnTab(const 
 
 	if (TabIdentifier == EventsSystemEditor::TabId)
 	{
-		TabWidget = SNew(SEventsSystemEditor, ObsEvent, Style);
+		TabWidget = SNew(SEventsSystemEditor, Event, Style);
 	}
 
 	return SNew(SDockTab)

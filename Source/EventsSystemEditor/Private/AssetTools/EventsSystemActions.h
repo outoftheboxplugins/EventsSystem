@@ -9,7 +9,7 @@ class ISlateStyle;
 
 
 /**
- * Implements an action for UObsEvent assets.
+ * Implements an action for UEvent assets.
  */
 class FEventsSystemActions
 	: public FAssetTypeActions_Base

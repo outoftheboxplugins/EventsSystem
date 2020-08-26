@@ -9,7 +9,7 @@
 
 
 /**
- * Implements a factory for UObsEvent objects.
+ * Implements a factory for UEvent objects.
  */
 UCLASS(hidecategories=Object)
 class UEventsSystemFactoryNew

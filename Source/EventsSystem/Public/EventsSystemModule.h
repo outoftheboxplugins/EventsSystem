@@ -5,9 +5,9 @@
 
 
 /**
- * Implements the ObsEvent module.
+ * Implements the EventsSystem module.
  */
-class FObsEventModule
+class FEventsSystemModule
 	: public IModuleInterface
 {
 public:

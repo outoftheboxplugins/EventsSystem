@@ -72,9 +72,9 @@ protected:
 
 		if (SettingsModule != nullptr)
 		{
-			ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Editor", "Plugins", "ObsEvent",
-				LOCTEXT("EventsSystemettingsName", "Obs Events System"),
-				LOCTEXT("EventsSystemettingsDescription", "Configure Obs Events System"),
+			ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Editor", "Plugins", "EventsSystem",
+				LOCTEXT("EventsSystemettingsName", "Events System"),
+				LOCTEXT("EventsSystemettingsDescription", "Configure Events System"),
 				GetMutableDefault<UEventsSystemEditorSettings>()
 			);
 		}
@@ -103,7 +103,7 @@ protected:
 
 		if (SettingsModule != nullptr)
 		{
-			SettingsModule->UnregisterSettings("Editor", "Plugins", "ObsEvent");
+			SettingsModule->UnregisterSettings("Editor", "Plugins", "EventsSystem");
 		}
 	}
 

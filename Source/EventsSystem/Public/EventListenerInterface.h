@@ -29,11 +29,11 @@ class IEventListenerInterface
 public:
 	// Adds the current listener to the event's listeners
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem")
-	virtual void RegisterListener(UEvent* ObsEvent) const;
+	virtual void RegisterListener(UEvent* Event) const;
 
 	// Removes the current listener from the event's listeners
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem")
-	virtual void UnregisterListener(UEvent* ObsEvent) const;
+	virtual void UnregisterListener(UEvent* Event) const;
 
 	// Sends the invoke to the delegate of the event.
 	virtual void OnEventCalled(UEventsSystemPayload* payload) const {}

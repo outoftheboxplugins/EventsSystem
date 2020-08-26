@@ -2,11 +2,11 @@
 
 #include "EventListenerInterface.h"
 
-void IEventListenerInterface::RegisterListener(UEvent* ObsEvent) const
+void IEventListenerInterface::RegisterListener(UEvent* Event) const
 {
-	if (IsValid(ObsEvent))
+	if (IsValid(Event))
 	{
-		ObsEvent->RegisterListener(this);
+		Event->RegisterListener(this);
 	}
 	else
 	{
@@ -14,11 +14,11 @@ void IEventListenerInterface::RegisterListener(UEvent* ObsEvent) const
 	}
 }
 
-void IEventListenerInterface::UnregisterListener(UEvent* ObsEvent) const
+void IEventListenerInterface::UnregisterListener(UEvent* Event) const
 {
-	if (IsValid(ObsEvent))
+	if (IsValid(Event))
 	{
-		ObsEvent->UnRegisterListener(this);
+		Event->UnRegisterListener(this);
 	}
 	else
 	{

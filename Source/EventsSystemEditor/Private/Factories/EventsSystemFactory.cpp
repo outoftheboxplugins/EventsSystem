@@ -25,16 +25,16 @@ UEventsSystemFactory::UEventsSystemFactory( const FObjectInitializer& ObjectInit
 
 UObject* UEventsSystemFactory::FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
 {
-	UEvent* ObsEvent = nullptr;
+	UEvent* Event = nullptr;
 	FString TextString;
 
 	if (FFileHelper::LoadFileToString(TextString, *Filename))
 	{
-		ObsEvent = NewObject<UEvent>(InParent, InClass, InName, Flags);
-		ObsEvent->Description = FText::FromString(TextString);
+		Event = NewObject<UEvent>(InParent, InClass, InName, Flags);
+		Event->Description = FText::FromString(TextString);
 	}
 
 	bOutOperationCanceled = false;
 
-	return ObsEvent;
+	return Event;
 }

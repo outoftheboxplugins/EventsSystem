@@ -4,7 +4,7 @@
 #include "CoreMinimal.h"
 #include "K2Node_InvokeEventPayload.generated.h"
 
-UCLASS(MinimalAPI, meta = (Keywords = "event invoke obs"))
+UCLASS(MinimalAPI, meta = (Keywords = "events system invoke event"))
 class UK2Node_InvokeEventPayload : public UK2Node_ConstructObjectFromClass
 {
     GENERATED_UCLASS_BODY()

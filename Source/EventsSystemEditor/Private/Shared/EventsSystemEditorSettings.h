@@ -17,19 +17,19 @@ class EVENTSSYSTEMEDITOR_API UEventsSystemEditorSettings
 
 public:
 
-	/** Color of the ObsEvent editor's background. */
+	/** Color of the EventsSystem editor's background. */
 	UPROPERTY(config, EditAnywhere, Category=Appearance)
 	FSlateColor BackgroundColor;
 
-	/** Color of the ObsEvent editor's text. */
+	/** Color of the EventsSystem editor's text. */
 	UPROPERTY(config, EditAnywhere, Category=Appearance)
 	FSlateColor ForegroundColor;
 
-	/** The font to use in the ObsEvent editor window. */
+	/** The font to use in the EventsSystem editor window. */
 	UPROPERTY(config, EditAnywhere, Category=Appearance)
 	FSlateFontInfo Font;
 
-	/** The margin around the ObsEvent editor window (in pixels). */
+	/** The margin around the EventsSystem editor window (in pixels). */
 	UPROPERTY(config, EditAnywhere, Category=Appearance)
 	float Margin;
 

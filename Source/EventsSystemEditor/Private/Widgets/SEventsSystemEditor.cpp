@@ -24,9 +24,9 @@ SEventsSystemEditor::~SEventsSystemEditor()
 }
 
 
-void SEventsSystemEditor::Construct(const FArguments& InArgs, UEvent* InObsEvent, const TSharedRef<ISlateStyle>& InStyle)
+void SEventsSystemEditor::Construct(const FArguments& InArgs, UEvent* InEvent, const TSharedRef<ISlateStyle>& InStyle)
 {
-	ObsEvent = InObsEvent;
+	Event = InEvent;
 
 	auto Settings = GetDefault<UEventsSystemEditorSettings>();
 
@@ -44,11 +44,11 @@ void SEventsSystemEditor::Construct(const FArguments& InArgs, UEvent* InObsEvent
 					.Margin((Settings != nullptr) ? Settings->Margin : 4.0f)
 					.OnTextChanged(this, &SEventsSystemEditor::HandleEditableTextBoxTextChanged)
 					.OnTextCommitted(this, &SEventsSystemEditor::HandleEditableTextBoxTextCommitted)
-					.Text(ObsEvent->Description)
+					.Text(Event->Description)
 			]
 	];
 
-	FCoreUObjectDelegates::OnObjectPropertyChanged.AddSP(this, &SEventsSystemEditor::HandleObsEventPropertyChanged);
+	FCoreUObjectDelegates::OnObjectPropertyChanged.AddSP(this, &SEventsSystemEditor::HandleEventPropertyChanged);
 }
 
 
@@ -57,21 +57,21 @@ void SEventsSystemEditor::Construct(const FArguments& InArgs, UEvent* InObsEvent
 
 void SEventsSystemEditor::HandleEditableTextBoxTextChanged(const FText& NewText)
 {
-	ObsEvent->MarkPackageDirty();
+	Event->MarkPackageDirty();
 }
 
 
 void SEventsSystemEditor::HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType)
 {
-	ObsEvent->Description = EditableTextBox->GetText();
+	Event->Description = EditableTextBox->GetText();
 }
 
 
-void SEventsSystemEditor::HandleObsEventPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent)
+void SEventsSystemEditor::HandleEventPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent)
 {
-	if (Object == ObsEvent)
+	if (Object == Event)
 	{
-		EditableTextBox->SetText(ObsEvent->Description);
+		EditableTextBox->SetText(Event->Description);
 	}
 }
 

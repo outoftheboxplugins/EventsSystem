@@ -70,7 +70,7 @@ uint32 FEventsSystemActions::GetCategories()
 
 FText FEventsSystemActions::GetName() const
 {
-	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_ObsEvent", "Obs Event");
+	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_EventsSystem", "EventsSystem");
 }
 
 UClass* FEventsSystemActions::GetSupportedClass() const
