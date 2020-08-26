@@ -15,18 +15,18 @@ class UEvent;
 /**
  * Implements the UObsEvent asset editor widget.
  */
-class SObsEventEditor
+class SEventsSystemEditor
 	: public SCompoundWidget
 {
 public:
 
-	SLATE_BEGIN_ARGS(SObsEventEditor) { }
+	SLATE_BEGIN_ARGS(SEventsSystemEditor) { }
 	SLATE_END_ARGS()
 
 public:
 
 	/** Virtual destructor. */
-	virtual ~SObsEventEditor();
+	virtual ~SEventsSystemEditor();
 
 	/**
 	 * Construct this widget

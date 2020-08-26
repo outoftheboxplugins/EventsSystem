@@ -17,14 +17,14 @@
 /**
  * Implements the visual style of the text asset editor UI.
  */
-class FObsEventEditorStyle
+class FEventsSystemEditorStyle
 	: public FSlateStyleSet
 {
 public:
 
 	/** Default constructor. */
-	 FObsEventEditorStyle()
-		 : FSlateStyleSet("ObsEventEditorStyle")
+	 FEventsSystemEditorStyle()
+		 : FSlateStyleSet("EventsSystemEditorStyle")
 	 {
 		const FVector2D Icon16x16(16.0f, 16.0f);
 		const FVector2D Icon20x20(20.0f, 20.0f);
@@ -34,13 +34,13 @@ public:
 		SetContentRoot(BaseDir / TEXT("Content"));
 
 		// set new styles here, for example...
-		//Set("ObsEventEditor.FancyButton", new IMAGE_BRUSH("icon_forward_40x", Icon40x40));
+		//Set("EventsSystemEditor.FancyButton", new IMAGE_BRUSH("icon_forward_40x", Icon40x40));
 		
 		FSlateStyleRegistry::RegisterSlateStyle(*this);
 	 }
 
 	 /** Destructor. */
-	 ~FObsEventEditorStyle()
+	 ~FEventsSystemEditorStyle()
 	 {
 		FSlateStyleRegistry::UnRegisterSlateStyle(*this);
 	 }

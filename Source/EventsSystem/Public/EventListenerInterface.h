@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ObsEvent.h"
+#include "Event.h"
 #include "UObject/Interface.h"
 #include "GameFramework/Actor.h"
 #include "EventListenerInterface.generated.h"

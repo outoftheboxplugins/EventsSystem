@@ -11,7 +11,7 @@ class ISlateStyle;
 /**
  * Implements an action for UObsEvent assets.
  */
-class FObsEventActions
+class FEventsSystemActions
 	: public FAssetTypeActions_Base
 {
 public:
@@ -21,7 +21,7 @@ public:
 	 *
 	 * @param InStyle The style set to use for asset editor toolkits.
 	 */
-	FObsEventActions(const TSharedRef<ISlateStyle>& InStyle);
+	FEventsSystemActions(const TSharedRef<ISlateStyle>& InStyle);
 
 public:
 

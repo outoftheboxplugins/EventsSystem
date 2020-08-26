@@ -17,7 +17,7 @@ class UEvent;
 /**
  * Implements an Editor toolkit for textures.
  */
-class FObsEventEditorToolkit
+class FEventsSystemEditorToolkit
 	: public FAssetEditorToolkit
 	, public FEditorUndoClient
 	, public FGCObject
@@ -29,10 +29,10 @@ public:
 	 *
 	 * @param InStyle The style set to use.
 	 */
-	FObsEventEditorToolkit(const TSharedRef<ISlateStyle>& InStyle);
+	FEventsSystemEditorToolkit(const TSharedRef<ISlateStyle>& InStyle);
 
 	/** Virtual destructor. */
-	virtual ~FObsEventEditorToolkit();
+	virtual ~FEventsSystemEditorToolkit();
 
 public:
 

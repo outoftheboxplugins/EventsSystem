@@ -12,7 +12,7 @@
  */
 
 UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "EventsSystem", Blueprintable)
-class Event_API UEventsSystemPayload : public UObject
+class EVENTSSYSTEM_API UEventsSystemPayload : public UObject
 {
 	GENERATED_BODY()
 };

@@ -1,21 +1,21 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "ObsEventActions.h"
+#include "EventsSystemActions.h"
 
 #include "Framework/MultiBox/MultiBoxBuilder.h"
-#include "ObsEvent.h"
+#include "Event.h"
 #include "Styling/SlateStyle.h"
 
-#include "ObsEventEditorToolkit.h"
+#include "EventsSystemEditorToolkit.h"
 
 
 #define LOCTEXT_NAMESPACE "AssetTypeActions"
 
 
-/* FObsEventActions constructors
+/* FEventsSystemActions constructors
  *****************************************************************************/
 
-FObsEventActions::FObsEventActions(const TSharedRef<ISlateStyle>& InStyle)
+FEventsSystemActions::FEventsSystemActions(const TSharedRef<ISlateStyle>& InStyle)
 	: Style(InStyle)
 { }
 
@@ -23,13 +23,13 @@ FObsEventActions::FObsEventActions(const TSharedRef<ISlateStyle>& InStyle)
 /* FAssetTypeActions_Base overrides
  *****************************************************************************/
 
-bool FObsEventActions::CanFilter()
+bool FEventsSystemActions::CanFilter()
 {
 	return true;
 }
 
 
-void FObsEventActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
+void FEventsSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
 {
 	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
 
@@ -63,32 +63,32 @@ void FObsEventActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilde
 	);
 }
 
-uint32 FObsEventActions::GetCategories()
+uint32 FEventsSystemActions::GetCategories()
 {
 	return EAssetTypeCategories::Blueprint;
 }
 
-FText FObsEventActions::GetName() const
+FText FEventsSystemActions::GetName() const
 {
 	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_ObsEvent", "Obs Event");
 }
 
-UClass* FObsEventActions::GetSupportedClass() const
+UClass* FEventsSystemActions::GetSupportedClass() const
 {
 	return UEvent::StaticClass();
 }
 
-FColor FObsEventActions::GetTypeColor() const
+FColor FEventsSystemActions::GetTypeColor() const
 {
 	return FColor::Blue;
 }
 
-bool FObsEventActions::HasActions(const TArray<UObject *>& InObjects) const
+bool FEventsSystemActions::HasActions(const TArray<UObject *>& InObjects) const
 {
 	return true;
 }
 
-void FObsEventActions::OpenAssetEditor(const TArray<UObject *>& InObjects, TSharedPtr<class IToolkitHost> EditWithinLevelEditor /* = TSharedPtr<IToolkitHost>() */)
+void FEventsSystemActions::OpenAssetEditor(const TArray<UObject *>& InObjects, TSharedPtr<class IToolkitHost> EditWithinLevelEditor /* = TSharedPtr<IToolkitHost>() */)
 {
 	EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid()
 		? EToolkitMode::WorldCentric
@@ -100,8 +100,8 @@ void FObsEventActions::OpenAssetEditor(const TArray<UObject *>& InObjects, TShar
 
 		if (Event != nullptr)
 		{
-			TSharedRef<FObsEventEditorToolkit> EditorToolkit = MakeShareable(new FObsEventEditorToolkit(Style));
-			EditorToolkit->Initialize(ObsEvent, Mode, EditWithinLevelEditor);
+			TSharedRef<FEventsSystemEditorToolkit> EditorToolkit = MakeShareable(new FEventsSystemEditorToolkit(Style));
+			EditorToolkit->Initialize(Event, Mode, EditWithinLevelEditor);
 		}
 	}
 }

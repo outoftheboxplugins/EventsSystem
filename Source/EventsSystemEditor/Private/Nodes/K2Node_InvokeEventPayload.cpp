@@ -1,4 +1,4 @@
-#include "K2Node_ConstructEventsSystemPayload.h"
+#include "K2Node_InvokeEventPayload.h"
 
 #include "KismetCompiler.h"
 #include "BlueprintActionDatabaseRegistrar.h"
@@ -6,12 +6,12 @@
 #include "K2Node_CallFunction.h"
 #include "EventsSystemPayload.h"
 #include "Kismet2/BlueprintEditorUtils.h"
-#include "ObsEvent.h"
+#include "Event.h"
 #include "Misc/AssertionMacros.h"
 #include "Kismet/GameplayStatics.h"
 #include "UObject/UObjectGlobals.h"
 
-#define LOCTEXT_NAMESPACE "K2Node_ConstructEventsSystemPayload"
+#define LOCTEXT_NAMESPACE "K2Node_InvokeEventPayload"
 
 struct FGetPinName {
 	static const FName& GetEventTextPin() {
@@ -20,46 +20,46 @@ struct FGetPinName {
 	}
 };
 
-UK2Node_ConstructEventsSystemPayload::UK2Node_ConstructEventsSystemPayload(const FObjectInitializer& ObjectInitializer)
+UK2Node_InvokeEventPayload::UK2Node_InvokeEventPayload(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	NodeTooltip = LOCTEXT("ConstructEventsSystemPayloadNodeTooltip", "Create a new payload and invokes an event with it.");
+	NodeTooltip = LOCTEXT("InvokeEventPayloadNodeTooltip", "Create a new payload and invokes an event with it.");
 }
 
-FText UK2Node_ConstructEventsSystemPayload::GetBaseNodeTitle() const
+FText UK2Node_InvokeEventPayload::GetBaseNodeTitle() const
 {
-	return LOCTEXT("ConstructEventsSystemPayload_BaseTitle", "Invoke Event with Payload");
+	return LOCTEXT("InvokeEventPayload_BaseTitle", "Invoke Event with Payload");
 }
 
-FText UK2Node_ConstructEventsSystemPayload::GetNodeTitleFormat() const
+FText UK2Node_InvokeEventPayload::GetNodeTitleFormat() const
 {
-	return LOCTEXT("ConstructEventsSystemPayload", "Invoke Event with {ClassName}");
+	return LOCTEXT("InvokeEventPayload", "Invoke Event with {ClassName}");
 }
 
-UClass* UK2Node_ConstructEventsSystemPayload::GetClassPinBaseClass() const
+UClass* UK2Node_InvokeEventPayload::GetClassPinBaseClass() const
 {
 	return UEventsSystemPayload::StaticClass();
 }
 
-UEdGraphPin* UK2Node_ConstructEventsSystemPayload::GetEventPin() const
+UEdGraphPin* UK2Node_InvokeEventPayload::GetEventPin() const
 {
 	UEdGraphPin* Pin = FindPin(FGetPinName::GetEventTextPin());
 	ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
 	return Pin;
 }
 
-FText UK2Node_ConstructEventsSystemPayload::GetMenuCategory() const
+FText UK2Node_InvokeEventPayload::GetMenuCategory() const
 {
-	return LOCTEXT("ConstructEventsSystemPayloadK2Node_MenuCategory", "EventsSystem");
+	return LOCTEXT("InvokeEventPayloadK2Node_MenuCategory", "EventsSystem");
 }
 
-bool UK2Node_ConstructEventsSystemPayload::IsSpawnVarPin(UEdGraphPin* Pin) const
+bool UK2Node_InvokeEventPayload::IsSpawnVarPin(UEdGraphPin* Pin) const
 {
 	bool eventPinCheck = (Pin->PinName != FGetPinName::GetEventTextPin());
 	return eventPinCheck && Super::IsSpawnVarPin(Pin);
 }
 
-void UK2Node_ConstructEventsSystemPayload::AllocateDefaultPins()
+void UK2Node_InvokeEventPayload::AllocateDefaultPins()
 {
 	Super::AllocateDefaultPins();
 
@@ -85,7 +85,7 @@ void UK2Node_ConstructEventsSystemPayload::AllocateDefaultPins()
 	}
 }
 
-void UK2Node_ConstructEventsSystemPayload::ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
+void UK2Node_InvokeEventPayload::ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
 {
 	Super::ExpandNode(CompilerContext, SourceGraph);
 
@@ -148,12 +148,12 @@ void UK2Node_ConstructEventsSystemPayload::ExpandNode(class FKismetCompilerConte
 	}
 }
 
-FText UK2Node_ConstructEventsSystemPayload::GetNodeTitle(ENodeTitleType::Type TitleType) const
+FText UK2Node_InvokeEventPayload::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
 	FText superValue = Super::GetNodeTitle(TitleType);
 	if (!superValue.CompareTo(FText::FromString("Construct NONE")))
 	{
-		return  LOCTEXT("ConstructEventsSystemPayloadK2Node_NoPayload", "Invoke Event without payload");
+		return  LOCTEXT("InvokeEventPayloadK2Node_NoPayload", "Invoke Event without payload");
 	}
 	else
 	{

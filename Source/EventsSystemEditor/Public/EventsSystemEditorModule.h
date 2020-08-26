@@ -8,18 +8,18 @@
 #include "Templates/SharedPointer.h"
 #include "Toolkits/AssetEditorToolkit.h"
 
-#include "AssetTools/ObsEventActions.h"
-#include "Styles/ObsEventEditorStyle.h"
-#include "ObsEventEditorSettings.h"
+#include "AssetTools/EventsSystemActions.h"
+#include "Styles/EventsSystemEditorStyle.h"
+#include "EventsSystemEditorSettings.h"
 
 
-#define LOCTEXT_NAMESPACE "FObsEventEditorModule"
+#define LOCTEXT_NAMESPACE "FEventsSystemEditorModule"
 
 
 /**
- * Implements the ObsEventEditor module.
+ * Implements the EventsSystemEditor module.
  */
-class FObsEventEditorModule
+class FEventsSystemEditorModule
 	: public IHasMenuExtensibility
 	, public IHasToolBarExtensibility
 	, public IModuleInterface
@@ -35,7 +35,7 @@ public:
 	//~ IModuleInterface interface
 	virtual void StartupModule() override
 	{
-		Style = MakeShareable(new FObsEventEditorStyle());
+		Style = MakeShareable(new FEventsSystemEditorStyle());
 
 		RegisterAssetTools();
 		RegisterMenuExtensions();
@@ -55,7 +55,7 @@ protected:
 	void RegisterAssetTools()
 	{
 		IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
-		RegisterAssetTypeAction(AssetTools, MakeShareable(new FObsEventActions(Style.ToSharedRef())));
+		RegisterAssetTypeAction(AssetTools, MakeShareable(new FEventsSystemActions(Style.ToSharedRef())));
 	}
 
 	/** Registers a single asset type action. */
@@ -75,7 +75,7 @@ protected:
 			ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Editor", "Plugins", "ObsEvent",
 				LOCTEXT("EventsSystemettingsName", "Obs Events System"),
 				LOCTEXT("EventsSystemettingsDescription", "Configure Obs Events System"),
-				GetMutableDefault<UObsEventEditorSettings>()
+				GetMutableDefault<UEventsSystemEditorSettings>()
 			);
 		}
 	}
@@ -139,7 +139,7 @@ private:
 };
 
 
-IMPLEMENT_MODULE(FObsEventEditorModule, ObsEventEditor);
+IMPLEMENT_MODULE(FEventsSystemEditorModule, EventsSystemEditor);
 
 
 #undef LOCTEXT_NAMESPACE

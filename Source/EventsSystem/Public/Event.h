@@ -18,7 +18,7 @@ class UEventsSystemPayload;
  */
 
 UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "EventsSystem", Blueprintable)
-class Event_API UEvent : public UObject
+class EVENTSSYSTEM_API UEvent : public UObject
 {
 	GENERATED_BODY()
 	

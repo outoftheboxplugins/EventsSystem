@@ -5,14 +5,14 @@
 #include "Factories/Factory.h"
 #include "UObject/ObjectMacros.h"
 
-#include "ObsEventFactoryNew.generated.h"
+#include "EventsSystemFactoryNew.generated.h"
 
 
 /**
  * Implements a factory for UObsEvent objects.
  */
 UCLASS(hidecategories=Object)
-class UObsEventFactoryNew
+class UEventsSystemFactoryNew
 	: public UFactory
 {
 	GENERATED_UCLASS_BODY()

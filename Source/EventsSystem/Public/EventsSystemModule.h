@@ -22,6 +22,3 @@ public:
 		return true;
 	}
 };
-
-
-IMPLEMENT_MODULE(FObsEventModule, ObsEvent);

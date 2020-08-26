@@ -6,11 +6,11 @@
 #include "Styling/SlateColor.h"
 #include "UObject/ObjectMacros.h"
 
-#include "ObsEventEditorSettings.generated.h"
+#include "EventsSystemEditorSettings.generated.h"
 
 
 UCLASS(config=Editor)
-class OBSEVENTEDITOR_API UObsEventEditorSettings
+class EVENTSSYSTEMEDITOR_API UEventsSystemEditorSettings
 	: public UObject
 {
 	GENERATED_BODY()
@@ -36,5 +36,5 @@ public:
 public:
 
 	/** Default constructor. */
-	UObsEventEditorSettings();
+	UEventsSystemEditorSettings();
 };

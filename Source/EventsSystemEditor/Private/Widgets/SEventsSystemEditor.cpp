@@ -1,34 +1,34 @@
 // Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
-#include "SObsEventEditor.h"
+#include "SEventsSystemEditor.h"
 
 #include "Fonts/SlateFontInfo.h"
 #include "Internationalization/Text.h"
-#include "ObsEvent.h"
+#include "Event.h"
 #include "UObject/Class.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Input/SMultiLineEditableTextBox.h"
 
-#include "ObsEventEditorSettings.h"
+#include "EventsSystemEditorSettings.h"
 
 
-#define LOCTEXT_NAMESPACE "SObsEventEditor"
+#define LOCTEXT_NAMESPACE "SEventsSystemEditor"
 
 
-/* SObsEventEditor interface
+/* SEventsSystemEditor interface
  *****************************************************************************/
 
-SObsEventEditor::~SObsEventEditor()
+SEventsSystemEditor::~SEventsSystemEditor()
 {
 	FCoreUObjectDelegates::OnObjectPropertyChanged.RemoveAll(this);
 }
 
 
-void SObsEventEditor::Construct(const FArguments& InArgs, UEvent* InObsEvent, const TSharedRef<ISlateStyle>& InStyle)
+void SEventsSystemEditor::Construct(const FArguments& InArgs, UEvent* InObsEvent, const TSharedRef<ISlateStyle>& InStyle)
 {
 	ObsEvent = InObsEvent;
 
-	auto Settings = GetDefault<UObsEventEditorSettings>();
+	auto Settings = GetDefault<UEventsSystemEditorSettings>();
 
 	ChildSlot
 	[
@@ -42,32 +42,32 @@ void SObsEventEditor::Construct(const FArguments& InArgs, UEvent* InObsEvent, co
 					.Font((Settings != nullptr) ? Settings->Font : FSlateFontInfo())
 					.ForegroundColor((Settings != nullptr) ? Settings->ForegroundColor : FLinearColor::Black)
 					.Margin((Settings != nullptr) ? Settings->Margin : 4.0f)
-					.OnTextChanged(this, &SObsEventEditor::HandleEditableTextBoxTextChanged)
-					.OnTextCommitted(this, &SObsEventEditor::HandleEditableTextBoxTextCommitted)
+					.OnTextChanged(this, &SEventsSystemEditor::HandleEditableTextBoxTextChanged)
+					.OnTextCommitted(this, &SEventsSystemEditor::HandleEditableTextBoxTextCommitted)
 					.Text(ObsEvent->Description)
 			]
 	];
 
-	FCoreUObjectDelegates::OnObjectPropertyChanged.AddSP(this, &SObsEventEditor::HandleObsEventPropertyChanged);
+	FCoreUObjectDelegates::OnObjectPropertyChanged.AddSP(this, &SEventsSystemEditor::HandleObsEventPropertyChanged);
 }
 
 
-/* SObsEventEditor callbacks
+/* SEventsSystemEditor callbacks
  *****************************************************************************/
 
-void SObsEventEditor::HandleEditableTextBoxTextChanged(const FText& NewText)
+void SEventsSystemEditor::HandleEditableTextBoxTextChanged(const FText& NewText)
 {
 	ObsEvent->MarkPackageDirty();
 }
 
 
-void SObsEventEditor::HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType)
+void SEventsSystemEditor::HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType)
 {
 	ObsEvent->Description = EditableTextBox->GetText();
 }
 
 
-void SObsEventEditor::HandleObsEventPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent)
+void SEventsSystemEditor::HandleObsEventPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent)
 {
 	if (Object == ObsEvent)
 	{

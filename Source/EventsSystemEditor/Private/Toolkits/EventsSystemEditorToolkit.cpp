@@ -1,40 +1,40 @@
 // Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
-#include "ObsEventEditorToolkit.h"
+#include "EventsSystemEditorToolkit.h"
 
 #include "Editor.h"
 #include "EditorReimportHandler.h"
 #include "EditorStyleSet.h"
-#include "SObsEventEditor.h"
-#include "ObsEvent.h"
+#include "SEventsSystemEditor.h"
+#include "Event.h"
 #include "UObject/NameTypes.h"
 #include "Widgets/Docking/SDockTab.h"
 
-#define LOCTEXT_NAMESPACE "FObsEventEditorToolkit"
+#define LOCTEXT_NAMESPACE "FEventsSystemEditorToolkit"
 
-DEFINE_LOG_CATEGORY_STATIC(LogObsEventEditor, Log, All);
+DEFINE_LOG_CATEGORY_STATIC(LogEventsSystemEditor, Log, All);
 
 
 /* Local constants
  *****************************************************************************/
 
-namespace ObsEventEditor
+namespace EventsSystemEditor
 {
-	static const FName AppIdentifier("ObsEventEditorApp");
+	static const FName AppIdentifier("EventsSystemEditorApp");
 	static const FName TabId("TextEditor");
 }
 
 
-/* FObsEventEditorToolkit structors
+/* FEventsSystemEditorToolkit structors
  *****************************************************************************/
 
-FObsEventEditorToolkit::FObsEventEditorToolkit(const TSharedRef<ISlateStyle>& InStyle)
+FEventsSystemEditorToolkit::FEventsSystemEditorToolkit(const TSharedRef<ISlateStyle>& InStyle)
 	: ObsEvent(nullptr)
 	, Style(InStyle)
 { }
 
 
-FObsEventEditorToolkit::~FObsEventEditorToolkit()
+FEventsSystemEditorToolkit::~FEventsSystemEditorToolkit()
 {
 	FReimportManager::Instance()->OnPreReimport().RemoveAll(this);
 	FReimportManager::Instance()->OnPostReimport().RemoveAll(this);
@@ -43,10 +43,10 @@ FObsEventEditorToolkit::~FObsEventEditorToolkit()
 }
 
 
-/* FObsEventEditorToolkit interface
+/* FEventsSystemEditorToolkit interface
  *****************************************************************************/
 
-void FObsEventEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
+void FEventsSystemEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
 {
 	ObsEvent = InObsEvent;
 
@@ -55,7 +55,7 @@ void FObsEventEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMode::
 	GEditor->RegisterForUndo(this);
 
 	// create tab layout
-	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("Standalone_ObsEventEditor")
+	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("Standalone_EventsSystemEditor")
 		->AddArea
 		(
 			FTabManager::NewPrimaryArea()
@@ -76,7 +76,7 @@ void FObsEventEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMode::
 						->Split
 						(
 							FTabManager::NewStack()
-								->AddTab(ObsEventEditor::TabId, ETabState::OpenedTab)
+								->AddTab(EventsSystemEditor::TabId, ETabState::OpenedTab)
 								->SetHideTabWell(true)
 								->SetSizeCoefficient(0.9f)
 						)
@@ -86,7 +86,7 @@ void FObsEventEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMode::
 	FAssetEditorToolkit::InitAssetEditor(
 		InMode,
 		InToolkitHost,
-		ObsEventEditor::AppIdentifier,
+		EventsSystemEditor::AppIdentifier,
 		Layout,
 		true /*bCreateDefaultStandaloneMenu*/,
 		true /*bCreateDefaultToolbar*/,
@@ -100,56 +100,56 @@ void FObsEventEditorToolkit::Initialize(UEvent* InObsEvent, const EToolkitMode::
 /* FAssetEditorToolkit interface
  *****************************************************************************/
 
-FString FObsEventEditorToolkit::GetDocumentationLink() const
+FString FEventsSystemEditorToolkit::GetDocumentationLink() const
 {
 	return FString(TEXT("https://github.com/ue4plugins/ObsEvent"));
 }
 
 
-void FObsEventEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
+void FEventsSystemEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
 {
-	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_ObsEventEditor", "Text Asset Editor"));
+	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_EventsSystemEditor", "Text Asset Editor"));
 	auto WorkspaceMenuCategoryRef = WorkspaceMenuCategory.ToSharedRef();
 
 	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
 
-	InTabManager->RegisterTabSpawner(ObsEventEditor::TabId, FOnSpawnTab::CreateSP(this, &FObsEventEditorToolkit::HandleTabManagerSpawnTab, ObsEventEditor::TabId))
+	InTabManager->RegisterTabSpawner(EventsSystemEditor::TabId, FOnSpawnTab::CreateSP(this, &FEventsSystemEditorToolkit::HandleTabManagerSpawnTab, EventsSystemEditor::TabId))
 		.SetDisplayName(LOCTEXT("TextEditorTabName", "Text Editor"))
 		.SetGroup(WorkspaceMenuCategoryRef)
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
 }
 
 
-void FObsEventEditorToolkit::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
+void FEventsSystemEditorToolkit::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
 {
 	FAssetEditorToolkit::UnregisterTabSpawners(InTabManager);
 
-	InTabManager->UnregisterTabSpawner(ObsEventEditor::TabId);
+	InTabManager->UnregisterTabSpawner(EventsSystemEditor::TabId);
 }
 
 
 /* IToolkit interface
  *****************************************************************************/
 
-FText FObsEventEditorToolkit::GetBaseToolkitName() const
+FText FEventsSystemEditorToolkit::GetBaseToolkitName() const
 {
 	return LOCTEXT("AppLabel", "Text Asset Editor");
 }
 
 
-FName FObsEventEditorToolkit::GetToolkitFName() const
+FName FEventsSystemEditorToolkit::GetToolkitFName() const
 {
-	return FName("ObsEventEditor");
+	return FName("EventsSystemEditor");
 }
 
 
-FLinearColor FObsEventEditorToolkit::GetWorldCentricTabColorScale() const
+FLinearColor FEventsSystemEditorToolkit::GetWorldCentricTabColorScale() const
 {
 	return FLinearColor(0.3f, 0.2f, 0.5f, 0.5f);
 }
 
 
-FString FObsEventEditorToolkit::GetWorldCentricTabPrefix() const
+FString FEventsSystemEditorToolkit::GetWorldCentricTabPrefix() const
 {
 	return LOCTEXT("WorldCentricTabPrefix", "ObsEvent ").ToString();
 }
@@ -158,7 +158,7 @@ FString FObsEventEditorToolkit::GetWorldCentricTabPrefix() const
 /* FGCObject interface
  *****************************************************************************/
 
-void FObsEventEditorToolkit::AddReferencedObjects(FReferenceCollector& Collector)
+void FEventsSystemEditorToolkit::AddReferencedObjects(FReferenceCollector& Collector)
 {
 	Collector.AddReferencedObject(ObsEvent);
 }
@@ -167,26 +167,26 @@ void FObsEventEditorToolkit::AddReferencedObjects(FReferenceCollector& Collector
 /* FEditorUndoClient interface
 *****************************************************************************/
 
-void FObsEventEditorToolkit::PostUndo(bool bSuccess)
+void FEventsSystemEditorToolkit::PostUndo(bool bSuccess)
 { }
 
 
-void FObsEventEditorToolkit::PostRedo(bool bSuccess)
+void FEventsSystemEditorToolkit::PostRedo(bool bSuccess)
 {
 	PostUndo(bSuccess);
 }
 
 
-/* FObsEventEditorToolkit callbacks
+/* FEventsSystemEditorToolkit callbacks
  *****************************************************************************/
 
-TSharedRef<SDockTab> FObsEventEditorToolkit::HandleTabManagerSpawnTab(const FSpawnTabArgs& Args, FName TabIdentifier)
+TSharedRef<SDockTab> FEventsSystemEditorToolkit::HandleTabManagerSpawnTab(const FSpawnTabArgs& Args, FName TabIdentifier)
 {
 	TSharedPtr<SWidget> TabWidget = SNullWidget::NullWidget;
 
-	if (TabIdentifier == ObsEventEditor::TabId)
+	if (TabIdentifier == EventsSystemEditor::TabId)
 	{
-		TabWidget = SNew(SObsEventEditor, ObsEvent, Style);
+		TabWidget = SNew(SEventsSystemEditor, ObsEvent, Style);
 	}
 
 	return SNew(SDockTab)

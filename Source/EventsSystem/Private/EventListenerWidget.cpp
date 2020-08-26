@@ -1,7 +1,7 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #include "EventListenerWidget.h"
-#include "ObsEvent.h"
+#include "Event.h"
 #include "GameFramework/Actor.h"
 
 void UEventListenerWidget::NativeConstruct()

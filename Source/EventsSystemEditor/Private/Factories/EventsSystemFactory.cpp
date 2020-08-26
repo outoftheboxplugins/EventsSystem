@@ -1,19 +1,19 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "ObsEventFactory.h"
+#include "EventsSystemFactory.h"
 
 #include "Containers/UnrealString.h"
-#include "ObsEvent.h"
+#include "Event.h"
 #include "Misc/FileHelper.h"
 
 
-/* UObsEventFactory constructors
+/* UEventsSystemFactory constructors
  *****************************************************************************/
 
-UObsEventFactory::UObsEventFactory( const FObjectInitializer& ObjectInitializer )
+UEventsSystemFactory::UEventsSystemFactory( const FObjectInitializer& ObjectInitializer )
 	: Super(ObjectInitializer)
 {
-	Formats.Add(FString(TEXT("txt;")) + NSLOCTEXT("UObsEventFactory", "FormatTxt", "Text File").ToString());
+	Formats.Add(FString(TEXT("txt;")) + NSLOCTEXT("UEventsSystemFactory", "FormatTxt", "Text File").ToString());
 	SupportedClass = UEvent::StaticClass();
 	bCreateNew = false;
 	bEditorImport = true;
@@ -23,7 +23,7 @@ UObsEventFactory::UObsEventFactory( const FObjectInitializer& ObjectInitializer 
 /* UFactory overrides
  *****************************************************************************/
 
-UObject* UObsEventFactory::FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
+UObject* UEventsSystemFactory::FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
 {
 	UEvent* ObsEvent = nullptr;
 	FString TextString;
