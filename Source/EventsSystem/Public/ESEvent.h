@@ -6,8 +6,9 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "Math/NumericLimits.h"
+#include "Misc/Build.h"
 
-#include "Event.generated.h"
+#include "ESEvent.generated.h"
 
 class IEventListenerInterface;
 class UEventsSystemPayload;
@@ -64,7 +65,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
 	FText Description;
 
-#ifdef UE_BUILD_DEBUG || UE_EDITOR
+#if defined(UE_BUILD_DEBUG) || defined(UE_EDITOR)
 public:
 	// Invokes the event for debug purposes.
 	void DebugInvoke();

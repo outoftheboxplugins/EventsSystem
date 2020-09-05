@@ -6,7 +6,7 @@
 #include "Styling/SlateColor.h"
 #include "UObject/ObjectMacros.h"
 
-#include "EventsSystemEditorSettings.generated.h"
+#include "ESEditorSettings.generated.h"
 
 
 UCLASS(config=Editor)

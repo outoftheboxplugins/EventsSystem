@@ -1,8 +1,8 @@
 // Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
-#include "EventsSystemFactoryNew.h"
+#include "ESFactoryNew.h"
 
-#include "Event.h"
+#include "ESEvent.h"
 
 
 /* UEventsSystemFactoryNew structors

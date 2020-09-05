@@ -1,12 +1,12 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "EventsSystemActions.h"
+#include "ESActions.h"
 
 #include "Framework/MultiBox/MultiBoxBuilder.h"
-#include "Event.h"
+#include "ESEvent.h"
 #include "Styling/SlateStyle.h"
 
-#include "EventsSystemEditorToolkit.h"
+#include "ESEditorToolkit.h"
 
 
 #define LOCTEXT_NAMESPACE "AssetTypeActions"

@@ -2,20 +2,20 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Components/Widget.h"
-#include "Blueprint/UserWidget.h"
-#include "EventListenerInterface.h"
-#include "EventListenerWidget.generated.h"
+#include "Components/ActorComponent.h"
 
-/**
- * User Widget listening to event calls.
- */
+#include "CoreMinimal.h"
+#include "ESListenerInterface.h"
+#include "ESListenerComponent.generated.h"
 
 class UEvent;
-//TODO: Make this class blueprint spawnable widget
-UCLASS(ClassGroup = (Custom), Category = "EventsSystem", Blueprintable, BlueprintType, meta = (BlueprintSpawnableComponent), hidecategories = ("Slot (Canvas Panel Slot)", "Appearance", "Input", "Interaction", "Behavior", "RenderTransform", "Performance", "Clipping", "Navigation") )
-class EVENTSSYSTEM_API UEventListenerWidget : public UUserWidget, public IEventListenerInterface
+
+/**
+ * Component listening to event calls.
+ */
+
+UCLASS( ClassGroup=(Custom), Category = "EventsSystem", BlueprintType, Blueprintable, hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering", "Sockets"), meta=(BlueprintSpawnableComponent) )
+class EVENTSSYSTEM_API UEventListenerComponent : public UActorComponent, public IEventListenerInterface
 {
 	GENERATED_BODY()
 
@@ -31,18 +31,19 @@ public:
 	// Flow of action when the event is called.
 	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
 	FOnEventCalled OnEventInvoked;
-
+	
 	// Flow if action when the event is called. (Including payload)
 	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
 	FOnEventsSystemPayloadCalled OnEventsSystemPayloadInvoked;
 
-public:
+protected:
 	// Called at the start of the game.
-	virtual void NativeConstruct() override;
+	virtual void BeginPlay() override;
 
-	// Called at the end of the game.
-	~UEventListenerWidget();
+	// Called at the start of destroying.
+	virtual void BeginDestroy() override;
 
+public:
 	// Called when the event is invoked.
 	virtual void OnEventCalled(UEventsSystemPayload* payload) const override;
 };

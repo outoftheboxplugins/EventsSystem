@@ -1,15 +1,15 @@
 // Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
-#include "SEventsSystemEditor.h"
+#include "SESEditor.h"
 
 #include "Fonts/SlateFontInfo.h"
 #include "Internationalization/Text.h"
-#include "Event.h"
+#include "ESEvent.h"
 #include "UObject/Class.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Input/SMultiLineEditableTextBox.h"
 
-#include "EventsSystemEditorSettings.h"
+#include "ESEditorSettings.h"
 
 
 #define LOCTEXT_NAMESPACE "SEventsSystemEditor"

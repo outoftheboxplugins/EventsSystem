@@ -8,9 +8,9 @@
 #include "Templates/SharedPointer.h"
 #include "Toolkits/AssetEditorToolkit.h"
 
-#include "AssetTools/EventsSystemActions.h"
-#include "Styles/EventsSystemEditorStyle.h"
-#include "EventsSystemEditorSettings.h"
+#include "AssetTools/ESActions.h"
+#include "Styles/ESEditorStyle.h"
+#include "ESEditorSettings.h"
 
 
 #define LOCTEXT_NAMESPACE "FEventsSystemEditorModule"

@@ -1,12 +1,12 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "EventListenerWidget.h"
-#include "Event.h"
+#include "ESListenerComponent.h"
+#include "ESEvent.h"
 #include "GameFramework/Actor.h"
 
-void UEventListenerWidget::NativeConstruct()
+void UEventListenerComponent::BeginPlay()
 {
-	Super::NativeConstruct();
+	Super::BeginPlay();
 
 	// Register listener if wanted.
 	if (bShouldRegisterOnStart)
@@ -15,12 +15,14 @@ void UEventListenerWidget::NativeConstruct()
 	}
 }
 
-UEventListenerWidget::~UEventListenerWidget()
+void UEventListenerComponent::BeginDestroy()
 {
+	Super::BeginDestroy();
+
 	UnregisterListener(eventToListen);
 }
 
-void UEventListenerWidget::OnEventCalled(UEventsSystemPayload* payload) const
+void UEventListenerComponent::OnEventCalled(UEventsSystemPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
 	OnEventsSystemPayloadInvoked.Broadcast(payload);

@@ -5,7 +5,7 @@
 #include "Internationalization/Text.h"
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
-#include "EventsSystemPayload.generated.h"
+#include "ESPayload.generated.h"
 
 /**
  * Event holding all the listeners and delegating the call to them.

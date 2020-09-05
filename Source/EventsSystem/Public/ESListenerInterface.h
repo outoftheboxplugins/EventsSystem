@@ -2,10 +2,10 @@
 
 #pragma once
 
-#include "Event.h"
+#include "ESEvent.h"
 #include "UObject/Interface.h"
 #include "GameFramework/Actor.h"
-#include "EventListenerInterface.generated.h"
+#include "ESListenerInterface.generated.h"
 
 /**
  * Interface for creating Event listeners of any type.

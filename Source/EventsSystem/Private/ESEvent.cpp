@@ -1,8 +1,8 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "Event.h"
-#include "EventsSystemPayload.h"
-#include "EventListenerInterface.h"
+#include "ESEvent.h"
+#include "ESPayload.h"
+#include "ESListenerInterface.h"
 #include "GameFramework/Actor.h"
 #include "Blueprint/WidgetTree.h"
 #include "Blueprint/UserWidget.h"

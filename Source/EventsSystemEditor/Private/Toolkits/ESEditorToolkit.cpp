@@ -1,12 +1,12 @@
 // Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
 
-#include "EventsSystemEditorToolkit.h"
+#include "ESEditorToolkit.h"
 
 #include "Editor.h"
 #include "EditorReimportHandler.h"
 #include "EditorStyleSet.h"
-#include "SEventsSystemEditor.h"
-#include "Event.h"
+#include "SESEditor.h"
+#include "ESEvent.h"
 #include "UObject/NameTypes.h"
 #include "Widgets/Docking/SDockTab.h"
 

@@ -5,7 +5,7 @@
 #include "Factories/Factory.h"
 #include "UObject/ObjectMacros.h"
 
-#include "EventsSystemFactoryNew.generated.h"
+#include "ESFactoryNew.generated.h"
 
 
 /**

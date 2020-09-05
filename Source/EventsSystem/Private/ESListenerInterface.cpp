@@ -1,6 +1,6 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "EventListenerInterface.h"
+#include "ESListenerInterface.h"
 
 void IEventListenerInterface::RegisterListener(UEvent* Event) const
 {
