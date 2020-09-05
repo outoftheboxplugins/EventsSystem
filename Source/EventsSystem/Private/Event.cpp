@@ -7,46 +7,77 @@
 #include "Blueprint/WidgetTree.h"
 #include "Blueprint/UserWidget.h"
 
-void UEvent::Invoke(UEvent* eventToInvoke, UEventsSystemPayload* payload)
+//////////////////////////////////////////////////////////////////////////
+// Public BP API
+/* STATIC */ void UEvent::Invoke(UEvent* EventToInvoke, UEventsSystemPayload* Payload)
 {
-	// Delegate the event to all the listeners.
-	if (eventToInvoke)
+	if (EventToInvoke)
 	{
-		eventToInvoke->CallListeners(payload);
+		EventToInvoke->CallListeners(Payload);
 	}
 }
 
-void UEvent::InvokeOnActor(AActor* actor, UEvent* eventToInvoke, UEventsSystemPayload* payload)
+/* STATIC */ void UEvent::InvokeOnActor(UEvent* EventToInvoke, UEventsSystemPayload* Payload, AActor* Actor)
 {
-	if (!actor) return;
-
-	if (eventToInvoke)
+	if (EventToInvoke)
 	{
-		eventToInvoke->CallListenerComponents(actor, payload);
+		EventToInvoke->CallListenerComponents(Payload, Actor);
 	}
 }
 
-void UEvent::InvokeOnWidget(UUserWidget* widget, UEvent* eventToInvoke, UEventsSystemPayload* payload)
+/* STATIC */ void UEvent::InvokeOnActorsInRadius(UEvent* EventToInvoke, UEventsSystemPayload* Payload, FVector Origin, float Radius /*= FLOAT_MAX*/)
 {
-	if (!widget) return;
-
-	if (eventToInvoke)
+	if (EventToInvoke)
 	{
-		eventToInvoke->CallListenerWidgets(widget, payload);
+		EventToInvoke->CallListenersInRange(Payload, Origin, Radius);
 	}
 }
 
-void UEvent::UnRegisterAllListeners(UEvent* eventToClear)
+/* STATIC */ void UEvent::InvokeOnWidget(UUserWidget* Widget, UEvent* EventToInvoke, UEventsSystemPayload* Payload)
 {
-	if (!eventToClear)
+	if (EventToInvoke)
 	{
-		return;
+		EventToInvoke->CallListenerWidget(Widget, Payload);
 	}
+}
 
-	// Remove each one of the listeners.
-	for (int i = eventToClear->listeners.Num() - 1; i >= 0; i--)
+//////////////////////////////////////////////////////////////////////////
+// Listeners management
+/* STATIC */ void UEvent::UnRegisterAllListeners(UEvent* EventToClear)
+{
+	if (EventToClear)
 	{
-		eventToClear->listeners.RemoveAt(i);
+		EventToClear->ActiveListeners.Empty();
+	}
+}
+
+void UEvent::RegisterListener(const IEventListenerInterface* NewListener)
+{
+	// Try and register the new listener
+	if (NewListener)
+	{
+		bool bAlreadyInSet = false;
+		ActiveListeners.Add(NewListener, &bAlreadyInSet);
+
+		if (bAlreadyInSet)
+		{
+			//TODO: Log listener already existed.
+		}
+	}
+}
+
+void UEvent::UnRegisterListener(const IEventListenerInterface* OldListener)
+{
+	// If the listener is now in our list, remove it.
+	
+	auto OldListenerIt = ActiveListeners.FindId(OldListener);
+	if (OldListenerIt.IsValidId())
+	{
+		ActiveListeners.Remove(OldListenerIt);
+	}
+	else
+	{
+		//TODO: Log listener not registered.
 	}
 }
 
@@ -55,41 +86,23 @@ void UEvent::DebugInvoke()
 	Invoke(this, nullptr);
 }
 
-void UEvent::RegisterListener(const IEventListenerInterface* newListener)
+void UEvent::CallListeners(UEventsSystemPayload* Payload)
 {
-	// If the listener is not already registered, add him.
-	if (newListener != nullptr && listeners.Contains(newListener) == false)
+	for (const IEventListenerInterface*& Listener : ActiveListeners)
 	{
-		listeners.Add(newListener);
-	}
-}
-
-void UEvent::UnRegisterListener(const IEventListenerInterface* oldListener)
-{
-	// If the listener is now in our list, remove it.
-	if (listeners.Contains(oldListener))
-	{
-		listeners.Remove(oldListener);
-	}
-}
-
-void UEvent::CallListeners(UEventsSystemPayload* payload)
-{
-	// Call each one of the listeners & remove deleted ones.
-	for (int i = listeners.Num() - 1; i >= 0; i--)
-	{
-		if (listeners[i] == nullptr)
+		if (Listener)
 		{
-			listeners.RemoveAt(i);
-		}
-		else
-		{
-			listeners[i]->OnEventCalled(payload);
+			Listener->OnEventCalled(Payload);
 		}
 	}
 }
 
-void UEvent::CallListenerComponents(AActor* actor, UEventsSystemPayload* payload)
+void UEvent::CallListenersInRange(UEventsSystemPayload* payload, FVector origin, float range)
+{
+
+}
+
+void UEvent::CallListenerComponents(UEventsSystemPayload* payload, AActor* actor)
 {
 	if (!actor)
 	{
@@ -112,7 +125,7 @@ void UEvent::CallListenerComponents(AActor* actor, UEventsSystemPayload* payload
 	}
 }
 
-void UEvent::CallListenerWidgets(UUserWidget* widget, UEventsSystemPayload* payload)
+void UEvent::CallListenerWidget(UUserWidget* widget, UEventsSystemPayload* payload)
 {
     if (!widget)
     {

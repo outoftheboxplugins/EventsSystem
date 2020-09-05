@@ -9,9 +9,10 @@
 #include "Event.generated.h"
 
 class IEventListenerInterface;
+class UEventsSystemPayload;
+
 class AActor;
 class UUserWidget;
-class UEventsSystemPayload;
 
 /**
  * Event holding all the listeners and delegating the call to them.
@@ -20,49 +21,69 @@ class UEventsSystemPayload;
 UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "EventsSystem", Blueprintable)
 class EVENTSSYSTEM_API UEvent : public UObject
 {
-	GENERATED_BODY()
+	GENERATED_BODY();
 	
+// Public BP API
 public:
 	// Invoke the event.
-	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "payload"))
-	static void Invoke(UEvent* eventToInvoke, UEventsSystemPayload* payload);
+	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
+	static void Invoke(UEvent* EventToInvoke, UEventsSystemPayload* Payload);
 
 	// Invoke the event on a single actor.
-	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "payload"))
-	static void InvokeOnActor(AActor* actor, UEvent* eventToInvoke, UEventsSystemPayload* payload);
+	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
+	static void InvokeOnActor(UEvent* EventToInvoke, UEventsSystemPayload* Payload, AActor* Actor);
+
+	// Invoke the event on every actor within a range
+	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
+	static void InvokeOnActorsInRadius(UEvent* EventToInvoke, UEventsSystemPayload* Payload, FVector Origin, float Radius = FLOAT_MAX);
 
     // Invoke the event on a single widget.
-    UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "payload"))
-    static void InvokeOnWidget(UUserWidget* widget, UEvent* eventToInvoke, UEventsSystemPayload* payload);
+    UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
+    static void InvokeOnWidget(UUserWidget* Widget, UEvent* EventToInvoke, UEventsSystemPayload* Payload);
 
+// Listeners management
+public:
 	// Removes all the listeners from one event.
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem")
-	static void UnRegisterAllListeners(UEvent* eventToClear);
+	static void UnRegisterAllListeners(UEvent* EventToClear);
 
-	//TODO: Consider putting payload in here as well.
+	// Register the listener to the event.
+	void RegisterListener(const IEventListenerInterface* Listener);
+
+	// Unregister the listener from the event.
+	void UnRegisterListener(const IEventListenerInterface* Listener);
+
+#ifdef UE_BUILD_DEBUG || UE_EDITOR
+// Editor & Debugging
+public:
 	// Invokes the event for debug purposes.
 	void DebugInvoke();
 
-	// Register the listener to the event.
-	void RegisterListener(const IEventListenerInterface* listener);
+	// Allows the event to write logs.
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
+	bool bWriteLogs;
 
-	// Unregister the listener from the event.
-	void UnRegisterListener(const IEventListenerInterface* listener);
-	
 	// Short description so you won't forget.
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
 	FText Description;
+#endif
 
-protected:
-	// Listeners registered.
-	TArray<const IEventListenerInterface*> listeners;
-
+// Internal functionality
+private:
 	// Delegate the call to the listeners.
-	void CallListeners(UEventsSystemPayload* payload);
+	void CallListeners(UEventsSystemPayload* Payload);
+
+	// Delegate the call to all the listeners in rage.
+	void CallListenersInRange(UEventsSystemPayload* Payload, FVector Origin, float Range);
 
 	// Delegate the call to all the components listeners on the target actor
-	void CallListenerComponents(AActor* actor, UEventsSystemPayload* payload);
+	void CallListenerComponents(UEventsSystemPayload* Payload, AActor* Actor);
 
     // Delegate the call to all the widget listeners on the target widget
-    void CallListenerWidgets(UUserWidget* widget, UEventsSystemPayload* payload);
+    void CallListenerWidget(UUserWidget* Widget, UEventsSystemPayload* Payload);
+
+// Internal state
+private:
+	// Listeners registered.
+	TSet<const IEventListenerInterface*> ActiveListeners;
 };
