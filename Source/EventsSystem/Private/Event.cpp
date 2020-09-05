@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Blueprint/WidgetTree.h"
 #include "Blueprint/UserWidget.h"
+#include "EventsSystemModule.h"
 
 //////////////////////////////////////////////////////////////////////////
 // Public BP API
@@ -25,7 +26,7 @@
 	}
 }
 
-/* STATIC */ void UEvent::InvokeOnActorsInRadius(UEvent* EventToInvoke, UEventsSystemPayload* Payload, FVector Origin, float Radius /*= FLOAT_MAX*/)
+/* STATIC */ void UEvent::InvokeOnActorsInRadius(UEvent* EventToInvoke, UEventsSystemPayload* Payload, FVector Origin, float Radius /*= 100.0f*/)
 {
 	if (EventToInvoke)
 	{
@@ -61,7 +62,7 @@ void UEvent::RegisterListener(const IEventListenerInterface* NewListener)
 
 		if (bAlreadyInSet)
 		{
-			//TODO: Log listener already existed.
+			UE_LOG(LogEventsSystem, Warning, TEXT("Listener already registered. Skipping double registration."));
 		}
 	}
 }
@@ -117,7 +118,7 @@ void UEvent::CallListenerComponents(UEventsSystemPayload* payload, AActor* actor
 		if (components[i])
 		{
 			IEventListenerInterface* listenerComponent = Cast<IEventListenerInterface>(components[i]);
-			if (listenerComponent && listeners.Contains(listenerComponent))
+			if (listenerComponent && ActiveListeners.Contains(listenerComponent))
 			{
 				listenerComponent->OnEventCalled(payload);
 			}
@@ -140,7 +141,7 @@ void UEvent::CallListenerWidget(UUserWidget* widget, UEventsSystemPayload* paylo
         if (widgets[i])
         {
             IEventListenerInterface* listenerComponent = Cast<IEventListenerInterface>(widgets[i]);
-            if (listenerComponent && listeners.Contains(listenerComponent))
+            if (listenerComponent && ActiveListeners.Contains(listenerComponent))
             {
                 listenerComponent->OnEventCalled(payload);
             }

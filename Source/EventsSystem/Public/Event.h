@@ -5,6 +5,7 @@
 #include "Internationalization/Text.h"
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
+#include "Math/NumericLimits.h"
 
 #include "Event.generated.h"
 
@@ -21,7 +22,7 @@ class UUserWidget;
 UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "EventsSystem", Blueprintable)
 class EVENTSSYSTEM_API UEvent : public UObject
 {
-	GENERATED_BODY();
+	GENERATED_BODY()
 	
 // Public BP API
 public:
@@ -35,7 +36,7 @@ public:
 
 	// Invoke the event on every actor within a range
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
-	static void InvokeOnActorsInRadius(UEvent* EventToInvoke, UEventsSystemPayload* Payload, FVector Origin, float Radius = FLOAT_MAX);
+	static void InvokeOnActorsInRadius(UEvent* EventToInvoke, UEventsSystemPayload* Payload, FVector Origin, float Radius = 100.0f);
 
     // Invoke the event on a single widget.
     UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
@@ -53,12 +54,8 @@ public:
 	// Unregister the listener from the event.
 	void UnRegisterListener(const IEventListenerInterface* Listener);
 
-#ifdef UE_BUILD_DEBUG || UE_EDITOR
 // Editor & Debugging
 public:
-	// Invokes the event for debug purposes.
-	void DebugInvoke();
-
 	// Allows the event to write logs.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
 	bool bWriteLogs;
@@ -66,6 +63,11 @@ public:
 	// Short description so you won't forget.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
 	FText Description;
+
+#ifdef UE_BUILD_DEBUG || UE_EDITOR
+public:
+	// Invokes the event for debug purposes.
+	void DebugInvoke();
 #endif
 
 // Internal functionality
