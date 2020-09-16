@@ -45,7 +45,7 @@ void FEventsSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBu
 		{
 			if (Event.IsValid())
 			{
-				Event->DebugInvoke();
+				
 			}
 		}
 	}),

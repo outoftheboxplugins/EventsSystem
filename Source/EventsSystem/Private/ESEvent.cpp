@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "ESEvent.h"
 
@@ -17,15 +17,31 @@
 {
 	if (EventToInvoke)
 	{
-		EventToInvoke->CallListeners(Payload);
+		for (const IESListenerInterface* Listener : EventToInvoke->ActiveListeners)
+		{
+			if (Listener)
+			{
+				Listener->OnEventCalled(Payload);
+			}
+		}
 	}
 }
 
 /* STATIC */ void UESEvent::InvokeOnActor(const UESEvent* EventToInvoke, const UESPayload* Payload, const AActor* Actor)
 {
-	if (EventToInvoke)
+	if (EventToInvoke && Actor)
 	{
-		EventToInvoke->CallListenerComponents(Payload, Actor);
+		TArray<UActorComponent*> ActorComponents;
+		Actor->GetComponents(ActorComponents);
+
+		for (UActorComponent* ActorComponent : ActorComponents)
+		{
+			IESListenerInterface* ListenerComponent = Cast<IESListenerInterface>(ActorComponent);
+			if (ListenerComponent && EventToInvoke->ActiveListeners.Contains(ListenerComponent))
+			{
+				ListenerComponent->OnEventCalled(Payload);
+			}
+		}
 	}
 }
 
@@ -33,20 +49,40 @@
 {
 	if (EventToInvoke)
 	{
-		EventToInvoke->CallListenersInRange(Payload, Origin, Radius);
+		for (const IESListenerInterface* Listener : EventToInvoke->ActiveListeners)
+		{
+			if (const AActor* ActorListener = Cast<AActor>(Listener))
+			{
+				FVector ActorLocation = ActorListener->GetActorLocation();
+				bool bIsInRange = FVector::DistSquared2D(ActorLocation, Origin) <= Radius;
+
+				if (bIsInRange)
+				{
+					InvokeOnActor(EventToInvoke, Payload, ActorListener);
+				}
+			}
+		}
 	}
 }
 
 /* STATIC */ void UESEvent::InvokeOnWidget(const UESEvent* EventToInvoke, const UESPayload* Payload, const UUserWidget* Widget)
 {
-	if (EventToInvoke)
+	if (EventToInvoke && Widget)
 	{
-		EventToInvoke->CallListenerWidget(Payload, Widget);
+		TArray<UWidget*> WidgetListeners;
+		Widget->WidgetTree->GetAllWidgets(WidgetListeners);
+
+		for (UWidget* WidgetListener : WidgetListeners)
+		{
+			IESListenerInterface* ListenerComponent = Cast<IESListenerInterface>(WidgetListener);
+			if (ListenerComponent && EventToInvoke->ActiveListeners.Contains(ListenerComponent))
+			{
+				ListenerComponent->OnEventCalled(Payload);
+			}
+		}
 	}
 }
 
-//////////////////////////////////////////////////////////////////////////
-// Listeners management
 /* STATIC */ void UESEvent::UnRegisterAllListeners(UESEvent* EventToClear)
 {
 	if (EventToClear)
@@ -55,6 +91,8 @@
 	}
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Listeners management
 void UESEvent::RegisterListener(const IESListenerInterface* NewListener)
 {
 	if (NewListener)
@@ -66,10 +104,6 @@ void UESEvent::RegisterListener(const IESListenerInterface* NewListener)
 		{
 			UE_LOG(LogEventsSystem, Warning, TEXT("Listener already registered. Skipping double registration."));
 		}
-	}
-	else
-	{
-		UE_LOG(LogEventsSystem, Warning, TEXT("Listener is nullptr."));
 	}
 }
 
@@ -84,71 +118,4 @@ void UESEvent::UnRegisterListener(const IESListenerInterface* OldListener)
 	{
 		UE_LOG(LogEventsSystem, Warning, TEXT("Listener is not registered to this event."));
 	}
-}
-
-void UESEvent::DebugInvoke()
-{
-	Invoke(this, nullptr);
-}
-
-void UESEvent::CallListeners(const UESPayload* Payload) const
-{
-	for (const IESListenerInterface* Listener : ActiveListeners)
-	{
-		if (Listener)
-		{
-			Listener->OnEventCalled(Payload);
-		}
-	}
-}
-
-void UESEvent::CallListenersInRange(const UESPayload* payload, FVector origin, float range) const
-{
-
-}
-
-void UESEvent::CallListenerComponents(const UESPayload* payload, const AActor* actor) const
-{
-	if (!actor)
-	{
-		return;
-	}
-
-	TArray<UActorComponent*> components;
-	actor->GetComponents(components);
-
-	for (int i = 0; i < components.Num(); i++)
-	{
-		if (components[i])
-		{
-			IESListenerInterface* listenerComponent = Cast<IESListenerInterface>(components[i]);
-			if (listenerComponent && ActiveListeners.Contains(listenerComponent))
-			{
-				listenerComponent->OnEventCalled(payload);
-			}
-		}
-	}
-}
-
-void UESEvent::CallListenerWidget(const UESPayload* payload, const UUserWidget* widget) const
-{
-    if (!widget)
-    {
-        return;
-    }
-
-    TArray<UWidget*> widgets;
-    widget->WidgetTree->GetAllWidgets(widgets);
-
-    for (int i = 0; i < widgets.Num(); i++)
-    {
-        if (widgets[i])
-        {
-            IESListenerInterface* listenerComponent = Cast<IESListenerInterface>(widgets[i]);
-            if (listenerComponent && ActiveListeners.Contains(listenerComponent))
-            {
-                listenerComponent->OnEventCalled(payload);
-            }
-        }
-    }
 }

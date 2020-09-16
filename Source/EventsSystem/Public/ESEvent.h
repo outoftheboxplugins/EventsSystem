@@ -41,50 +41,30 @@ public:
     UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
     static void InvokeOnWidget(const UESEvent* EventToInvoke, const UESPayload* Payload, const UUserWidget* Widget);
 
-// Listeners management
-public:
 	// Removes all the listeners from one event.
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem")
 	static void UnRegisterAllListeners(UESEvent* EventToClear);
 
+// Listeners management
+public:	
 	// Register the listener to the event.
 	void RegisterListener(const IESListenerInterface* Listener);
 
 	// Unregister the listener from the event.
 	void UnRegisterListener(const IESListenerInterface* Listener);
 
-// Editor & Debugging
-public:
-	// Allows the event to write logs.
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
-	bool bWriteLogs;
-
-	// Short description so you won't forget.
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
-	FText Description;
-
-#if defined(UE_BUILD_DEBUG) || defined(UE_EDITOR)
-public:
-	// Invokes the event for debug purposes.
-	void DebugInvoke();
-#endif
-
-// Internal functionality
-private:
-	// Delegate the call to the listeners.
-	void CallListeners(const UESPayload* Payload) const;
-
-	// Delegate the call to all the components listeners on the target actor
-	void CallListenerComponents(const UESPayload* Payload, const AActor* Actor) const;
-
-	// Delegate the call to all the listeners in rage.
-	void CallListenersInRange(const UESPayload* Payload, FVector Origin, float Range) const;
-
-    // Delegate the call to all the widget listeners on the target widget
-    void CallListenerWidget(const UESPayload* Payload, const UUserWidget* Widget) const;
-
 // Internal state
 private:
 	// Listeners registered.
 	TSet<const IESListenerInterface*> ActiveListeners;
+
+// Editor & Debugging
+public:	
+	// Short description so you won't forget.
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
+	FText Description;
+
+	// Allows the event to write logs.
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
+	bool bWriteLogs;
 };
