@@ -46,7 +46,7 @@ FEventsSystemEditorToolkit::~FEventsSystemEditorToolkit()
 /* FEventsSystemEditorToolkit interface
  *****************************************************************************/
 
-void FEventsSystemEditorToolkit::Initialize(UEvent* InEvent, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
+void FEventsSystemEditorToolkit::Initialize(UESEvent* InEvent, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
 {
 	Event = InEvent;
 

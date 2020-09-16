@@ -9,7 +9,7 @@
 
 class FText;
 class ISlateStyle;
-class UEvent;
+class UESEvent;
 
 
 /**
@@ -35,7 +35,7 @@ public:
 	 * @param InEvent The UEvent asset to edit.
 	 * @param InStyleSet The style set to use.
 	 */
-	void Construct(const FArguments& InArgs, UEvent* InEvent, const TSharedRef<ISlateStyle>& InStyle);
+	void Construct(const FArguments& InArgs, UESEvent* InEvent, const TSharedRef<ISlateStyle>& InStyle);
 
 private:
 
@@ -54,5 +54,5 @@ private:
 	TSharedPtr<SMultiLineEditableTextBox> EditableTextBox;
 
 	/** Pointer to the text asset that is being edited. */
-	UEvent* Event;
+	UESEvent* Event;
 };

@@ -38,7 +38,7 @@ FText UK2Node_InvokeEventPayload::GetNodeTitleFormat() const
 
 UClass* UK2Node_InvokeEventPayload::GetClassPinBaseClass() const
 {
-	return UEventsSystemPayload::StaticClass();
+	return UESPayload::StaticClass();
 }
 
 UEdGraphPin* UK2Node_InvokeEventPayload::GetEventPin() const
@@ -66,7 +66,7 @@ void UK2Node_InvokeEventPayload::AllocateDefaultPins()
 	UEdGraphPin* ClassPin = GetClassPin();
 	if (ClassPin->DefaultObject == NULL)
 	{
-		ClassPin->DefaultObject = UEventsSystemPayload::StaticClass();
+		ClassPin->DefaultObject = UESPayload::StaticClass();
 
 		UClass* UseSpawnClass = GetClassToSpawn();
 		if (UseSpawnClass != NULL)
@@ -76,7 +76,7 @@ void UK2Node_InvokeEventPayload::AllocateDefaultPins()
 	}
 
 	const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
-	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UEvent::StaticClass(), FGetPinName::GetEventTextPin());
+	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UESEvent::StaticClass(), FGetPinName::GetEventTextPin());
 
 	InEventPin->bAdvancedView = true;
 	if (ENodeAdvancedPins::NoPins == AdvancedPinDisplay)
@@ -94,7 +94,7 @@ void UK2Node_InvokeEventPayload::ExpandNode(class FKismetCompilerContext& Compil
 	CallCreateNode->AllocateDefaultPins();
 
 	UK2Node_CallFunction* CallInvokeNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
-	CallInvokeNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UEvent, Invoke), UEvent::StaticClass());
+	CallInvokeNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UESEvent, Invoke), UESEvent::StaticClass());
 	CallInvokeNode->AllocateDefaultPins();
 
 	// store off the class to spawn before we mutate pin connections:

@@ -12,17 +12,17 @@
  * User Widget listening to event calls.
  */
 
-class UEvent;
+class UESEvent;
 //TODO: Make this class blueprint spawnable widget
 UCLASS(ClassGroup = (Custom), Category = "EventsSystem", Blueprintable, BlueprintType, meta = (BlueprintSpawnableComponent), hidecategories = ("Slot (Canvas Panel Slot)", "Appearance", "Input", "Interaction", "Behavior", "RenderTransform", "Performance", "Clipping", "Navigation") )
-class EVENTSSYSTEM_API UEventListenerWidget : public UUserWidget, public IEventListenerInterface
+class EVENTSSYSTEM_API UEventListenerWidget : public UUserWidget, public IESListenerInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Event to listen to.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	UEvent* eventToListen;
+	UESEvent* eventToListen;
 
 	// Should the listener register on start?
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
@@ -44,5 +44,5 @@ public:
 	~UEventListenerWidget();
 
 	// Called when the event is invoked.
-	virtual void OnEventCalled(UEventsSystemPayload* payload) const override;
+	virtual void OnEventCalled(const UESPayload* payload) const override;
 };

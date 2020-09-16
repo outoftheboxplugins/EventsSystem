@@ -8,21 +8,21 @@
 #include "ESListenerInterface.h"
 #include "ESListenerComponent.generated.h"
 
-class UEvent;
+class UESEvent;
 
 /**
  * Component listening to event calls.
  */
 
 UCLASS( ClassGroup=(Custom), Category = "EventsSystem", BlueprintType, Blueprintable, hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering", "Sockets"), meta=(BlueprintSpawnableComponent) )
-class EVENTSSYSTEM_API UEventListenerComponent : public UActorComponent, public IEventListenerInterface
+class EVENTSSYSTEM_API UEventListenerComponent : public UActorComponent, public IESListenerInterface
 {
 	GENERATED_BODY()
 
 public:
 	// Event to listen to.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	UEvent* eventToListen;
+	UESEvent* eventToListen;
 
 	// Should the listener register on start?
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
@@ -45,5 +45,5 @@ protected:
 
 public:
 	// Called when the event is invoked.
-	virtual void OnEventCalled(UEventsSystemPayload* payload) const override;
+	virtual void OnEventCalled(const UESPayload* payload) const override;
 };

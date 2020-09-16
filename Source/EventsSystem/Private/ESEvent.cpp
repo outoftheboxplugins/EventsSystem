@@ -1,16 +1,19 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #include "ESEvent.h"
-#include "ESPayload.h"
-#include "ESListenerInterface.h"
-#include "GameFramework/Actor.h"
-#include "Blueprint/WidgetTree.h"
-#include "Blueprint/UserWidget.h"
-#include "EventsSystemModule.h"
+
+#include "EventsSystemModule.h"		// for Debugging Logs
+
+#include "ESPayload.h"				// for UESPayload
+#include "ESListenerInterface.h"	// for IESListenerInterface
+
+#include "GameFramework/Actor.h"	// for AActor
+#include "Blueprint/WidgetTree.h"	// for WidgetTree
+#include "Blueprint/UserWidget.h"	// for UUserWidget
 
 //////////////////////////////////////////////////////////////////////////
 // Public BP API
-/* STATIC */ void UEvent::Invoke(UEvent* EventToInvoke, UEventsSystemPayload* Payload)
+/* STATIC */ void UESEvent::Invoke(const UESEvent* EventToInvoke, const UESPayload* Payload)
 {
 	if (EventToInvoke)
 	{
@@ -18,7 +21,7 @@
 	}
 }
 
-/* STATIC */ void UEvent::InvokeOnActor(UEvent* EventToInvoke, UEventsSystemPayload* Payload, AActor* Actor)
+/* STATIC */ void UESEvent::InvokeOnActor(const UESEvent* EventToInvoke, const UESPayload* Payload, const AActor* Actor)
 {
 	if (EventToInvoke)
 	{
@@ -26,7 +29,7 @@
 	}
 }
 
-/* STATIC */ void UEvent::InvokeOnActorsInRadius(UEvent* EventToInvoke, UEventsSystemPayload* Payload, FVector Origin, float Radius /*= 100.0f*/)
+/* STATIC */ void UESEvent::InvokeOnActorsInRadius(const UESEvent* EventToInvoke, const UESPayload* Payload, FVector Origin, float Radius /*= 100.0f*/)
 {
 	if (EventToInvoke)
 	{
@@ -34,17 +37,17 @@
 	}
 }
 
-/* STATIC */ void UEvent::InvokeOnWidget(UUserWidget* Widget, UEvent* EventToInvoke, UEventsSystemPayload* Payload)
+/* STATIC */ void UESEvent::InvokeOnWidget(const UESEvent* EventToInvoke, const UESPayload* Payload, const UUserWidget* Widget)
 {
 	if (EventToInvoke)
 	{
-		EventToInvoke->CallListenerWidget(Widget, Payload);
+		EventToInvoke->CallListenerWidget(Payload, Widget);
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////
 // Listeners management
-/* STATIC */ void UEvent::UnRegisterAllListeners(UEvent* EventToClear)
+/* STATIC */ void UESEvent::UnRegisterAllListeners(UESEvent* EventToClear)
 {
 	if (EventToClear)
 	{
@@ -52,9 +55,8 @@
 	}
 }
 
-void UEvent::RegisterListener(const IEventListenerInterface* NewListener)
+void UESEvent::RegisterListener(const IESListenerInterface* NewListener)
 {
-	// Try and register the new listener
 	if (NewListener)
 	{
 		bool bAlreadyInSet = false;
@@ -65,12 +67,14 @@ void UEvent::RegisterListener(const IEventListenerInterface* NewListener)
 			UE_LOG(LogEventsSystem, Warning, TEXT("Listener already registered. Skipping double registration."));
 		}
 	}
+	else
+	{
+		UE_LOG(LogEventsSystem, Warning, TEXT("Listener is nullptr."));
+	}
 }
 
-void UEvent::UnRegisterListener(const IEventListenerInterface* OldListener)
+void UESEvent::UnRegisterListener(const IESListenerInterface* OldListener)
 {
-	// If the listener is now in our list, remove it.
-	
 	auto OldListenerIt = ActiveListeners.FindId(OldListener);
 	if (OldListenerIt.IsValidId())
 	{
@@ -78,18 +82,18 @@ void UEvent::UnRegisterListener(const IEventListenerInterface* OldListener)
 	}
 	else
 	{
-		//TODO: Log listener not registered.
+		UE_LOG(LogEventsSystem, Warning, TEXT("Listener is not registered to this event."));
 	}
 }
 
-void UEvent::DebugInvoke()
+void UESEvent::DebugInvoke()
 {
 	Invoke(this, nullptr);
 }
 
-void UEvent::CallListeners(UEventsSystemPayload* Payload)
+void UESEvent::CallListeners(const UESPayload* Payload) const
 {
-	for (const IEventListenerInterface*& Listener : ActiveListeners)
+	for (const IESListenerInterface* Listener : ActiveListeners)
 	{
 		if (Listener)
 		{
@@ -98,12 +102,12 @@ void UEvent::CallListeners(UEventsSystemPayload* Payload)
 	}
 }
 
-void UEvent::CallListenersInRange(UEventsSystemPayload* payload, FVector origin, float range)
+void UESEvent::CallListenersInRange(const UESPayload* payload, FVector origin, float range) const
 {
 
 }
 
-void UEvent::CallListenerComponents(UEventsSystemPayload* payload, AActor* actor)
+void UESEvent::CallListenerComponents(const UESPayload* payload, const AActor* actor) const
 {
 	if (!actor)
 	{
@@ -117,7 +121,7 @@ void UEvent::CallListenerComponents(UEventsSystemPayload* payload, AActor* actor
 	{
 		if (components[i])
 		{
-			IEventListenerInterface* listenerComponent = Cast<IEventListenerInterface>(components[i]);
+			IESListenerInterface* listenerComponent = Cast<IESListenerInterface>(components[i]);
 			if (listenerComponent && ActiveListeners.Contains(listenerComponent))
 			{
 				listenerComponent->OnEventCalled(payload);
@@ -126,7 +130,7 @@ void UEvent::CallListenerComponents(UEventsSystemPayload* payload, AActor* actor
 	}
 }
 
-void UEvent::CallListenerWidget(UUserWidget* widget, UEventsSystemPayload* payload)
+void UESEvent::CallListenerWidget(const UESPayload* payload, const UUserWidget* widget) const
 {
     if (!widget)
     {
@@ -140,7 +144,7 @@ void UEvent::CallListenerWidget(UUserWidget* widget, UEventsSystemPayload* paylo
     {
         if (widgets[i])
         {
-            IEventListenerInterface* listenerComponent = Cast<IEventListenerInterface>(widgets[i]);
+            IESListenerInterface* listenerComponent = Cast<IESListenerInterface>(widgets[i]);
             if (listenerComponent && ActiveListeners.Contains(listenerComponent))
             {
                 listenerComponent->OnEventCalled(payload);

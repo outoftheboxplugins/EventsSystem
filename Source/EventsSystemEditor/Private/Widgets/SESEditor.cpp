@@ -24,7 +24,7 @@ SEventsSystemEditor::~SEventsSystemEditor()
 }
 
 
-void SEventsSystemEditor::Construct(const FArguments& InArgs, UEvent* InEvent, const TSharedRef<ISlateStyle>& InStyle)
+void SEventsSystemEditor::Construct(const FArguments& InArgs, UESEvent* InEvent, const TSharedRef<ISlateStyle>& InStyle)
 {
 	Event = InEvent;
 

@@ -14,7 +14,7 @@ UEventsSystemFactory::UEventsSystemFactory( const FObjectInitializer& ObjectInit
 	: Super(ObjectInitializer)
 {
 	Formats.Add(FString(TEXT("txt;")) + NSLOCTEXT("UEventsSystemFactory", "FormatTxt", "Text File").ToString());
-	SupportedClass = UEvent::StaticClass();
+	SupportedClass = UESEvent::StaticClass();
 	bCreateNew = false;
 	bEditorImport = true;
 }
@@ -25,12 +25,12 @@ UEventsSystemFactory::UEventsSystemFactory( const FObjectInitializer& ObjectInit
 
 UObject* UEventsSystemFactory::FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
 {
-	UEvent* Event = nullptr;
+	UESEvent* Event = nullptr;
 	FString TextString;
 
 	if (FFileHelper::LoadFileToString(TextString, *Filename))
 	{
-		Event = NewObject<UEvent>(InParent, InClass, InName, Flags);
+		Event = NewObject<UESEvent>(InParent, InClass, InName, Flags);
 		Event->Description = FText::FromString(TextString);
 	}
 

@@ -33,7 +33,7 @@ void FEventsSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBu
 {
 	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
 
-	auto EventsSystem = GetTypedWeakObjectPtrs<UEvent>(InObjects);
+	auto EventsSystem = GetTypedWeakObjectPtrs<UESEvent>(InObjects);
 
 	MenuBuilder.AddMenuEntry(
 		LOCTEXT("Event_InvokeEvent", "Debug Invoke Event"),
@@ -75,7 +75,7 @@ FText FEventsSystemActions::GetName() const
 
 UClass* FEventsSystemActions::GetSupportedClass() const
 {
-	return UEvent::StaticClass();
+	return UESEvent::StaticClass();
 }
 
 FColor FEventsSystemActions::GetTypeColor() const
@@ -96,7 +96,7 @@ void FEventsSystemActions::OpenAssetEditor(const TArray<UObject *>& InObjects, T
 
 	for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
 	{
-		auto Event = Cast<UEvent>(*ObjIt);
+		auto Event = Cast<UESEvent>(*ObjIt);
 
 		if (Event != nullptr)
 		{

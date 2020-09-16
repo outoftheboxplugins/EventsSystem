@@ -2,26 +2,24 @@
 
 #pragma once
 
-#include "Internationalization/Text.h"
 #include "UObject/Object.h"
-#include "UObject/ObjectMacros.h"
-#include "Math/NumericLimits.h"
-#include "Misc/Build.h"
 
 #include "ESEvent.generated.h"
 
-class IEventListenerInterface;
-class UEventsSystemPayload;
-
+// Forward declaration UE types
 class AActor;
 class UUserWidget;
+
+// Forward declaration Events System Elements
+class IESListenerInterface;
+class UESPayload;
 
 /**
  * Event holding all the listeners and delegating the call to them.
  */
 
 UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "EventsSystem", Blueprintable)
-class EVENTSSYSTEM_API UEvent : public UObject
+class EVENTSSYSTEM_API UESEvent : public UObject
 {
 	GENERATED_BODY()
 	
@@ -29,31 +27,31 @@ class EVENTSSYSTEM_API UEvent : public UObject
 public:
 	// Invoke the event.
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
-	static void Invoke(UEvent* EventToInvoke, UEventsSystemPayload* Payload);
+	static void Invoke(const UESEvent* EventToInvoke, const UESPayload* Payload);
 
 	// Invoke the event on a single actor.
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
-	static void InvokeOnActor(UEvent* EventToInvoke, UEventsSystemPayload* Payload, AActor* Actor);
+	static void InvokeOnActor(const UESEvent* EventToInvoke, const UESPayload* Payload, const AActor* Actor);
 
 	// Invoke the event on every actor within a range
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
-	static void InvokeOnActorsInRadius(UEvent* EventToInvoke, UEventsSystemPayload* Payload, FVector Origin, float Radius = 100.0f);
+	static void InvokeOnActorsInRadius(const UESEvent* EventToInvoke, const UESPayload* Payload, FVector Origin, float Radius = 100.0f);
 
     // Invoke the event on a single widget.
     UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
-    static void InvokeOnWidget(UUserWidget* Widget, UEvent* EventToInvoke, UEventsSystemPayload* Payload);
+    static void InvokeOnWidget(const UESEvent* EventToInvoke, const UESPayload* Payload, const UUserWidget* Widget);
 
 // Listeners management
 public:
 	// Removes all the listeners from one event.
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem")
-	static void UnRegisterAllListeners(UEvent* EventToClear);
+	static void UnRegisterAllListeners(UESEvent* EventToClear);
 
 	// Register the listener to the event.
-	void RegisterListener(const IEventListenerInterface* Listener);
+	void RegisterListener(const IESListenerInterface* Listener);
 
 	// Unregister the listener from the event.
-	void UnRegisterListener(const IEventListenerInterface* Listener);
+	void UnRegisterListener(const IESListenerInterface* Listener);
 
 // Editor & Debugging
 public:
@@ -74,19 +72,19 @@ public:
 // Internal functionality
 private:
 	// Delegate the call to the listeners.
-	void CallListeners(UEventsSystemPayload* Payload);
-
-	// Delegate the call to all the listeners in rage.
-	void CallListenersInRange(UEventsSystemPayload* Payload, FVector Origin, float Range);
+	void CallListeners(const UESPayload* Payload) const;
 
 	// Delegate the call to all the components listeners on the target actor
-	void CallListenerComponents(UEventsSystemPayload* Payload, AActor* Actor);
+	void CallListenerComponents(const UESPayload* Payload, const AActor* Actor) const;
+
+	// Delegate the call to all the listeners in rage.
+	void CallListenersInRange(const UESPayload* Payload, FVector Origin, float Range) const;
 
     // Delegate the call to all the widget listeners on the target widget
-    void CallListenerWidget(UUserWidget* Widget, UEventsSystemPayload* Payload);
+    void CallListenerWidget(const UESPayload* Payload, const UUserWidget* Widget) const;
 
 // Internal state
 private:
 	// Listeners registered.
-	TSet<const IEventListenerInterface*> ActiveListeners;
+	TSet<const IESListenerInterface*> ActiveListeners;
 };

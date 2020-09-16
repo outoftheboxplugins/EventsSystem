@@ -2,7 +2,7 @@
 
 #include "ESListenerInterface.h"
 
-void IEventListenerInterface::RegisterListener(UEvent* Event) const
+void IESListenerInterface::RegisterListener(UESEvent* Event) const
 {
 	if (IsValid(Event))
 	{
@@ -14,7 +14,7 @@ void IEventListenerInterface::RegisterListener(UEvent* Event) const
 	}
 }
 
-void IEventListenerInterface::UnregisterListener(UEvent* Event) const
+void IESListenerInterface::UnregisterListener(UESEvent* Event) const
 {
 	if (IsValid(Event))
 	{

@@ -22,7 +22,7 @@ void UEventListenerComponent::BeginDestroy()
 	UnregisterListener(eventToListen);
 }
 
-void UEventListenerComponent::OnEventCalled(UEventsSystemPayload* payload) const
+void UEventListenerComponent::OnEventCalled(const UESPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
 	OnEventsSystemPayloadInvoked.Broadcast(payload);

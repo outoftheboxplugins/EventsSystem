@@ -20,7 +20,7 @@ UEventListenerWidget::~UEventListenerWidget()
 	UnregisterListener(eventToListen);
 }
 
-void UEventListenerWidget::OnEventCalled(UEventsSystemPayload* payload) const
+void UEventListenerWidget::OnEventCalled(const UESPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
 	OnEventsSystemPayloadInvoked.Broadcast(payload);
