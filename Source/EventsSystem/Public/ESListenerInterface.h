@@ -10,7 +10,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEventCalled);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEventsSystemPayloadCalled, const UESPayload*, Payload);
 
-// Forward declaration Events System Elements
+// Forward declaration EventsSystem Types
 class UESPayload;
 class UESEvent;
 
@@ -30,7 +30,7 @@ class IESListenerInterface
 // Abstract interface to be implemented by derived classes.
 public:
 	// Sends the invoke to the delegate of the event.
-	virtual void OnEventCalled(const UESPayload* payload) const;
+	virtual void OnEventCalled(const UESPayload* Payload) const;
 
 // Public BP API
 public:

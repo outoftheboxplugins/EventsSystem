@@ -1,8 +1,8 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "ESListenerComponent.h"
-#include "ESEvent.h"
-#include "GameFramework/Actor.h"
+
+#include "ESEvent.h" // for UESEvent
 
 void UEventListenerComponent::BeginPlay()
 {
@@ -11,7 +11,7 @@ void UEventListenerComponent::BeginPlay()
 	// Register listener if wanted.
 	if (bShouldRegisterOnStart)
 	{
-		RegisterListener(eventToListen);
+		RegisterListener(EventToListen);
 	}
 }
 
@@ -19,12 +19,20 @@ void UEventListenerComponent::BeginDestroy()
 {
 	Super::BeginDestroy();
 
-	UnregisterListener(eventToListen);
+	if (bShouldUnRegisterOnDestroy)
+	{
+		UnregisterListener(EventToListen);
+	}
 }
 
-void UEventListenerComponent::OnEventCalled(const UESPayload* payload) const
+void UEventListenerComponent::OnEventCalled(const UESPayload* Payload) const
 {
 	OnEventInvoked.Broadcast();
-	OnEventsSystemPayloadInvoked.Broadcast(payload);
+	OnEventsSystemPayloadInvoked.Broadcast(Payload);
+}
+
+FString UEventListenerComponent::GetListenerName() const
+{
+	return GetReadableName();
 }
 

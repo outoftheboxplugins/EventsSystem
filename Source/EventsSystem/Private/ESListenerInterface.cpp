@@ -5,7 +5,7 @@
 #include "EventsSystemModule.h"		// for Debugging Logs
 #include "ESEvent.h"				// for UESEvent
 
-void IESListenerInterface::OnEventCalled(const UESPayload* payload) const
+void IESListenerInterface::OnEventCalled(const UESPayload* Payload) const
 {
 	UE_LOG(LogEventsSystem, Error, TEXT("Listener %s trying to call IESListenerInterface::OnEventCalled base method.", *GetListenerName()));
 	checkf(false, TEXT("IESListenerInterface::OnEventCalled base method should never be called. Make sure to override this method in your derived classes."));

@@ -10,7 +10,7 @@
 class AActor;
 class UUserWidget;
 
-// Forward declaration Events System Elements
+// Forward declaration EventsSystem Types
 class IESListenerInterface;
 class UESPayload;
 

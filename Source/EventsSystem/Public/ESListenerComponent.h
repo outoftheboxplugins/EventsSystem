@@ -1,33 +1,39 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #pragma once
 
 #include "Components/ActorComponent.h"
-
-#include "CoreMinimal.h"
 #include "ESListenerInterface.h"
+
 #include "ESListenerComponent.generated.h"
 
+// Forward declaration EventsSystem Types
 class UESEvent;
 
 /**
- * Component listening to event calls.
+ * ActorComponent implementation of the IESListenerInteface
  */
 
-UCLASS( ClassGroup=(Custom), Category = "EventsSystem", BlueprintType, Blueprintable, hidecategories = ("Variable", "Tags", "ComponentReplication", "Activation", "Cooking", "Physics", "LOD", "AssetUserData", "Collision", "Rendering", "Sockets"), meta=(BlueprintSpawnableComponent) )
+UCLASS(ClassGroup = EventsSystem, Category = "EventsSystem", NotBlueprintable, hidecategories = (Object, ActorComponent), meta=(BlueprintSpawnableComponent))
 class EVENTSSYSTEM_API UEventListenerComponent : public UActorComponent, public IESListenerInterface
 {
 	GENERATED_BODY()
 
+// Event Registration
 public:
 	// Event to listen to.
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	UESEvent* eventToListen;
+	UESEvent* EventToListen;
 
-	// Should the listener register on start?
+	// Should the listener register from the start to the event?
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
 	bool bShouldRegisterOnStart = true;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
+	bool bShouldUnRegisterOnDestroy = true;
+
+// BP Delegates
+public:
 	// Flow of action when the event is called.
 	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
 	FOnEventCalled OnEventInvoked;
@@ -36,14 +42,20 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
 	FOnEventsSystemPayloadCalled OnEventsSystemPayloadInvoked;
 
-protected:
+	
+// IESListenerInterface interface
+private:
+	// Called when the event is invoked.
+	virtual void OnEventCalled(const UESPayload* Payload) const override;
+
+	// Used for debugging logs.
+	virtual FString GetListenerName() const override;
+
+// UActorComponent interface
+private:
 	// Called at the start of the game.
 	virtual void BeginPlay() override;
 
 	// Called at the start of destroying.
 	virtual void BeginDestroy() override;
-
-public:
-	// Called when the event is invoked.
-	virtual void OnEventCalled(const UESPayload* payload) const override;
 };
