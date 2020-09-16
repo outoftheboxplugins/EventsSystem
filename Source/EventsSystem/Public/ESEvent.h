@@ -18,7 +18,7 @@ class UESPayload;
  * Event holding all the listeners and delegating the call to them.
  */
 
-UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = Events, Category = "EventsSystem", Blueprintable)
+UCLASS(BlueprintType, hidecategories = (Object), ClassGroup = EventsSystem, Category = "EventsSystem", Blueprintable)
 class EVENTSSYSTEM_API UESEvent : public UObject
 {
 	GENERATED_BODY()
