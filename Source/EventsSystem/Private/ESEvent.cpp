@@ -102,7 +102,7 @@ void UESEvent::RegisterListener(const IESListenerInterface* NewListener)
 
 		if (bAlreadyInSet)
 		{
-			UE_LOG(LogEventsSystem, Warning, TEXT("Listener already registered. Skipping double registration."));
+			UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s already registered to event %s.", *NewListener->GetListenerName(), *GetName()));
 		}
 	}
 }
@@ -116,6 +116,6 @@ void UESEvent::UnRegisterListener(const IESListenerInterface* OldListener)
 	}
 	else
 	{
-		UE_LOG(LogEventsSystem, Warning, TEXT("Listener is not registered to this event."));
+		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s is not registered to event %s.", *NewListener->GetListenerName(), *GetName()));
 	}
 }

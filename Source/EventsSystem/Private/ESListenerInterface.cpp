@@ -1,16 +1,25 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "ESListenerInterface.h"
 
+#include "EventsSystemModule.h"		// for Debugging Logs
+#include "ESEvent.h"				// for UESEvent
+
+void IESListenerInterface::OnEventCalled(const UESPayload* payload) const
+{
+	UE_LOG(LogEventsSystem, Error, TEXT("Listener %s trying to call IESListenerInterface::OnEventCalled base method.", *GetListenerName()));
+	checkf(false, TEXT("IESListenerInterface::OnEventCalled base method should never be called. Make sure to override this method in your derived classes."));
+}
+
 void IESListenerInterface::RegisterListener(UESEvent* Event) const
 {
-	if (IsValid(Event))
+	if (Event)
 	{
 		Event->RegisterListener(this);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing event on listener while registering."))
+		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s trying to register to an invalid event.", *GetListenerName()));
 	}
 }
 
@@ -22,7 +31,7 @@ void IESListenerInterface::UnregisterListener(UESEvent* Event) const
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing event on listener while unregistering."))
+		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s trying to unregister from an invalid event.", *GetListenerName()));
 	}
 }
 

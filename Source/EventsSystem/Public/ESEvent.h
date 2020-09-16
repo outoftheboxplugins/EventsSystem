@@ -33,7 +33,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
 	static void InvokeOnActor(const UESEvent* EventToInvoke, const UESPayload* Payload, const AActor* Actor);
 
-	// Invoke the event on every actor within a range
+	// Invoke the event on every actor within a range.
 	UFUNCTION(BlueprintCallable, Category = "EventsSystem", meta = (AdvancedDisplay = "Payload"))
 	static void InvokeOnActorsInRadius(const UESEvent* EventToInvoke, const UESPayload* Payload, FVector Origin, float Radius = 100.0f);
 
