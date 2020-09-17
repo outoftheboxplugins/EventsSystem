@@ -9,7 +9,6 @@
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Input/SMultiLineEditableTextBox.h"
 
-#include "ESEditorSettings.h"
 
 
 #define LOCTEXT_NAMESPACE "SEventsSystemEditor"
@@ -28,8 +27,6 @@ void SEventsSystemEditor::Construct(const FArguments& InArgs, UESEvent* InEvent,
 {
 	Event = InEvent;
 
-	auto Settings = GetDefault<UEventsSystemEditorSettings>();
-
 	ChildSlot
 	[
 		SNew(SVerticalBox)
@@ -38,10 +35,10 @@ void SEventsSystemEditor::Construct(const FArguments& InArgs, UESEvent* InEvent,
 			.FillHeight(1.0f)
 			[
 				SAssignNew(EditableTextBox, SMultiLineEditableTextBox)
-					.BackgroundColor((Settings != nullptr) ? Settings->BackgroundColor : FLinearColor::White)
-					.Font((Settings != nullptr) ? Settings->Font : FSlateFontInfo())
-					.ForegroundColor((Settings != nullptr) ? Settings->ForegroundColor : FLinearColor::Black)
-					.Margin((Settings != nullptr) ? Settings->Margin : 4.0f)
+					.BackgroundColor(FLinearColor::White)
+					.Font(FSlateFontInfo())
+					.ForegroundColor(FLinearColor::Black)
+					.Margin(4.0f)
 					.OnTextChanged(this, &SEventsSystemEditor::HandleEditableTextBoxTextChanged)
 					.OnTextCommitted(this, &SEventsSystemEditor::HandleEditableTextBoxTextCommitted)
 					.Text(Event->Description)

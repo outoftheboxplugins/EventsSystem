@@ -1,20 +1,36 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
+
+#pragma once
+
+#include "Modules/ModuleInterface.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #include "Containers/Array.h"
 #include "ISettingsModule.h"
 #include "ISettingsSection.h"
-#include "Modules/ModuleInterface.h"
 #include "Modules/ModuleManager.h"
 #include "Templates/SharedPointer.h"
 #include "Toolkits/AssetEditorToolkit.h"
 
 #include "AssetTools/ESActions.h"
 #include "Styles/ESEditorStyle.h"
-#include "ESEditorSettings.h"
-
-
-#define LOCTEXT_NAMESPACE "FEventsSystemEditorModule"
-
 
 /**
  * Implements the EventsSystemEditor module.
@@ -33,95 +49,28 @@ public:
 
 public:
 	//~ IModuleInterface interface
-	virtual void StartupModule() override
-	{
-		Style = MakeShareable(new FEventsSystemEditorStyle());
-
-		RegisterAssetTools();
-		RegisterMenuExtensions();
-		RegisterSettings();
-	}
-	virtual void ShutdownModule() override
-	{
-		UnregisterAssetTools();
-		UnregisterMenuExtensions();
-		UnregisterSettings();
-	}
+	virtual void StartupModule() override;
+	virtual void ShutdownModule() override;
 	virtual bool SupportsDynamicReloading() override { return true; }
 
 protected:
 
 	/** Registers asset tool actions. */
-	void RegisterAssetTools()
-	{
-		IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
-		RegisterAssetTypeAction(AssetTools, MakeShareable(new FEventsSystemActions(Style.ToSharedRef())));
-	}
+	void RegisterAssetTools();
 
 	/** Registers a single asset type action. */
-	void RegisterAssetTypeAction(IAssetTools& AssetTools, TSharedRef<IAssetTypeActions> Action)
-	{
-		AssetTools.RegisterAssetTypeActions(Action);
-		RegisteredAssetTypeActions.Add(Action);
-	}
-
-	/** Register the text asset editor settings. */
-	void RegisterSettings()
-	{
-		ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings");
-
-		if (SettingsModule != nullptr)
-		{
-			ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Editor", "Plugins", "EventsSystem",
-				LOCTEXT("EventsSystemettingsName", "Events System"),
-				LOCTEXT("EventsSystemettingsDescription", "Configure Events System"),
-				GetMutableDefault<UEventsSystemEditorSettings>()
-			);
-		}
-	}
+	void RegisterAssetTypeAction(IAssetTools& AssetTools, TSharedRef<IAssetTypeActions> Action);
 
 	/** Unregisters asset tool actions. */
-	void UnregisterAssetTools()
-	{
-		FAssetToolsModule* AssetToolsModule = FModuleManager::GetModulePtr<FAssetToolsModule>("AssetTools");
-
-		if (AssetToolsModule != nullptr)
-		{
-			IAssetTools& AssetTools = AssetToolsModule->Get();
-
-			for (auto Action : RegisteredAssetTypeActions)
-			{
-				AssetTools.UnregisterAssetTypeActions(Action);
-			}
-		}
-	}
-
-	/** Unregister the text asset editor settings. */
-	void UnregisterSettings()
-	{
-		ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings");
-
-		if (SettingsModule != nullptr)
-		{
-			SettingsModule->UnregisterSettings("Editor", "Plugins", "EventsSystem");
-		}
-	}
+	void UnregisterAssetTools();
 
 protected:
 
 	/** Registers main menu and tool bar menu extensions. */
-	void RegisterMenuExtensions()
-	{
-		MenuExtensibilityManager = MakeShareable(new FExtensibilityManager);
-		ToolBarExtensibilityManager = MakeShareable(new FExtensibilityManager);
-	}
+	void RegisterMenuExtensions();
 
 	/** Unregisters main menu and tool bar menu extensions. */
-	void UnregisterMenuExtensions()
-	{
-		MenuExtensibilityManager.Reset();
-		ToolBarExtensibilityManager.Reset();
-	}
+	void UnregisterMenuExtensions();
 
 private:
 
@@ -137,9 +86,3 @@ private:
 	/** Holds the tool bar extensibility manager. */
 	TSharedPtr<FExtensibilityManager> ToolBarExtensibilityManager;
 };
-
-
-IMPLEMENT_MODULE(FEventsSystemEditorModule, EventsSystemEditor);
-
-
-#undef LOCTEXT_NAMESPACE
