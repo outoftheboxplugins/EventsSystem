@@ -24,13 +24,11 @@ void FEventsSystemEditorModule::StartupModule()
 	Style = MakeShareable(new FEventsSystemEditorStyle());
 
 	RegisterAssetTools();
-	RegisterMenuExtensions();
 }
 
 void FEventsSystemEditorModule::ShutdownModule()
 {
 	UnregisterAssetTools();
-	UnregisterMenuExtensions();
 }
 
 void FEventsSystemEditorModule::RegisterAssetTools()
@@ -58,16 +56,4 @@ void FEventsSystemEditorModule::UnregisterAssetTools()
 			AssetTools.UnregisterAssetTypeActions(Action);
 		}
 	}
-}
-
-void FEventsSystemEditorModule::RegisterMenuExtensions()
-{
-	MenuExtensibilityManager = MakeShareable(new FExtensibilityManager);
-	ToolBarExtensibilityManager = MakeShareable(new FExtensibilityManager);
-}
-
-void FEventsSystemEditorModule::UnregisterMenuExtensions()
-{
-	MenuExtensibilityManager.Reset();
-	ToolBarExtensibilityManager.Reset();
 }

@@ -36,7 +36,6 @@ void SEventsSystemEditor::Construct(const FArguments& InArgs, UESEvent* InEvent,
 			[
 				SAssignNew(EditableTextBox, SMultiLineEditableTextBox)
 					.BackgroundColor(FLinearColor::White)
-					.Font(FSlateFontInfo())
 					.ForegroundColor(FLinearColor::Black)
 					.Margin(4.0f)
 					.OnTextChanged(this, &SEventsSystemEditor::HandleEditableTextBoxTextChanged)

@@ -30,7 +30,7 @@ public:
 		const FVector2D Icon20x20(20.0f, 20.0f);
 		const FVector2D Icon40x40(40.0f, 40.0f);
 
-		const FString BaseDir = IPluginManager::Get().FindPlugin("Event")->GetBaseDir();
+		const FString BaseDir = IPluginManager::Get().FindPlugin("EventsSystem")->GetBaseDir();
 		SetContentRoot(BaseDir / TEXT("Content"));
 
 		// set new styles here, for example...
