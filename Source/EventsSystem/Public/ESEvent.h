@@ -61,7 +61,7 @@ private:
 // Editor & Debugging
 public:	
 	// Short description so you won't forget.
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug", meta = (MultiLine = "true"))
 	FText Description;
 
 	// Allows the event to write logs.

@@ -12,7 +12,6 @@ EVENTSSYSTEM_API DECLARE_LOG_CATEGORY_EXTERN(LogEventsSystem, Log, All);
 
 class FEventsSystemModule : public IModuleInterface
 {
-// IModuleInterface interface
-public:
-	virtual bool SupportsDynamicReloading() override { return true; }
 };
+
+IMPLEMENT_MODULE(FEventsSystemModule, EventsSystem);

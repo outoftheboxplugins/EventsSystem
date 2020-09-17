@@ -2,6 +2,4 @@
 
 #include "EventsSystemModule.h"
 
-IMPLEMENT_MODULE(FEventsSystemModule, EventsSystem);
-
 DEFINE_LOG_CATEGORY(LogEventsSystem);
