@@ -4,11 +4,21 @@
 
 #include "ESEvent.h" // for UESEvent
 
+void UEventListenerComponent::OnEventCalled(const UESPayload* Payload) const
+{
+	OnEventInvoked.Broadcast();
+	OnEventsSystemPayloadInvoked.Broadcast(Payload);
+}
+
+FString UEventListenerComponent::GetListenerName() const
+{
+	return GetReadableName();
+}
+
 void UEventListenerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// Register listener if wanted.
 	if (bShouldRegisterOnStart)
 	{
 		RegisterListener(EventToListen);
@@ -24,15 +34,3 @@ void UEventListenerComponent::BeginDestroy()
 		UnregisterListener(EventToListen);
 	}
 }
-
-void UEventListenerComponent::OnEventCalled(const UESPayload* Payload) const
-{
-	OnEventInvoked.Broadcast();
-	OnEventsSystemPayloadInvoked.Broadcast(Payload);
-}
-
-FString UEventListenerComponent::GetListenerName() const
-{
-	return GetReadableName();
-}
-

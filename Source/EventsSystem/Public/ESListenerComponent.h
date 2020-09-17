@@ -19,30 +19,6 @@ class EVENTSSYSTEM_API UEventListenerComponent : public UActorComponent, public 
 {
 	GENERATED_BODY()
 
-// Event Registration
-public:
-	// Event to listen to.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	UESEvent* EventToListen;
-
-	// Should the listener register from the start to the event?
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	bool bShouldRegisterOnStart = true;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	bool bShouldUnRegisterOnDestroy = true;
-
-// BP Delegates
-public:
-	// Flow of action when the event is called.
-	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
-	FOnEventCalled OnEventInvoked;
-	
-	// Flow if action when the event is called. (Including payload)
-	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
-	FOnEventsSystemPayloadCalled OnEventsSystemPayloadInvoked;
-
-	
 // IESListenerInterface interface
 private:
 	// Called when the event is invoked.
@@ -58,4 +34,25 @@ private:
 
 	// Called at the start of destroying.
 	virtual void BeginDestroy() override;
+
+// BP Delegates
+protected:
+	// Flow of action when the event is called.
+	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
+	FOnEventCalled OnEventInvoked;
+	
+	// Flow if action when the event is called. (Including payload)
+	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
+	FOnEventsSystemPayloadCalled OnEventsSystemPayloadInvoked;
+
+// Event Registration
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
+	UESEvent* EventToListen;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
+	bool bShouldRegisterOnStart = true;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
+	bool bShouldUnRegisterOnDestroy = true;
 };

@@ -1,48 +1,58 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "Components/Widget.h"
 #include "Blueprint/UserWidget.h"
 #include "ESListenerInterface.h"
+
 #include "ESListenerWidget.generated.h"
 
+// Forward declaration EventsSystem Types
+class UESEvent;
+
 /**
- * User Widget listening to event calls.
+ * UserWidget implementation of the IESListenerInteface
  */
 
-class UESEvent;
-//TODO: Make this class blueprint spawnable widget
-UCLASS(ClassGroup = (Custom), Category = "EventsSystem", Blueprintable, BlueprintType, meta = (BlueprintSpawnableComponent), hidecategories = ("Slot (Canvas Panel Slot)", "Appearance", "Input", "Interaction", "Behavior", "RenderTransform", "Performance", "Clipping", "Navigation") )
+UCLASS(ClassGroup = EventsSystem, Category = "EventsSystem", NotBlueprintable, hidecategories = (Object, UserWidget), meta = (BlueprintSpawnableComponent))
 class EVENTSSYSTEM_API UEventListenerWidget : public UUserWidget, public IESListenerInterface
 {
 	GENERATED_BODY()
 
-public:
-	// Event to listen to.
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	UESEvent* eventToListen;
+// IESListenerInterface interface
+private:
+	// Called when the event is invoked.
+	virtual void OnEventCalled(const UESPayload* Payload) const override;
 
-	// Should the listener register on start?
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	bool bShouldRegisterOnStart = true;
+	// Used for debugging logs.
+	virtual FString GetListenerName() const override;
 
+// UUserWidget interface
+private:
+	// Called when the widget is constructed.
+	virtual void NativeConstruct() override;
+
+	// Called when the widget is destructed.
+	virtual void NativeDestruct() override;
+
+// BP Delegates
+protected:
 	// Flow of action when the event is called.
 	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
 	FOnEventCalled OnEventInvoked;
-
+	
 	// Flow if action when the event is called. (Including payload)
 	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
 	FOnEventsSystemPayloadCalled OnEventsSystemPayloadInvoked;
 
-public:
-	// Called at the start of the game.
-	virtual void NativeConstruct() override;
+// Event Registration
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
+	UESEvent* EventToListen;
 
-	// Called at the end of the game.
-	~UEventListenerWidget();
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
+	bool bShouldRegisterOnStart = true;
 
-	// Called when the event is invoked.
-	virtual void OnEventCalled(const UESPayload* payload) const override;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
+	bool bShouldUnRegisterOnDestroy = true;
 };
