@@ -1,14 +1,10 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
-#include "ESFactoryNew.h"
+#include "ESEventsFactory.h"
 
 #include "ESEvent.h"
 
-
-/* UEventsSystemFactoryNew structors
- *****************************************************************************/
-
-UEventsSystemFactoryNew::UEventsSystemFactoryNew(const FObjectInitializer& ObjectInitializer)
+UESEventsFactory::UESEventsFactory(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	SupportedClass = UESEvent::StaticClass();
@@ -16,17 +12,12 @@ UEventsSystemFactoryNew::UEventsSystemFactoryNew(const FObjectInitializer& Objec
 	bEditAfterNew = true;
 }
 
-
-/* UFactory overrides
- *****************************************************************************/
-
-UObject* UEventsSystemFactoryNew::FactoryCreateNew(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
+UObject* UESEventsFactory::FactoryCreateNew(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
 {
 	return NewObject<UESEvent>(InParent, InClass, InName, Flags);
 }
 
-
-bool UEventsSystemFactoryNew::ShouldShowInNewMenu() const
+bool UESEventsFactory::ShouldShowInNewMenu() const
 {
 	return true;
 }

@@ -5,13 +5,13 @@
 #include "ESEvent.h"				// for UESEvent
 #include "Blueprint/UserWidget.h"	// for UWidgetTree
 
-void UEventListenerWidget::OnEventCalled(const UESPayload* payload) const
+void UESListenerWidget::OnEventCalled(const UESPayload* payload) const
 {
 	OnEventInvoked.Broadcast();
 	OnEventsSystemPayloadInvoked.Broadcast(payload);
 }
 
-FString UEventListenerWidget::GetListenerName() const
+FString UESListenerWidget::GetListenerName() const
 {
 	if (WidgetTree)
 	{
@@ -21,7 +21,7 @@ FString UEventListenerWidget::GetListenerName() const
 	return FString("InvalidWidgetTree");
 }
 
-void UEventListenerWidget::NativeConstruct()
+void UESListenerWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
@@ -31,7 +31,7 @@ void UEventListenerWidget::NativeConstruct()
 	}
 }
 
-void UEventListenerWidget::NativeDestruct()
+void UESListenerWidget::NativeDestruct()
 {
 	Super::NativeDestruct();
 	

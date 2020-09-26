@@ -17,11 +17,7 @@ public class EventsSystemEditor : ModuleRules
                 "EventsSystemEditor/Private",
                 "EventsSystemEditor/Private/AssetTools",
                 "EventsSystemEditor/Private/Factories",
-                "EventsSystemEditor/Private/Shared",
-                "EventsSystemEditor/Private/Styles",
-                "EventsSystemEditor/Private/Toolkits",
-                "EventsSystemEditor/Private/Widgets",
-				"EventsSystemEditor/Private/Nodes"
+                "EventsSystemEditor/Private/Nodes"
 			} );
 
         PrivateDependencyModuleNames.AddRange(

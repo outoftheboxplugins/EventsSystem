@@ -1,109 +1,40 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "ESActions.h"
 
-#include "Framework/MultiBox/MultiBoxBuilder.h"
 #include "ESEvent.h"
-#include "Styling/SlateStyle.h"
 
-#include "ESEditorToolkit.h"
+#define LOCTEXT_NAMESPACE "EventsSystemEditor"
 
-
-#define LOCTEXT_NAMESPACE "AssetTypeActions"
-
-
-/* FEventsSystemActions constructors
- *****************************************************************************/
-
-FEventsSystemActions::FEventsSystemActions(const TSharedRef<ISlateStyle>& InStyle)
-	: Style(InStyle)
-{ }
-
-
-/* FAssetTypeActions_Base overrides
- *****************************************************************************/
+FEventsSystemActions::FEventsSystemActions()
+{
+	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+	AssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(FName(TEXT("OutOfTheBox")), LOCTEXT("OutOfTheBoxCategory", "OutOfTheBox"));
+}
 
 bool FEventsSystemActions::CanFilter()
 {
 	return true;
 }
 
-
-void FEventsSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
+FText FEventsSystemActions::GetName() const
 {
-	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
+	return LOCTEXT("AssetName", "ESEvent");
+}
 
-	auto EventsSystem = GetTypedWeakObjectPtrs<UESEvent>(InObjects);
-
-	MenuBuilder.AddMenuEntry(
-		LOCTEXT("Event_InvokeEvent", "Debug Invoke Event"),
-		LOCTEXT("Event_InvokeEventToolTip", "Simulate an invoke event for this event."),
-		FSlateIcon(),
-		FUIAction(
-			FExecuteAction::CreateLambda([=] {
-		for (auto& Event : EventsSystem)
-		{
-			if (Event.IsValid())
-			{
-				
-			}
-		}
-	}),
-			FCanExecuteAction::CreateLambda([=] {
-		for (auto& Event : EventsSystem)
-		{
-			if (Event.IsValid())
-			{
-				return true;
-			}
-		}
-		return false;
-	})
-		)
-	);
+FColor FEventsSystemActions::GetTypeColor() const
+{
+	return FColor(1, 83, 183);
 }
 
 uint32 FEventsSystemActions::GetCategories()
 {
-	return EAssetTypeCategories::Blueprint;
-}
-
-FText FEventsSystemActions::GetName() const
-{
-	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_EventsSystem", "EventsSystem");
+	return AssetCategoryBit;
 }
 
 UClass* FEventsSystemActions::GetSupportedClass() const
 {
 	return UESEvent::StaticClass();
-}
-
-FColor FEventsSystemActions::GetTypeColor() const
-{
-	return FColor::Blue;
-}
-
-bool FEventsSystemActions::HasActions(const TArray<UObject *>& InObjects) const
-{
-	return true;
-}
-
-void FEventsSystemActions::OpenAssetEditor(const TArray<UObject *>& InObjects, TSharedPtr<class IToolkitHost> EditWithinLevelEditor /* = TSharedPtr<IToolkitHost>() */)
-{
-	EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid()
-		? EToolkitMode::WorldCentric
-		: EToolkitMode::Standalone;
-
-	for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
-	{
-		auto Event = Cast<UESEvent>(*ObjIt);
-
-		if (Event != nullptr)
-		{
-			TSharedRef<FEventsSystemEditorToolkit> EditorToolkit = MakeShareable(new FEventsSystemEditorToolkit(Style));
-			EditorToolkit->Initialize(Event, Mode, EditWithinLevelEditor);
-		}
-	}
 }
 
 #undef LOCTEXT_NAMESPACE

@@ -15,7 +15,7 @@ class UESEvent;
  */
 
 UCLASS(ClassGroup = EventsSystem, Category = "EventsSystem", NotBlueprintable, hidecategories = (Object, ActorComponent), meta=(BlueprintSpawnableComponent))
-class EVENTSSYSTEM_API UEventListenerComponent : public UActorComponent, public IESListenerInterface
+class EVENTSSYSTEM_API UESListenerComponent : public UActorComponent, public IESListenerInterface
 {
 	GENERATED_BODY()
 

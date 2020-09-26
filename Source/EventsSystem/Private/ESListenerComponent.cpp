@@ -4,18 +4,18 @@
 
 #include "ESEvent.h" // for UESEvent
 
-void UEventListenerComponent::OnEventCalled(const UESPayload* Payload) const
+void UESListenerComponent::OnEventCalled(const UESPayload* Payload) const
 {
 	OnEventInvoked.Broadcast();
 	OnEventsSystemPayloadInvoked.Broadcast(Payload);
 }
 
-FString UEventListenerComponent::GetListenerName() const
+FString UESListenerComponent::GetListenerName() const
 {
 	return GetReadableName();
 }
 
-void UEventListenerComponent::BeginPlay()
+void UESListenerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -25,7 +25,7 @@ void UEventListenerComponent::BeginPlay()
 	}
 }
 
-void UEventListenerComponent::BeginDestroy()
+void UESListenerComponent::BeginDestroy()
 {
 	Super::BeginDestroy();
 

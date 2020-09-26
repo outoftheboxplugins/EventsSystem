@@ -15,7 +15,7 @@ class UESEvent;
  */
 
 UCLASS(ClassGroup = EventsSystem, Category = "EventsSystem", NotBlueprintable, hidecategories = (Object, UserWidget), meta = (BlueprintSpawnableComponent))
-class EVENTSSYSTEM_API UEventListenerWidget : public UUserWidget, public IESListenerInterface
+class EVENTSSYSTEM_API UESListenerWidget : public UUserWidget, public IESListenerInterface
 {
 	GENERATED_BODY()
 
