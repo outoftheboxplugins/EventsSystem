@@ -6,33 +6,33 @@
 
 #define LOCTEXT_NAMESPACE "EventsSystemEditor"
 
-FEventsSystemActions::FEventsSystemActions()
+FESActions::FESActions()
 {
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
 	AssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(FName(TEXT("OutOfTheBox")), LOCTEXT("OutOfTheBoxCategory", "OutOfTheBox"));
 }
 
-bool FEventsSystemActions::CanFilter()
+bool FESActions::CanFilter()
 {
 	return true;
 }
 
-FText FEventsSystemActions::GetName() const
+FText FESActions::GetName() const
 {
 	return LOCTEXT("AssetName", "ESEvent");
 }
 
-FColor FEventsSystemActions::GetTypeColor() const
+FColor FESActions::GetTypeColor() const
 {
 	return FColor(1, 83, 183);
 }
 
-uint32 FEventsSystemActions::GetCategories()
+uint32 FESActions::GetCategories()
 {
 	return AssetCategoryBit;
 }
 
-UClass* FEventsSystemActions::GetSupportedClass() const
+UClass* FESActions::GetSupportedClass() const
 {
 	return UESEvent::StaticClass();
 }

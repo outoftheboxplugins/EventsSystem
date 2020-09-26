@@ -66,23 +66,15 @@ UClass* UK2Node_InvokeEventPayload::GetClassPinBaseClass() const
 void UK2Node_InvokeEventPayload::AllocateDefaultPins()
 {
 	Super::AllocateDefaultPins();
+	
+	FCreatePinParams PinParams;
+	PinParams.Index = 1; // Place the event pin right after the flow node.
+
+	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UESEvent::StaticClass(), FPinNames::GetEventPinNameText(), PinParams);
 
 	UEdGraphPin* ClassPin = GetClassPin();
-	if (ClassPin->DefaultObject == NULL)
-	{
-		ClassPin->DefaultObject = UESPayload::StaticClass();
+	ClassPin->bAdvancedView = true;
 
-		UClass* UseSpawnClass = GetClassToSpawn();
-		if (UseSpawnClass != NULL)
-		{
-			CreatePinsForClass(UseSpawnClass);
-		}
-	}
-
-	const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
-	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UESEvent::StaticClass(), FPinNames::GetEventPinNameText());
-
-	InEventPin->bAdvancedView = true;
 	if (ENodeAdvancedPins::NoPins == AdvancedPinDisplay)
 	{
 		AdvancedPinDisplay = ENodeAdvancedPins::Hidden;

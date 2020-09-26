@@ -8,10 +8,10 @@
  * Asset actions for UESEvents.
  */
 
-class FEventsSystemActions : public FAssetTypeActions_Base
+class FESActions : public FAssetTypeActions_Base
 {
 public:
-	FEventsSystemActions();
+	FESActions();
 
 // FAssetTypeActions_Base interface
 public:	

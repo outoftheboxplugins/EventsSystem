@@ -4,13 +4,21 @@
 
 #include "Modules/ModuleInterface.h"
 
+class FESActions;
+
 /**
  * Implements the EventsSystem editor module.
  */
 
 class FEventsSystemEditorModule : public IModuleInterface
 {
+// IModuleInterface interface
+private:
+	virtual void StartupModule() override;
+	virtual void ShutdownModule() override;
 
+private:
+	TSharedPtr<FESActions> AssetActions;
 };
 
 IMPLEMENT_MODULE(FEventsSystemEditorModule, EventsSystemEditor);
