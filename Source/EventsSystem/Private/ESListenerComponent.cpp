@@ -7,7 +7,7 @@
 void UESListenerComponent::OnEventCalled(const UESPayload* Payload) const
 {
 	OnEventInvoked.Broadcast();
-	OnEventsSystemPayloadInvoked.Broadcast(Payload);
+	OnEventWithPayloadInvoked.Broadcast(Payload);
 }
 
 FString UESListenerComponent::GetListenerName() const

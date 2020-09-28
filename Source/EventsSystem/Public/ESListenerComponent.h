@@ -43,7 +43,7 @@ protected:
 	
 	// Flow if action when the event is called. (Including payload)
 	UPROPERTY(BlueprintAssignable, Category = "EventsSystem")
-	FOnEventsSystemPayloadCalled OnEventsSystemPayloadInvoked;
+	FOnEventWithPayloadInvoked OnEventWithPayloadInvoked;
 
 // Event Registration
 protected:

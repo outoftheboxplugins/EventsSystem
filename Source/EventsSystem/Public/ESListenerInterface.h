@@ -8,7 +8,7 @@
 
 // Delegates to implement functionality inside the listener when the event is called.
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnEventCalled);
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEventsSystemPayloadCalled, const UESPayload*, Payload);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnEventWithPayloadInvoked, const UESPayload*, Payload);
 
 // Forward declaration EventsSystem Types
 class UESPayload;
