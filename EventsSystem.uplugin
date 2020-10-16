@@ -1,29 +1,32 @@
 {
-	"FileVersion"		: 3,
-	"VersionName"		: "versionplugin",
-	"EngineVersion"		: "versionengine",
-	"FriendlyName"		: "Blueprints Events System",
-	"Description"		: "Event-driven system who improves flow control inside C++ and BP.",
-	"Category"			: "Editor",
-	"CreatedBy"			: "Out-of-the-Box Plugis",
-	"CreatedByURL"		: "https://outofthebox-plugins.com",
-	"DocsURL"			: "https://bitbucket.org/pasotee-marketplace/eventsystemunreal/wiki/Home",
-	"MarketplaceURL"	: "com.epicgames.launcher://ue/marketplace/content/13d45e838b954d67b9d5d01fa82635d9",
-	"SupportURL"		: "https://outofthebox-plugins.com/pages/about",
-	"EnabledByDefault"	: true,
-	"CanContainContent" : true,
-	"Modules"			:
-	[
+	"FileVersion": 3,
+	"Version": 0,
+	"VersionName": "versionplugin",
+	"FriendlyName": "Events System",
+	"Description": "Event-driven system who improves flow control inside C++ and BP.",
+	"Category": "Editor",
+	"CreatedBy": "Out-of-the-Box Plugis",
+	"CreatedByURL": "https://outofthebox-plugins.com",
+	"DocsURL": "https://bitbucket.org/pasotee-marketplace/eventsystemunreal/wiki/Home",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/13d45e838b954d67b9d5d01fa82635d9",
+	"SupportURL": "https://outofthebox-plugins.com/pages/about",
+	"EngineVersion": "versionengine",
+	"EnabledByDefault": true,
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
 		{
-			"Name"				: "EventsSystem",
-			"Type"				: "Runtime",
-			"LoadingPhase"		: "PreDefault"
+			"Name": "EventsSystem",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
 		},
 		{
-			"Name"				: "EventsSystemEditor",
-			"Type"				: "Editor",
-			"WhitelistPlatforms": 
-			[
+			"Name": "EventsSystemEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default",
+			"WhitelistPlatforms": [
 				"Win64",
 				"Win32",
 				"Mac",
