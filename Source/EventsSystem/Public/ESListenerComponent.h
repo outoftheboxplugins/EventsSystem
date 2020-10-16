@@ -32,9 +32,9 @@ private:
 	// Called at the start of the game.
 	virtual void BeginPlay() override;
 
-	// Called at the start of destroying.
-	virtual void BeginDestroy() override;
-
+	// Called at the end of the game.
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	
 // BP Delegates
 protected:
 	// Flow of action when the event is called.
@@ -54,5 +54,5 @@ protected:
 	bool bShouldRegisterOnStart = true;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
-	bool bShouldUnRegisterOnDestroy = true;
+	bool bShouldUnRegisterOnEnd = true;
 };

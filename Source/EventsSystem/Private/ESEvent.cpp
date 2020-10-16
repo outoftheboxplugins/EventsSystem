@@ -17,6 +17,11 @@
 {
 	if (EventToInvoke)
 	{
+		if (EventToInvoke->bWriteLogs)
+		{
+			UE_LOG(LogEventsSystem, Log, TEXT("Event %s invoked."), *EventToInvoke->GetName());
+		}
+
 		for (const IESListenerInterface* Listener : EventToInvoke->ActiveListeners)
 		{
 			if (Listener)
@@ -31,6 +36,11 @@
 {
 	if (EventToInvoke && Actor)
 	{
+		if (EventToInvoke->bWriteLogs)
+		{
+			UE_LOG(LogEventsSystem, Log, TEXT("Event %s invoked."), *EventToInvoke->GetName());
+		}
+
 		TArray<UActorComponent*> ActorComponents;
 		Actor->GetComponents(ActorComponents);
 
@@ -49,6 +59,11 @@
 {
 	if (EventToInvoke)
 	{
+		if (EventToInvoke->bWriteLogs)
+		{
+			UE_LOG(LogEventsSystem, Log, TEXT("Event %s invoked."), *EventToInvoke->GetName());
+		}
+
 		for (const IESListenerInterface* Listener : EventToInvoke->ActiveListeners)
 		{
 			if (const AActor* ActorListener = Cast<AActor>(Listener))
@@ -69,6 +84,11 @@
 {
 	if (EventToInvoke && Widget)
 	{
+		if (EventToInvoke->bWriteLogs)
+		{
+			UE_LOG(LogEventsSystem, Log, TEXT("Event %s invoked."), *EventToInvoke->GetName());
+		}
+
 		TArray<UWidget*> WidgetListeners;
 		Widget->WidgetTree->GetAllWidgets(WidgetListeners);
 
@@ -88,6 +108,12 @@
 	if (EventToClear)
 	{
 		EventToClear->ActiveListeners.Empty();
+		EventToClear->ListenersList.Empty();
+
+		if (EventToClear->bWriteLogs)
+		{
+			UE_LOG(LogEventsSystem, Log, TEXT("Listeners for event %s cleared."), *EventToClear->GetName());
+		}
 	}
 }
 
@@ -100,9 +126,13 @@ void UESEvent::RegisterListener(const IESListenerInterface* NewListener)
 		bool bAlreadyInSet = false;
 		ActiveListeners.Add(NewListener, &bAlreadyInSet);
 
-		if (bAlreadyInSet)
+		if (!bAlreadyInSet)
 		{
-			UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s already registered to event %s.", *NewListener->GetListenerName(), *GetName()));
+			ListenersList.Add(NewListener->GetListenerName());
+		}
+		else if (bWriteLogs)
+		{
+			UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s already registered to event %s."), *NewListener->GetListenerName(), *GetName());
 		}
 	}
 }
@@ -113,9 +143,10 @@ void UESEvent::UnRegisterListener(const IESListenerInterface* OldListener)
 	if (OldListenerIt.IsValidId())
 	{
 		ActiveListeners.Remove(OldListenerIt);
+		ListenersList.RemoveSingle(OldListener->GetListenerName());
 	}
-	else
+	else if (bWriteLogs)
 	{
-		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s is not registered to event %s.", *NewListener->GetListenerName(), *GetName()));
+		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s is not registered to event %s."), *OldListener->GetListenerName(), *GetName());
 	}
 }

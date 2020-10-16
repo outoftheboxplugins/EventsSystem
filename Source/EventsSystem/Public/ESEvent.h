@@ -67,4 +67,7 @@ public:
 	// Allows the event to write logs.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "EventsSystem|Debug")
 	bool bWriteLogs;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "EventsSystem|Debug")
+	TArray<FString> ListenersList;
 };

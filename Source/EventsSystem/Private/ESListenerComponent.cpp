@@ -25,11 +25,11 @@ void UESListenerComponent::BeginPlay()
 	}
 }
 
-void UESListenerComponent::BeginDestroy()
+void UESListenerComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 {
-	Super::BeginDestroy();
-
-	if (bShouldUnRegisterOnDestroy)
+	Super::EndPlay(EndPlayReason);
+	
+	if (bShouldUnRegisterOnEnd)
 	{
 		UnregisterListener(EventToListen);
 	}
