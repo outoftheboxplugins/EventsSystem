@@ -1,6 +1,6 @@
 {
 	"FileVersion" : 3,
-	"VersionName": "2.14",
+	"VersionName": "2.15",
 	"EngineVersion": "4.25",
 	"FriendlyName" : "Blueprints Events System",
 	"Description" : "Event-driven system who improves flow control inside your project. Build huge systemic games easy.",
