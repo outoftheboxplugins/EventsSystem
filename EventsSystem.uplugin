@@ -19,10 +19,10 @@
 			"Type" : "Runtime",
 			"LoadingPhase" : "PreDefault"
 		},
-    {
-      "Name" : "EventsSystemEditor",
-      "Type" : "Editor",
-      "WhitelistPlatforms" : [ "Win64", "Win32", "Mac", "Linux" ]
-    }
+        {
+            "Name" : "EventsSystemEditor",
+            "Type" : "Editor",
+            "WhitelistPlatforms" : [ "Win64", "Win32", "Mac", "Linux" ]
+        }
 	]
 }

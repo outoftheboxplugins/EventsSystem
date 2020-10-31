@@ -1,13 +1,11 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 using UnrealBuildTool;
 
 public class EventsSystemEditor : ModuleRules
 {
-    public EventsSystemEditor( ReadOnlyTargetRules Target ) : base( Target )
+    public EventsSystemEditor (ReadOnlyTargetRules Target) : base( Target )
     {
-        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
-
         DynamicallyLoadedModuleNames.AddRange(
             new string[] {
                 "AssetTools",
@@ -19,12 +17,8 @@ public class EventsSystemEditor : ModuleRules
                 "EventsSystemEditor/Private",
                 "EventsSystemEditor/Private/AssetTools",
                 "EventsSystemEditor/Private/Factories",
-                "EventsSystemEditor/Private/Shared",
-                "EventsSystemEditor/Private/Styles",
-                "EventsSystemEditor/Private/Toolkits",
-                "EventsSystemEditor/Private/Widgets",
                 "EventsSystemEditor/Private/Nodes"
-            } );
+			} );
 
         PrivateDependencyModuleNames.AddRange(
             new string[] {
@@ -38,7 +32,7 @@ public class EventsSystemEditor : ModuleRules
                 "Projects",
                 "Slate",
                 "SlateCore",
-                "EventsSystem",
+				"EventsSystem",
                 "UnrealEd",
                 "Projects",
                 "BlueprintGraph",

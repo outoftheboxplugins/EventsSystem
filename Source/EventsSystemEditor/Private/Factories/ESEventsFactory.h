@@ -1,26 +1,22 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #pragma once
 
 #include "Factories/Factory.h"
-#include "UObject/ObjectMacros.h"
 
-#include "EventsSystemFactoryNew.generated.h"
-
+#include "ESEventsFactory.generated.h"
 
 /**
- * Implements a factory for UEventsSystem objects.
+ * Factory responsible for creating UESEvents assets.
  */
-UCLASS(hidecategories=Object)
-class UEventsSystemFactoryNew
-	: public UFactory
+
+UCLASS()
+class UESEventsFactory : public UFactory
 {
 	GENERATED_UCLASS_BODY()
 
+// UFactory interface
 public:
-
-	//~ UFactory Interface
-
 	virtual UObject* FactoryCreateNew(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;
 	virtual bool ShouldShowInNewMenu() const override;
 };
