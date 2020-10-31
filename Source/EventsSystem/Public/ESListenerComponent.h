@@ -14,7 +14,7 @@ class UESEvent;
  * ActorComponent implementation of the IESListenerInteface
  */
 
-UCLASS(ClassGroup = EventsSystem, Category = "EventsSystem", NotBlueprintable, hidecategories = (Object, ActorComponent), meta=(BlueprintSpawnableComponent))
+UCLASS(ClassGroup = EventsSystem, Category = "EventsSystem", NotBlueprintable, hidecategories = (Object, Sockets, Tags, Component, Activation, Cooking, AssetUserData, Collision), meta=(BlueprintSpawnableComponent))
 class EVENTSSYSTEM_API UESListenerComponent : public UActorComponent, public IESListenerInterface
 {
 	GENERATED_BODY()

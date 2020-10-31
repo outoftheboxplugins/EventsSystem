@@ -70,4 +70,9 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "EventsSystem")
 	bool bShouldUnRegisterOnEnd = true;
+
+private:
+	FParamOnEventCalled InDelegateCopy;
+
+	FParamOnEventWithPayloadInvoked InDelegateWithPayloadCopy;
 };

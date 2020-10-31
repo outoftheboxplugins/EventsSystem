@@ -19,19 +19,20 @@ void IESListenerInterface::RegisterListener(UESEvent* Event) const
 	}
 	else
 	{
-		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s trying to register to an invalid event.", *GetListenerName()));
+		FString ListenerName = GetListenerName();
+		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s trying to register to an invalid event."), *ListenerName);
 	}
 }
 
 void IESListenerInterface::UnregisterListener(UESEvent* Event) const
 {
-	if (IsValid(Event))
+	if (Event)
 	{
 		Event->UnRegisterListener(this);
 	}
 	else
 	{
-		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s trying to unregister from an invalid event.", *GetListenerName()));
+		FString ListenerName = GetListenerName();
+		UE_LOG(LogEventsSystem, Warning, TEXT("Listener %s trying to unregister from an invalid event."), *ListenerName);
 	}
 }
-

@@ -14,7 +14,7 @@ class UESEvent;
  * UserWidget implementation of the IESListenerInteface
  */
 
-UCLASS(ClassGroup = EventsSystem, Category = "EventsSystem", NotBlueprintable, hidecategories = (Object, UserWidget), meta = (BlueprintSpawnableComponent))
+UCLASS(ClassGroup = EventsSystem, Category = "EventsSystem", NotBlueprintable, hidecategories = (Object, Apperance, Input, Interaction, Behavior, RenderTransform, Performance, Clipping, Navigation, Localization), meta = (BlueprintSpawnableComponent))
 class EVENTSSYSTEM_API UESListenerWidget : public UUserWidget, public IESListenerInterface
 {
 	GENERATED_BODY()

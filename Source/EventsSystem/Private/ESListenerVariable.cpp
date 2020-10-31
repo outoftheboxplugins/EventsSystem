@@ -8,6 +8,9 @@ UESListenerVariable* UESListenerVariable::CreateVariableListener(UESEvent* Event
 {
 	UESListenerVariable* VariableListener = NewObject<UESListenerVariable>();
 
+	VariableListener->InDelegateCopy = OnEventInvoked;
+	VariableListener->InDelegateWithPayloadCopy = OnEventWithPayloadInvoked;
+
 	VariableListener->EventToListen = Event;
 	VariableListener->OnEventInvoked.AddUnique(OnEventInvoked);
 	VariableListener->OnEventWithPayloadInvoked.AddUnique(OnEventWithPayloadInvoked);
@@ -24,6 +27,11 @@ bool UESListenerVariable::DestroyVariableListener(UESListenerVariable* VariableL
 	if (VariableListener)
 	{
 		VariableListener->StopListener();
+
+		VariableListener->OnEventInvoked.Remove(VariableListener->InDelegateCopy);
+		VariableListener->OnEventWithPayloadInvoked.Remove(VariableListener->InDelegateWithPayloadCopy);
+
+		VariableListener->EventToListen = nullptr;
 
 		return true;
 	}
