@@ -3,6 +3,7 @@
 #pragma once
 
 #include "Modules/ModuleInterface.h"
+#include "Modules/ModuleManager.h"
 
 EVENTSSYSTEM_API DECLARE_LOG_CATEGORY_EXTERN(LogEventsSystem, Log, All);
 
