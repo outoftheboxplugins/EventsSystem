@@ -2,4 +2,14 @@
 
 #include "EventsSystemModule.h"
 
-DEFINE_LOG_CATEGORY(LogEventsSystem);
+#include "ESLog.h"
+
+void FEventsSystemModule::StartupModule()
+{
+	LOG_TRACE();
+}
+
+void FEventsSystemModule::ShutdownModule()
+{
+	LOG_TRACE();
+}

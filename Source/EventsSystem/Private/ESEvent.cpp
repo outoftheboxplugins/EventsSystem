@@ -2,8 +2,7 @@
 
 #include "ESEvent.h"
 
-#include "EventsSystemModule.h"		// for Debugging Logs
-
+#include "ESLog.h"					// for Debugging Logs
 #include "ESPayload.h"				// for UESPayload
 #include "ESListenerInterface.h"	// for IESListenerInterface
 
