@@ -2,7 +2,23 @@
 
 #include "EventsSystemEditorModule.h"
 
+#include "ESLog.h"
+
 void FEventsSystemEditorModule::StartupModule()
+{
+	LOG_TRACE();
+
+	RegisterAssetTools();
+}
+
+void FEventsSystemEditorModule::ShutdownModule()
+{
+	LOG_TRACE();
+
+	UnregisterAssetTools();
+}
+
+void FEventsSystemEditorModule::RegisterAssetTools()
 {
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
 
@@ -10,7 +26,7 @@ void FEventsSystemEditorModule::StartupModule()
 	AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
 }
 
-void FEventsSystemEditorModule::ShutdownModule()
+void FEventsSystemEditorModule::UnregisterAssetTools()
 {
 	if (FModuleManager::Get().IsModuleLoaded("AssetTools"))
 	{

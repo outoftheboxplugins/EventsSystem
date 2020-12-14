@@ -17,6 +17,11 @@ private:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 
+// Register & Unregister
+private:
+	void RegisterAssetTools();
+	void UnregisterAssetTools();
+
 private:
 	TSharedPtr<FESActions> AssetActions;
 };
