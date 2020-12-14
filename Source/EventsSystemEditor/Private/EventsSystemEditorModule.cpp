@@ -4,6 +4,8 @@
 
 #include "ESLog.h"
 
+#include "AssetToolsModule.h"
+
 void FEventsSystemEditorModule::StartupModule()
 {
 	LOG_TRACE();
@@ -20,17 +22,28 @@ void FEventsSystemEditorModule::ShutdownModule()
 
 void FEventsSystemEditorModule::RegisterAssetTools()
 {
-	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+	if (FAssetToolsModule::IsModuleLoaded())
+	{
+		IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
 
-	AssetActions = MakeShareable(new FESActions);
-	AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
+		AssetActions = MakeShareable(new FESActions);
+		AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
+	}
+	else
+	{
+		UE_LOG(LogEventsSystem, Warning, TEXT("FAssetToolsModule not loaded, cannot register asset tools."))
+	}
 }
 
 void FEventsSystemEditorModule::UnregisterAssetTools()
 {
-	if (FModuleManager::Get().IsModuleLoaded("AssetTools"))
+	if (FAssetToolsModule::IsModuleLoaded())
 	{
-		IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+		IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
 		AssetTools.UnregisterAssetTypeActions(AssetActions.ToSharedRef());
+	}
+	else
+	{
+		UE_LOG(LogEventsSystem, Warning, TEXT("FAssetToolsModule not loaded, cannot unregister asset tools."))
 	}
 }
