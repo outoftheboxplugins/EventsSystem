@@ -2,7 +2,7 @@
 
 #include "EventsSystemModule.h"
 
-#include "ESLog.h"
+#include "ESLog.h" // for Debugging Logs
 
 void FEventsSystemModule::StartupModule()
 {

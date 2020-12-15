@@ -2,9 +2,9 @@
 
 #include "EventsSystemEditorModule.h"
 
-#include "ESLog.h"
+#include "ESLog.h" // for Debugging Logs
 
-#include "AssetToolsModule.h"
+#include "AssetToolsModule.h" // for FAssetToolsModule
 
 void FEventsSystemEditorModule::StartupModule()
 {

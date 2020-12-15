@@ -14,9 +14,7 @@ public:
 	FESActions();
 
 // FAssetTypeActions_Base interface
-public:	
-	virtual bool CanFilter() override;
-	
+private:	
 	virtual FText GetName() const override;
 	virtual FColor GetTypeColor() const override;
 	virtual uint32 GetCategories() override;

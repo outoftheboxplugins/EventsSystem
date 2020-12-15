@@ -1,8 +1,7 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #pragma once
 
-#include "Modules/ModuleInterface.h"
 #include "Modules/ModuleManager.h"
 
 /**

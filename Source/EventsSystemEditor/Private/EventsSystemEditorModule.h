@@ -2,9 +2,7 @@
 
 #pragma once
 
-#include "Modules/ModuleInterface.h"
-
-class FESActions;
+#include "Modules/ModuleManager.h"
 
 /**
  * Implements the EventsSystem editor module.
@@ -23,7 +21,7 @@ private:
 	void UnregisterAssetTools();
 
 private:
-	TSharedPtr<FESActions> AssetActions;
+	TSharedPtr<class FESActions> AssetActions;
 };
 
 IMPLEMENT_MODULE(FEventsSystemEditorModule, EventsSystemEditor);

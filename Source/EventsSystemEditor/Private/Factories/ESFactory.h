@@ -4,19 +4,19 @@
 
 #include "Factories/Factory.h"
 
-#include "ESEventsFactory.generated.h"
+#include "ESFactory.generated.h"
 
 /**
  * Factory responsible for creating UESEvents assets.
  */
 
 UCLASS()
-class UESEventsFactory : public UFactory
+class UESFactory : public UFactory
 {
 	GENERATED_UCLASS_BODY()
 
 // UFactory interface
-public:
-	virtual UObject* FactoryCreateNew(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;
+private:
 	virtual bool ShouldShowInNewMenu() const override;
+	virtual UObject* FactoryCreateNew(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;
 };
