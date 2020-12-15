@@ -2,7 +2,7 @@
 
 #include "ESActions.h"
 
-#include "ESEvent.h"
+#include "ESEvent.h" // for UESEvent
 
 #define LOCTEXT_NAMESPACE "EventsSystemEditor"
 

@@ -2,7 +2,7 @@
 
 #include "ESFactory.h"
 
-#include "ESEvent.h"
+#include "ESEvent.h" // for UESEvent
 
 UESFactory::UESFactory(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

@@ -2,11 +2,11 @@
 
 #include "K2Node_InvokeEventPayload.h"
 
-#include "K2Node_CallFunction.h"
-#include "Kismet/GameplayStatics.h"
-#include "KismetCompiler.h"
+#include "K2Node_CallFunction.h"	// for UK2Node_CallFunction
+#include "Kismet/GameplayStatics.h" // for UGameplayStatics
+#include "KismetCompiler.h"			// for FKismetCompilerContext 
 
-#include "ESPayload.h"
+#include "ESPayload.h" // for UESPayload
 
 #define LOCTEXT_NAMESPACE "EventsSystemEditor"
 
