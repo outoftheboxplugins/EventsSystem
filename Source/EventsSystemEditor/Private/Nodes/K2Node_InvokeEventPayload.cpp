@@ -10,9 +10,9 @@
 
 #define LOCTEXT_NAMESPACE "EventsSystemEditor"
 
-namespace FPinNames
+namespace
 {
-	FName GetEventPinNameText() { return FName(TEXT("EventToInvoke")); }
+	const FName EventPinName = TEXT("EventToInvoke");
 }
 
 UK2Node_InvokeEventPayload::UK2Node_InvokeEventPayload(const FObjectInitializer& ObjectInitializer)
@@ -25,7 +25,7 @@ UK2Node_InvokeEventPayload::UK2Node_InvokeEventPayload(const FObjectInitializer&
 // UK2Node_ConstructObjectFromClass interface
 bool UK2Node_InvokeEventPayload::IsSpawnVarPin(UEdGraphPin* Pin) const
 {
-	bool EventPinCheck = (Pin->PinName != FPinNames::GetEventPinNameText());
+	bool EventPinCheck = (Pin->PinName != EventPinName);
 	return EventPinCheck && Super::IsSpawnVarPin(Pin);
 }
 
@@ -53,7 +53,8 @@ void UK2Node_InvokeEventPayload::AllocateDefaultPins()
 	FCreatePinParams PinParams;
 	PinParams.Index = 1; // Place the event pin right after the flow node.
 
-	UEdGraphPin* InEventPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UESEvent::StaticClass(), FPinNames::GetEventPinNameText(), PinParams);
+	// Create input pin for event selection
+	CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UESEvent::StaticClass(), EventPinName, PinParams);
 
 	UEdGraphPin* ClassPin = GetClassPin();
 	ClassPin->bAdvancedView = true;
@@ -86,14 +87,13 @@ void UK2Node_InvokeEventPayload::PinConnectionListChanged(UEdGraphPin* Pin)
 
 FText UK2Node_InvokeEventPayload::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-	FText SuperValue = Super::GetNodeTitle(TitleType);
-	if (!SuperValue.CompareTo(FText::FromString("Construct NONE")))
+	if (GetClassToSpawn())
 	{
-		return LOCTEXT("InvokeEventPayloadK2Node_NoPayload", "Invoke ESEvent without payload");
+		return Super::GetNodeTitle(TitleType);
 	}
 	else
 	{
-		return SuperValue;
+		return LOCTEXT("InvokeEventPayloadK2Node_NoPayload", "Invoke ESEvent without payload");
 	}
 }
 
@@ -119,8 +119,12 @@ void UK2Node_InvokeEventPayload::ExpandNode(class FKismetCompilerContext& Compil
 		bSucceeded &= SpawnExecPin && CallExecPin && CompilerContext.MovePinLinksToIntermediate(*SpawnExecPin, *CallExecPin).CanSafeConnect();
 	}
 
-	// Move 'then' connection from spawn node to 'finish spawn'
-	CompilerContext.MovePinLinksToIntermediate(*GetThenPin(), *CallInvokeNode->GetThenPin());
+	// connect then pin
+	{
+		UEdGraphPin* SpawnThenPin = GetThenPin();
+		UEdGraphPin* InvokeThenPin = CallInvokeNode->GetThenPin();
+		bSucceeded &= SpawnThenPin && InvokeThenPin && CompilerContext.MovePinLinksToIntermediate(*SpawnThenPin, *InvokeThenPin).CanSafeConnect();
+	}
 
 	//connect class
 	{
@@ -137,36 +141,63 @@ void UK2Node_InvokeEventPayload::ExpandNode(class FKismetCompilerContext& Compil
 	}
 
 	// Connect output actor from 'begin' to 'finish'
-	CallCreateNode->GetReturnValuePin()->MakeLinkTo(CallInvokeNode->FindPin(TEXT("payload")));
+	{
+		UEdGraphPin* SpawnPayloadPin = CallInvokeNode->FindPin(TEXT("payload"));
+		UEdGraphPin* CallReturnValuePin = CallCreateNode->GetReturnValuePin();
+		
+		bSucceeded &= SpawnPayloadPin && CallReturnValuePin;
+
+		if (bSucceeded)
+		{
+			CallReturnValuePin->MakeLinkTo(SpawnPayloadPin);
+		}
+	}
 
 	// Copy transform connection
-	CompilerContext.CopyPinLinksToIntermediate(*GetEventPin(), *CallInvokeNode->FindPin(TEXT("eventToInvoke")));
+	{
+		UEdGraphPin* SpawnEventPin = GetEventPin();
+		UEdGraphPin* CallEventPin = CallInvokeNode->FindPin(TEXT("eventToInvoke"));
+		bSucceeded &= SpawnEventPin && CallEventPin && CompilerContext.CopyPinLinksToIntermediate(*SpawnEventPin, *CallEventPin).CanSafeConnect();
+	}
 
-	CallCreateNode->GetReturnValuePin()->PinType = GetResultPin()->PinType; // Copy type so it uses the right actor subclass
-	CompilerContext.MovePinLinksToIntermediate(*GetResultPin(), *CallCreateNode->GetReturnValuePin());
+	// Connect return pins
+	{
+		UEdGraphPin* SpawnReturnPin = GetResultPin();
+		UEdGraphPin* CallReturnPin = CallCreateNode->GetReturnValuePin();
+		CallReturnPin->PinType = SpawnReturnPin->PinType; // Copy type so it uses the right actor subclass
 
-	UEdGraphPin* LastThen = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallCreateNode, this, CallCreateNode->GetReturnValuePin(), ClassToSpawn);
+		bSucceeded &= SpawnReturnPin && CallReturnPin && CompilerContext.MovePinLinksToIntermediate(*SpawnReturnPin, *CallReturnPin).CanSafeConnect();
+	}
 
-	// Make exec connection between 'then' on last node and 'finish'
-	LastThen->MakeLinkTo(CallInvokeNode->GetExecPin());
+
+	// Connect exec and 'then' on last node and 'finish'
+	{
+		UEdGraphPin* SpawnLastThenPin = FKismetCompilerUtilities::GenerateAssignmentNodes(CompilerContext, SourceGraph, CallCreateNode, this, CallCreateNode->GetReturnValuePin(), ClassToSpawn);
+		UEdGraphPin* CallThenPin = CallInvokeNode->GetExecPin();
+
+		bSucceeded &= SpawnLastThenPin && CallThenPin;
+
+		if (bSucceeded)
+		{
+			SpawnLastThenPin->MakeLinkTo(CallThenPin);
+		}
+	}
 
 	BreakAllNodeLinks();
 
 	if (!bSucceeded)
 	{
-		CompilerContext.MessageLog.Error(*LOCTEXT("InvokeEventPayloadK2Node_Error", "Invoke ES Event Error @@").ToString(), this);
+		CompilerContext.MessageLog.Error(*LOCTEXT("K2NodeExpansionFailed", "[EventsSystem] Failed to expand custom node.").ToString(), this);
 	}
 	else
 	{
+		// If the expansions was succesful, log a warning if the event pin has no value.
 		UEdGraphPin* SpawnOuterPin = GetEventPin();
-		if (SpawnOuterPin && SpawnOuterPin)
-		{
-			bool bHasValue = SpawnOuterPin->DefaultObject != NULL || SpawnOuterPin->HasAnyConnections();
+		const bool bHasEvent = SpawnOuterPin && (SpawnOuterPin->DefaultObject != NULL || SpawnOuterPin->HasAnyConnections());
 
-			if (!bHasValue)
-			{
-				CompilerContext.MessageLog.Warning(*LOCTEXT("InvokeEventPayloadK2Node_Warning", "Invoke ES Event has no event.").ToString(), this);
-			}
+		if (!bHasEvent)
+		{
+			CompilerContext.MessageLog.Warning(*LOCTEXT("K2NodeExpansionNoEventWarning", "[EventsSystem] node has no event").ToString(), this);
 		}
 	}
 }
@@ -187,7 +218,7 @@ FText UK2Node_InvokeEventPayload::GetMenuCategory() const
 // Helpers
 UEdGraphPin* UK2Node_InvokeEventPayload::GetEventPin() const
 {
-	UEdGraphPin* Pin = FindPin(FPinNames::GetEventPinNameText());
+	UEdGraphPin* Pin = FindPin(EventPinName);
 	ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
 	return Pin;
 }
