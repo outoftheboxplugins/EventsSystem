@@ -87,6 +87,11 @@ void UK2Node_InvokeEventPayload::PinConnectionListChanged(UEdGraphPin* Pin)
 
 FText UK2Node_InvokeEventPayload::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
+	if (TitleType == ENodeTitleType::Type::MenuTitle)
+	{
+		return GetBaseNodeTitle();
+	}
+
 	if (GetClassToSpawn())
 	{
 		return Super::GetNodeTitle(TitleType);
