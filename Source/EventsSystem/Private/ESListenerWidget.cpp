@@ -1,5 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
-
+// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
 #include "ESListenerWidget.h"
 
 #include "ESEvent.h"				// for UESEvent

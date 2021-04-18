@@ -1,5 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
-
+// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
 #include "K2Node_InvokeEventPayload.h"
 
 #include "K2Node_CallFunction.h"	// for UK2Node_CallFunction

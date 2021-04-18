@@ -1,17 +1,10 @@
-// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
-
+// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
 using UnrealBuildTool;
 
 public class EventsSystemEditor : ModuleRules
 {
     public EventsSystemEditor (ReadOnlyTargetRules Target) : base( Target )
     {
-        DynamicallyLoadedModuleNames.AddRange(
-            new string[] {
-                "AssetTools",
-                "MainFrame",
-			} );
-
         PrivateIncludePaths.AddRange(
             new string[] {
                 "EventsSystemEditor/Private",
@@ -38,11 +31,5 @@ public class EventsSystemEditor : ModuleRules
                 "BlueprintGraph",
                 "KismetCompiler",
             } );
-
-        PrivateIncludePathModuleNames.AddRange(
-            new string[] {
-                "AssetTools",
-                "UnrealEd",
-			} );
     }
 }
