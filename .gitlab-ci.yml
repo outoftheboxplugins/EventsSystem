@@ -10,8 +10,8 @@ prepare-job:
     - unreal
   script:
     - Write-Host "Prepare environment"
-    - Copy-Item -Path "C:\Logfiles" -Destination "C:\Drawings\Logs" -Recurse
     - cd D:/versions/4.27
+    - Copy-Item -Path "$PSScriptRoot" -Destination ".\Engine\Plugins\Marketplace\" -Recurse
     - .\Setup.bat --force
     - .\GenerateProjectFiles.bat
 
