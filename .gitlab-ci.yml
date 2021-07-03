@@ -1,6 +1,3 @@
-tags:
-  - windows
-
 stages:
   - prepare
   - build
@@ -8,6 +5,8 @@ stages:
 
 prepare-job:
   stage: prepare
+  tags:
+  - windows
   script:
     - Write-Host "Prepare environment"
     - Copy-Item -Path "C:\Logfiles" -Destination "C:\Drawings\Logs" -Recurse
@@ -17,11 +16,15 @@ prepare-job:
 
 build-job:       
   stage: build
+  tags:
+  - windows
   script:
     - Write-Host "Starting to build"
    
 deploy-job:  
   stage: deploy
+  tags:
+  - windows
   script:
     - echo "Deploying application..."
     - echo "Application successfully deployed."
