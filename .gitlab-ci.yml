@@ -19,6 +19,7 @@ build-job:
   stage: build
   tags:
     - windows
+    - unreal
   script:
     - Write-Host "Starting to build"
    
@@ -26,6 +27,7 @@ deploy-job:
   stage: deploy
   tags:
     - windows
+    - unreal
   script:
     - echo "Deploying application..."
     - echo "Application successfully deployed."
