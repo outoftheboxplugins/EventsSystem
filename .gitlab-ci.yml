@@ -6,7 +6,8 @@ stages:
 prepare-job:
   stage: prepare
   tags:
-  - windows
+    - windows
+    - unreal
   script:
     - Write-Host "Prepare environment"
     - Copy-Item -Path "C:\Logfiles" -Destination "C:\Drawings\Logs" -Recurse
