@@ -9,7 +9,7 @@ prepare-job:
     - unreal
   script:
     - Write-Host "Switching to engine environment"
-    - cd D:/versions/4.27
+    - cd D:/versions/4.26
 
     - Write-Host "Updating to latest engine version"
     - git checkout .
