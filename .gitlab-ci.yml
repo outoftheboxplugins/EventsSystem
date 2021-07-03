@@ -1,6 +1,5 @@
 stages:
   - prepare
-  - build
   - deploy
 
 prepare-job:
@@ -9,21 +8,19 @@ prepare-job:
     - windows
     - unreal
   script:
-    - Write-Host "Prepare environment"
+    - Write-Host "Switching to engine environment"
     - cd D:/versions/4.27
-    - Copy-Item -Path "$CI_PROJECT_DIR" -Destination ".\Engine\Plugins\Marketplace\" -Recurse
-    - .\Setup.bat --force
-    - .\GenerateProjectFiles.bat
 
-build-job:       
-  stage: build
-  tags:
-    - windows
-    - unreal
-  script:
-    - Write-Host "Starting to build"
+    - Write-Host "Updating to latest engine version"
+    - git checkout .
+    - Copy-Item -Path "$CI_PROJECT_DIR" -Destination ".\Engine\Plugins\Marketplace\$CI_PROJECT_NAME" -Recurse
+    - ((Get-Content -path Setup.bat -Raw) -replace '/register','/register /unattended') | Set-Content -Path Setup.bat
+    - .\Setup.bat --force
+    
+    - Write-Host "Starting build"
+    - .\GenerateProjectFiles.bat
     - .\Engine\Binaries\DotNET\UnrealBuildTool.exe UE4Editor Win64 Development
-   
+  
 deploy-job:  
   stage: deploy
   tags:
