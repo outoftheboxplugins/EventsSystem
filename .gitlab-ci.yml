@@ -11,7 +11,7 @@ prepare-job:
   script:
     - Write-Host "Prepare environment"
     - cd D:/versions/4.27
-    - Copy-Item -Path "$PSScriptRoot" -Destination ".\Engine\Plugins\Marketplace\" -Recurse
+    - Copy-Item -Path "$CI_PROJECT_DIR" -Destination ".\Engine\Plugins\Marketplace\" -Recurse
     - .\Setup.bat --force
     - .\GenerateProjectFiles.bat
 
@@ -22,6 +22,7 @@ build-job:
     - unreal
   script:
     - Write-Host "Starting to build"
+    - .\Engine\Binaries\DotNET\UnrealBuildTool.exe UE4Editor Win64 Development
    
 deploy-job:  
   stage: deploy
