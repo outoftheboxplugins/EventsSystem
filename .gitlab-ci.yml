@@ -18,14 +18,14 @@ prepare-job:
 build-job:       
   stage: build
   tags:
-  - windows
+    - windows
   script:
     - Write-Host "Starting to build"
    
 deploy-job:  
   stage: deploy
   tags:
-  - windows
+    - windows
   script:
     - echo "Deploying application..."
     - echo "Application successfully deployed."
