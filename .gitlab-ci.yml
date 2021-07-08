@@ -1,2 +1,4 @@
 include:
-  - 'https://gitlab.com/unreal-marketplace/pluginsdevops/-/blob/Live/plugin-ci.yml'
+  - project: 'unreal-marketplace/pluginsdevops'
+    ref: Live
+    file: 'plugin-ci.yml'
