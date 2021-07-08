@@ -13,6 +13,7 @@ prepare-job:
 
     - Write-Host "Updating to latest engine version"
     - git checkout .
+    - Remove-Item -Recurse -Force ".\Engine\Plugins\Marketplace\$CI_PROJECT_NAME"
     - Copy-Item -Path "$CI_PROJECT_DIR" -Destination ".\Engine\Plugins\Marketplace\$CI_PROJECT_NAME" -Recurse
     - ((Get-Content -path Setup.bat -Raw) -replace '/register','/register /unattended') | Set-Content -Path Setup.bat
     - .\Setup.bat --force
