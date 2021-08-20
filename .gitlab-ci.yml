@@ -2,5 +2,4 @@ include:
   - project: 'unreal-marketplace/pluginsdevops'
     ref: Live
     file: 
-      - 'plugin-ci.yml'
       - 'plugin-cd.yml'
