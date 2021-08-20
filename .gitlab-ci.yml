@@ -2,3 +2,6 @@ include:
   - project: 'unreal-marketplace/pluginsdevops'
     ref: Live
     file: 'plugin-ci.yml'
+  - project: 'unreal-marketplace/pluginsdevops'
+    ref: Live
+    file: 'plugin-cd.yml'
