@@ -5,6 +5,11 @@ include:
         - 'plugin-ci.yml'
         - 'plugin-cd.yml'
 
+stages:
+  - prepare
+  - build
+  - package
+
 prepare:
   extends: .prepare-job
 
