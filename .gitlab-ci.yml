@@ -10,6 +10,7 @@ build-job:
       ref: Live
       file: 
         - 'plugin-ci.yml'
+    strategy: depend
 
 deploy-job:
   stage: deploy
@@ -22,3 +23,4 @@ deploy-job:
       ref: Live
       file: 
         - 'plugin-cd.yml'
+    strategy: depend
