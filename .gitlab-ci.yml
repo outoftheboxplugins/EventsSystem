@@ -11,10 +11,13 @@ include:
         - 'plugin-cd.yml'
 
 prepare:
+  stage: prepare
   extends: .prepare-job
 
 build:
+  stage: build
   extends: .build-job
 
 package:
+  stage: package
   extends: .package-job
