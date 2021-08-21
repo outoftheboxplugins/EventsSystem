@@ -4,19 +4,21 @@ stages:
 
 build-job:
   stage: build
-  include:
-  - project: 'unreal-marketplace/pluginsdevops'
-    ref: Live
-    file: 
-      - 'plugin-ci.yml'
+  trigger:
+    include:
+    - project: 'unreal-marketplace/pluginsdevops'
+      ref: Live
+      file: 
+        - 'plugin-ci.yml'
 
 deploy-job:
   stage: deploy
   only:
     refs:
       - Live
-  include:
-  - project: 'unreal-marketplace/pluginsdevops'
-    ref: Live
-    file: 
-      - 'plugin-cd.yml'
+  trigger:
+    include:
+    - project: 'unreal-marketplace/pluginsdevops'
+      ref: Live
+      file: 
+        - 'plugin-cd.yml'
