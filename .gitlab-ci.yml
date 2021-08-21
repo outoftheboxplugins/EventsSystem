@@ -4,3 +4,12 @@ include:
       file: 
         - 'plugin-ci.yml'
         - 'plugin-cd.yml'
+
+prepare:
+  extends: .prepare-job
+
+build:
+  extends: .build-job
+
+package:
+  extends: .package-job
