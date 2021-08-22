@@ -1,11 +1,8 @@
-variables:
-  GIT_SSL_NO_VERIFY: "1"
-
 stages:
-  - package
-  - upload
   - prepare
   - build
+  - package
+  - upload
   
 include:
     - project: 'unreal-marketplace/pluginsdevops'
