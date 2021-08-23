@@ -1,8 +1,8 @@
 stages:
-  - prepare
-  - build
   - package
   - upload
+  - prepare
+  - build
   
 include:
     - project: 'unreal-marketplace/pluginsdevops'
