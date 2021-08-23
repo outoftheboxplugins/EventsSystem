@@ -5,8 +5,16 @@ stages:
   - upload
   
 include:
-    - project: 'unreal-marketplace/pluginsdevops'
+    - template: 'unreal-marketplace/pluginsdevops'
       ref: Live
       file: 
         - 'plugin-ci.yml'
         - 'plugin-cd.yml'
+
+
+prepare-job:
+build-job:
+package-job:
+  variables:
+    PLUGIN_NAME: $CI_PROJECT_NAME
+upload-job:
