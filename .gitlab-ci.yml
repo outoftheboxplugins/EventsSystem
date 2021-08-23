@@ -10,7 +10,3 @@ include:
       template: 
         - 'plugin-ci.yml'
         - 'plugin-cd.yml'
-
-package-job:
-  variables:
-    PLUGIN_NAME: $CI_PROJECT_NAME
