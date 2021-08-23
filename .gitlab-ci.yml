@@ -7,6 +7,6 @@ stages:
 include:
     - project: 'unreal-marketplace/pluginsdevops'
       ref: Live
-      template: 
+      file: 
         - 'plugin-ci.yml'
         - 'plugin-cd.yml'
