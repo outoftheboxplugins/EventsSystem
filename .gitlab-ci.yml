@@ -5,12 +5,11 @@ stages:
   - upload
   
 include:
-    - template: 'unreal-marketplace/pluginsdevops'
+    - project: 'unreal-marketplace/pluginsdevops'
       ref: Live
-      file: 
+      template: 
         - 'plugin-ci.yml'
         - 'plugin-cd.yml'
-
 
 prepare-job:
 build-job:
