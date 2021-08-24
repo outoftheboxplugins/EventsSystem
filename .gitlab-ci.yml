@@ -1,7 +1,7 @@
 stages:
-  - test-plugin-for-engine
   - prepare-engine
   - build-plugin-for-engine
+  - test-plugin-for-engine
   - update-plugin-for-engine
   - package-plugin-for-engine
   - upload-plugin-for-engine
