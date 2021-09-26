@@ -1,15 +1,15 @@
 {
 	"FileVersion": 3,
-	"VersionName": "2.15",
+	"VersionName": "4.1",
 	"EngineVersion": "4.25",
 	"FriendlyName": "Events System",
 	"Description": "Event-driven system who improves flow control inside your project. Build huge systemic games easy.",
 	"Category": "Editor",
 	"CreatedBy": "Out-of-the-Box Plugins",
 	"CreatedByURL": "https://outofthebox-plugins.com",
-	"DocsURL": "https://bitbucket.org/pasotee-marketplace/eventssystem/wiki/Home",
+	"DocsURL": "https://gitlab.com/unreal-marketplace/EventsSystem/-/wikis/home",
 	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/92c5f7f264f94069bc5d9a6981117c52",
-	"SupportURL": "https://outofthebox-plugins.com/pages/about",
+	"SupportURL": "https://gitlab.com/unreal-marketplace/EventsSystem/-/wikis/home",
 	"EnabledByDefault": true,
 	"CanContainContent": true,
 	"Modules": [
