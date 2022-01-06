@@ -1,7 +1,7 @@
 // Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
 #include "ESListenerInterface.h"
-
-#include "EventsSystemModule.h"		// for Debugging Logs
+#include "ESLog.h"
+//#include "EventsSystemModule.h"		// for Debugging Logs
 #include "ESEvent.h"				// for UESEvent
 
 void IESListenerInterface::OnEventCalled(const UESPayload* Payload) const

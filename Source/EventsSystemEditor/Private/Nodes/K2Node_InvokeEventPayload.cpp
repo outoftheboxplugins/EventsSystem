@@ -4,7 +4,7 @@
 #include "K2Node_CallFunction.h"	// for UK2Node_CallFunction
 #include "Kismet/GameplayStatics.h" // for UGameplayStatics
 #include "KismetCompiler.h"			// for FKismetCompilerContext 
-
+#include "ESEvent.h"
 #include "ESPayload.h" // for UESPayload
 
 #define LOCTEXT_NAMESPACE "EventsSystemEditor"
