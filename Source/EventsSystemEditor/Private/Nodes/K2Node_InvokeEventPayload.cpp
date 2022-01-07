@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h" // for UGameplayStatics
 #include "KismetCompiler.h"			// for FKismetCompilerContext 
 
+#include "ESEvent.h"
 #include "ESPayload.h" // for UESPayload
 
 #define LOCTEXT_NAMESPACE "EventsSystemEditor"

@@ -1,6 +1,7 @@
 // Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
 #include "ESListenerWidget.h"
 
+#include "Blueprint/WidgetTree.h"
 #include "ESEvent.h"				// for UESEvent
 #include "Blueprint/UserWidget.h"	// for UWidgetTree
 
