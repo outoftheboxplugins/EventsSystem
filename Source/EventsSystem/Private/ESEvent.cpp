@@ -53,7 +53,7 @@
 	}
 }
 
-/* STATIC */ void UESEvent::InvokeOnActorsInRadius(const UESEvent* EventToInvoke, const UESPayload* Payload, FVector Origin, float Radius /*= 100.0f*/)
+/* STATIC */ void UESEvent::InvokeOnActorsInRadius(const UESEvent* EventToInvoke, const UESPayload* Payload, FVector Origin, float Radius /*= 200.0f*/)
 {
 	if (EventToInvoke)
 	{
@@ -61,17 +61,15 @@
 		{
 			UE_LOG(LogEventsSystem, Log, TEXT("Event %s invoked."), *EventToInvoke->GetName());
 		}
-
 		for (const IESListenerInterface* Listener : EventToInvoke->ActiveListeners)
 		{
-			if (const AActor* ActorListener = Cast<AActor>(Listener))
+			if (const UActorComponent* ActorListener = Cast<UActorComponent>(Listener))
 			{
-				FVector ActorLocation = ActorListener->GetActorLocation();
-				bool bIsInRange = FVector::DistSquared2D(ActorLocation, Origin) <= Radius;
-
+				FVector ActorLocation = ActorListener->GetOwner()->GetActorLocation();
+				const bool bIsInRange = FVector::Distance(ActorLocation, Origin) <= Radius;
 				if (bIsInRange)
 				{
-					InvokeOnActor(EventToInvoke, Payload, ActorListener);
+					Listener->OnEventCalled(Payload);
 				}
 			}
 		}
