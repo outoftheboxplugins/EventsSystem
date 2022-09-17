@@ -2,8 +2,8 @@ name: Plugin CD
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
 
 jobs:
   plugin-cd:
