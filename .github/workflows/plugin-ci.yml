@@ -4,5 +4,5 @@ on:
   [push]
 
 jobs:
-  compliance:
+  plugin-ci:
     uses:  outoftheboxplugins/BuildMachines/.github/workflows/github-actions-demo.yml@master
