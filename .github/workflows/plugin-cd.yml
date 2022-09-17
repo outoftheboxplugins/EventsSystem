@@ -1,0 +1,8 @@
+name: Plugin CD
+
+on:
+  [push, workflow_dispatch]
+
+jobs:
+  plugin-cd:
+    uses:  outoftheboxplugins/BuildMachines/.github/workflows/package-plugin.yml.yml@master
