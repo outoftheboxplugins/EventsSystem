@@ -1,0 +1,8 @@
+name: "Compliance"
+
+on:
+  [push]
+
+jobs:
+  compliance:
+    uses:  outoftheboxplugins/BuildMachines/.github/workflows/github-actions-demo.yml@main
