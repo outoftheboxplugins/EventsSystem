@@ -5,4 +5,4 @@ on:
 
 jobs:
   compliance:
-    uses:  outoftheboxplugins/BuildMachines/.github/workflows/github-actions-demo.yml@main
+    uses:  outoftheboxplugins/BuildMachines/.github/workflows/github-actions-demo.yml@master
