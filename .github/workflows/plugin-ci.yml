@@ -1,7 +1,7 @@
 name: Plugin CI
 
 on:
-  [push]
+  [push, workflow_dispatch]
 
 jobs:
   plugin-ci:
