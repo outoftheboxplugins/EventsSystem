@@ -1,7 +1,7 @@
 name: Plugin CI
 
 on:
-  [push, workflow_dispatch]
+  [pull_request, workflow_dispatch]
 
 jobs:
   plugin-ci:
