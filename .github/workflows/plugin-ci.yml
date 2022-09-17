@@ -1,4 +1,4 @@
-name: "Compliance"
+name: Plugin CI
 
 on:
   [push]
