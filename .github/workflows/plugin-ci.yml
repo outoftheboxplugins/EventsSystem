@@ -5,4 +5,4 @@ on:
 
 jobs:
   plugin-ci:
-    uses:  outoftheboxplugins/BuildMachines/.github/workflows/github-actions-demo.yml@master
+    uses:  outoftheboxplugins/BuildMachines/.github/workflows/compile-plugin.yml@master
