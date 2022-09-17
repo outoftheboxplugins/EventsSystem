@@ -1,7 +1,9 @@
 name: Plugin CD
 
 on:
-  [push, workflow_dispatch]
+  push:
+    branches:
+      - main
 
 jobs:
   plugin-cd:
