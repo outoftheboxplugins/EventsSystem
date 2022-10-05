@@ -21,7 +21,7 @@
 		{
 			"Name": "EventsSystemEditor",
 			"Type": "UncookedOnly",
-			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "Linux" ]
+			"WhitelistPlatforms": [ "Win64", "Mac", "Linux" ]
 		}
 	]
 }
