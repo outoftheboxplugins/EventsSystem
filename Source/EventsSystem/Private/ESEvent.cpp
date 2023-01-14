@@ -49,6 +49,10 @@
 			{
 				ListenerComponent->OnEventCalled(Payload);
 			}
+			else if(UWidgetComponent* WidgetComponent = Cast<UWidgetComponent>(ActorComponent))
+			{
+				InvokeOnWidget(EventToInvoke, Payload, WidgetComponent->GetWidget());
+			}
 		}
 	}
 }
