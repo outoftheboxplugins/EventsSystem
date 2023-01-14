@@ -5,9 +5,10 @@
 #include "ESPayload.h"				// for UESPayload
 #include "ESListenerInterface.h"	// for IESListenerInterface
 
-#include "GameFramework/Actor.h"	// for AActor
-#include "Blueprint/WidgetTree.h"	// for WidgetTree
-#include "Blueprint/UserWidget.h"	// for UUserWidget
+#include "Blueprint/UserWidget.h" // for UUserWidget
+#include "Blueprint/WidgetTree.h" // for WidgetTree
+#include "Components/WidgetComponent.h"
+#include "GameFramework/Actor.h" // for AActor
 
 //////////////////////////////////////////////////////////////////////////
 // Public BP API
