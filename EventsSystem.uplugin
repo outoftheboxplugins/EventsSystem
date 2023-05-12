@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineVersion": "5.1",
+	"EngineVersion": "5.2",
 	"VersionName": "4.1",
 	"FriendlyName": "Events System",
 	"Description": "Event-driven system who improves flow control inside your project. Build huge systemic games easy.",
