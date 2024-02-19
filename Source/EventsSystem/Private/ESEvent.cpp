@@ -21,7 +21,8 @@
 			UE_LOG(LogEventsSystem, Log, TEXT("Event %s invoked."), *EventToInvoke->GetName());
 		}
 
-		for (const IESListenerInterface* Listener : EventToInvoke->ActiveListeners)
+		TSet<const IESListenerInterface*> ActiveListeners = EventToInvoke->ActiveListeners;
+		for (const IESListenerInterface* Listener : ActiveListeners)
 		{
 			if (Listener)
 			{
@@ -50,7 +51,7 @@
 			{
 				ListenerComponent->OnEventCalled(Payload);
 			}
-			else if(UWidgetComponent* WidgetComponent = Cast<UWidgetComponent>(ActorComponent))
+			else if (UWidgetComponent* WidgetComponent = Cast<UWidgetComponent>(ActorComponent))
 			{
 				InvokeOnWidget(EventToInvoke, Payload, WidgetComponent->GetWidget());
 			}
@@ -66,7 +67,8 @@
 		{
 			UE_LOG(LogEventsSystem, Log, TEXT("Event %s invoked."), *EventToInvoke->GetName());
 		}
-		for (const IESListenerInterface* Listener : EventToInvoke->ActiveListeners)
+		TSet<const IESListenerInterface*> ActiveListeners = EventToInvoke->ActiveListeners;
+		for (const IESListenerInterface* Listener : ActiveListeners)
 		{
 			if (const UActorComponent* ActorListener = Cast<UActorComponent>(Listener))
 			{
